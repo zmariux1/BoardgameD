@@ -1,0 +1,981 @@
+/*====================================================
+=                     PALETTE
+====================================================*/
+
+:root{
+    --eb-bg:#0b1117;
+    --eb-bg2:#101820;
+
+    --eb-panel:#11181f;
+    --eb-panel-light:#17222c;
+
+    --eb-gold:#cba15c;
+    --eb-gold-light:#e5c98d;
+    --eb-gold-dark:#6c4924;
+
+    --eb-bronze:#8b6438;
+
+    --eb-text:#ead7b2;
+    --eb-text-soft:#bfa987;
+    --eb-text-muted:#7f7466;
+
+    --eb-green:#74c96f;
+    --eb-red:#b95757;
+}
+
+
+/*====================================================
+=                     PANEL
+====================================================*/
+
+.encounterBuilder{
+    /* width: 700px; */
+    position:relative;
+    overflow:hidden;
+    padding:20px;
+    border-radius:14px;
+    /* background:
+        radial-gradient(
+            circle at top,
+            rgba(255,220,140,.03),
+            transparent 40%
+        ),
+        linear-gradient(
+            180deg,
+            #10161d,
+            #0d1319 45%,
+            #091017
+        ); */
+    border:1px solid rgba(180,130,70,.45);
+    box-shadow:
+        inset 0 0 0 1px rgba(255,220,170,.03),
+        inset 0 0 40px rgba(0,0,0,.45),
+        0 10px 35px rgba(0,0,0,.35);
+}
+
+
+/* interior frame */
+
+.encounterBuilder::before{
+    content:"";
+    position:absolute;
+    inset:8px;
+    border-radius:10px;
+    border:1px solid rgba(196,150,82,.22);
+    pointer-events:none;
+}
+
+
+/* subtle top light */
+.encounterBuilder::after{
+    content:"";
+    position:absolute;
+    inset:1px;
+    border-radius:13px;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,220,180,.05),
+            transparent 12%,
+            transparent 88%,
+            rgba(255,220,180,.02)
+        );
+    pointer-events:none;
+}
+
+
+/*====================================================
+=                     HEADER
+====================================================*/
+
+.encounterBuilder_header{
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    /* gap:10px; */
+    
+}
+
+.encounterBuilder_actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.startCombat_form {
+    margin: 0;
+}
+
+.encounterBuilder_actions .addStuff_button {
+    white-space: nowrap;
+}
+
+
+.encounterBuilder_title{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+
+.encounterBuilder_title h2{
+    margin:0;
+    color:var(--eb-gold-light);
+    font-size:1.5rem;
+    font-family:"Cinzel",serif;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+}
+
+
+.encounterBuilder_title p{
+    margin-top:4px;
+    color:var(--eb-text-soft);
+    font-size:.9rem;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+}
+
+
+/*====================================================
+=                     ICON
+====================================================*/
+
+.encounterBuilder_icon{
+    /* width:64px;
+    height:64px; */
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:8px;
+    transform:rotate(45deg);
+    border:2px solid rgba(205,162,88,.8);
+    background:
+        linear-gradient(
+            180deg,
+            #3a2917,
+            #1d1713
+        );
+
+    box-shadow:
+        inset 0 0 10px rgba(255,220,150,.05),
+        0 0 20px rgba(0,0,0,.35);
+}
+
+
+.encounterBuilder_icon i{
+    transform:rotate(-45deg);
+    font-size:1.6rem;
+    color:var(--eb-gold);
+    margin: 7px;
+}
+
+
+
+
+
+/*====================================================
+=                    TABLE
+====================================================*/
+
+
+
+
+/*====================================================
+=                 GRID LAYOUT
+====================================================*/
+
+
+
+
+
+
+
+
+/*====================================================
+=                 TABLE HEADER
+====================================================*/
+
+.encounterBuilder_tableHeader{
+    min-height:35px;
+    color:var(--eb-gold);
+    font-size: var(--font-size-m);
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    border-bottom:1px solid rgba(185,140,70,.28);
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,220,170,.015),
+            transparent
+        );
+}
+
+.encounterBuilder_tableHeader>div{
+    padding:0 18px;
+}
+
+
+/*====================================================
+=                 FOOTER
+====================================================*/
+
+.encounterBuilder_footer{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:0;
+    border:1px solid rgba(175,128,62,.35);
+    border-radius:10px;
+    overflow:hidden;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,220,170,.02),
+            rgba(0,0,0,.18)
+        );
+}
+
+
+/*====================================================
+=                FOOTER BLOCK
+====================================================*/
+
+.overviewStat{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    /* gap:8px; */
+    padding:5px;
+    border-right:1px solid rgba(180,135,70,.18);
+}
+
+.overviewStat_description{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    gap: 5px;
+}
+
+
+.overviewStat i{
+    color:var(--eb-gold);
+    font-size: var(--font-size-xl);
+}
+
+.overviewStat small{
+    width:100%;
+    color:var(--eb-text-soft);
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    text-align:center;
+}
+.overviewStat strong{
+    font-family:"Cinzel",serif;
+    color:var(--eb-gold-light);
+    font-size:var(--font-size-xl);
+}
+
+
+
+
+
+
+
+/*====================================================
+=              DRAG HANDLE
+====================================================*/
+
+
+
+/*====================================================
+=            HEADER ALIGNMENT
+====================================================*/
+
+.encounterBuilder_tableHeader > div{
+    display:flex;
+    align-items:center;
+}
+
+
+/*====================================================
+=          COLUMN ALIGNMENTS
+====================================================*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*====================================================
+=           RESPONSIVE
+====================================================*/
+
+@media (max-width:1100px){
+    .enemyInfo{
+        gap:12px;
+    }
+
+    .enemyInfo img{
+        width:40px;     
+        height:40px; 
+    }
+
+    .enemyInfo h4{
+        font-size: var(--font-size-m);
+    }
+    .enemyInfo p{
+        font-size:.70rem;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /* ==========================================================
+     DND-CREATURE-LIST WIDGET
+     All rules are scoped under .dndc-list / .dndc-* classes so
+     they never collide with the host page's own styles.
+     ========================================================== */
+
+  .dndc-list {
+    --dndc-bg-panel: 
+    linear-gradient(
+        180deg,
+        rgba(255,255,255,.015),
+        rgba(0,0,0,.15)
+    );
+
+    --dndc-bg-card-1: #141a2b;
+    --dndc-bg-card-2: #0b0e18;
+    --dndc-border: rgba(191, 145, 79, 0.38);
+    --dndc-border-strong: rgba(202, 160, 92, 0.65);
+    --dndc-gold: #c9a45c;
+    --dndc-gold-soft: #a67c3d;
+    --dndc-rust: #b3552f;
+    --dndc-text: #ddd2bd;
+    --dndc-text-muted: #8a8271;
+    --dndc-hp: #a8524b;
+    --dndc-hp-bg: rgba(168, 82, 75, 0.14);
+    --dndc-ac: #4c7290;
+    --dndc-ac-bg: rgba(76, 114, 144, 0.14);
+    --dndc-hidden: #b8493f;
+    --dndc-radius: 14px;
+
+    box-sizing: border-box;
+    display: block;
+
+    max-height: min(400px, calc(100vh - 36px));
+    max-width: 640px;
+
+    margin: 18px auto;
+    padding: 7px 12px 28px;
+
+    font-family: 'EB Garamond', Georgia, serif;
+    color: var(--dndc-text);
+
+    -webkit-font-smoothing: antialiased;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    border-radius: 12px;
+
+    /* Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #8b652d transparent;
+  }
+
+  /* ---------- Card ---------- */
+
+  .dndc-card {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+    padding: 14px;
+    margin-bottom: 14px;
+    border-radius: var(--dndc-radius);
+    background: linear-gradient( 90deg, rgba(255, 255, 255, .015), transparent 65% );
+    border: 1px solid var(--dndc-border);
+    box-shadow:
+      inset 0 0 0 1px rgba(0, 0, 0, 0.4),
+      0 6px 18px rgba(0, 0, 0, 0.35);
+  }
+  .dndc-card:hover {
+
+    background: linear-gradient( 90deg, rgba(173, 126, 55, .08), rgba(255, 255, 255, .015) );
+  }
+
+  .dndc-card:last-of-type {
+    margin-bottom: 6px;
+  }
+
+  /* corner rivets, a small nod to a wax-seal / ledger aesthetic */
+  .dndc-card::before,
+  .dndc-card::after {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--dndc-gold-soft);
+    opacity: 0.55;
+    top: 8px;
+  }
+  .dndc-card::before { left: 8px; }
+  .dndc-card::after   { right: 8px; }
+
+  /* ---------- Avatar seal ---------- */
+
+  .dndc-avatar {
+    flex: 0 0 auto;
+    width: 68px;
+    height: 68px;
+    border-radius: 10px;
+    border: 1.5px solid var(--dndc-border-strong);
+    background:
+      radial-gradient(circle at 32% 28%, #232a40 0%, #0b0e18 78%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .dndc-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .dndc-avatar .dndc-icon {
+    width: 34px;
+    height: 34px;
+    color: var(--dndc-gold);
+    opacity: 0.9;
+  }
+
+
+  .dndc-detail-organizer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 12px;
+  }
+
+  /* ---------- Info column ---------- */
+
+  .dndc-info {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .dndc-name {
+    margin: 0;
+    font-family: 'Cinzel', Georgia, serif;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.03em;
+    color: var(--dndc-gold);
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .dndc-stats {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .dndc-stat {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 9px;
+    border-radius: 8px;
+    border: 1px solid;
+  }
+
+  .dndc-stat--hp { border-color: rgba(168, 82, 75, 0.45); background: var(--dndc-hp-bg); }
+  .dndc-stat--ac { border-color: rgba(76, 114, 144, 0.45); background: var(--dndc-ac-bg); }
+
+  .dndc-stat .dndc-icon {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 auto;
+  }
+  .dndc-stat--hp .dndc-icon { color: var(--dndc-hp); }
+  .dndc-stat--ac .dndc-icon { color: var(--dndc-ac); }
+
+  .dndc-stat-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.05;
+  }
+
+  .dndc-stat-value {
+    font-weight: 600;
+    font-size: 0.86rem;
+    color: var(--dndc-text);
+  }
+
+  .dndc-stat-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--dndc-text-muted);
+  }
+
+  /* ---------- Inventory ---------- */
+
+  .dndc-inv-heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dndc-text-muted);
+  }
+
+  .dndc-inv-heading::after {
+    content: "";
+    flex: 1 1 auto;
+    height: 1px;
+    background: linear-gradient(90deg, var(--dndc-border), transparent);
+  }
+
+  .dndc-inventory {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .dndc-inv-items {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .dndc-item-form {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 0;
+  }
+
+  .dndc-item-name {
+    color: var(--dndc-text-muted);
+    font-size: 0.68rem;
+  }
+
+  .dndc-item-slot {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 auto;
+    border-radius: 6px;
+    border: 1px solid var(--dndc-border);
+    background: rgba(255, 255, 255, 0.02);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .dndc-item-slot:hover {
+    border-color: var(--dndc-border-strong);
+    background: rgba(255, 255, 255, 0.04);
+
+  }
+
+  .dndc-item-slot .dndc-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--dndc-gold);
+    opacity: 0.85;
+  }
+
+  .dndc-inv-divider {
+    width: 1px;
+    align-self: stretch;
+    background: var(--dndc-border);
+    flex: 0 0 auto;
+  }
+
+  .dndc-purse {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: auto;
+    font-weight: 600;
+    font-size: 0.86rem;
+    color: var(--dndc-gold);
+    white-space: nowrap;
+  }
+
+  .dndc-purse .dndc-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--dndc-gold-soft);
+  }
+
+  /* ---------- Controls column ---------- */
+
+  .dndc-controls {
+    flex: 0 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    gap: 10px;
+  }
+
+  .dndc-visibility {
+    all: unset;
+    box-sizing: border-box;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .dndc-visibility .dndc-icon {
+    width: 19px;
+    height: 19px;
+  }
+
+  .dndc-visibility[data-state="visible"] .dndc-icon {
+    color: var(--dndc-gold);
+    opacity: 0.9;
+  }
+
+  .dndc-visibility[data-state="hidden"] .dndc-icon {
+    color: var(--dndc-hidden);
+  }
+
+  .dndc-visibility:hover {
+    border-color: var(--dndc-border);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .dndc-visibility:focus-visible {
+    outline: 2px solid var(--dndc-gold);
+    outline-offset: 2px;
+  }
+
+  /* ---------- Duplicate button ---------- */
+
+  .dndc-duplicate-btn {
+    all: unset;
+    box-sizing: border-box;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .dndc-duplicate-btn .dndc-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--dndc-gold);
+    opacity: 0.85;
+  }
+
+  .dndc-duplicate-btn:hover {
+    border-color: var(--dndc-border);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .dndc-duplicate-btn:focus-visible {
+    outline: 2px solid var(--dndc-gold);
+    outline-offset: 2px;
+  }
+
+
+
+  .dndc-leftSide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  /* ---------- Close/Delete button ---------- */
+
+.dndc-leftSide-controls {
+    /* width: 84px;  */
+    
+    display: flex;
+    flex-direction: row;
+    align-items:flex-end;
+    justify-content: center;
+
+    gap: 6px;
+
+    margin-top: 7px;
+}
+
+
+  .dndc-action-form {
+    margin: 0;
+  }
+
+
+/* =========================
+   BAZA BUTOANELOR
+   ========================= */
+
+.dndc-leftSide-controls button {
+    width: 35px;
+    height: 34px;
+
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    font-family: Georgia, serif;
+    font-size: 20px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background .18s ease,
+        border-color .18s ease,
+        color .18s ease,
+        transform .12s ease,
+        box-shadow .18s ease;
+}
+@media (min-width: 870px) {
+  .dndc-leftSide-controls button {
+      width: 39px;
+  }
+}
+
+
+
+/* =========================
+   CLOSE / REMOVE
+   ========================= */
+
+.dndc-close-btn {
+    color: #b8493f;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(184, 73, 63, .12),
+            rgba(184, 73, 63, .22)
+        );
+
+    border: 1px solid rgba(184, 73, 63, .28);
+
+    text-shadow:
+        0 0 5px rgba(184, 73, 63, .25);
+}
+
+.dndc-close-btn:hover {
+    color: #d05c50;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(184, 73, 63, .20),
+            rgba(184, 73, 63, .32)
+        );
+
+    border-color: rgba(184, 73, 63, .50);
+
+    box-shadow:
+        0 0 8px rgba(184, 73, 63, .12);
+}
+
+.dndc-close-btn:active {
+    transform: translateY(1px) scale(.97);
+}
+
+
+/* =========================
+   DUPLICATE
+   ========================= */
+
+.dndc-duplicate-btn {
+    color: #c9a45c;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(201, 164, 92, .04),
+            rgba(201, 164, 92, .10)
+        );
+
+    border: 1px solid rgba(201, 164, 92, .30);
+
+    font-size: 17px;
+}
+
+.dndc-duplicate-btn:hover {
+    color: #dfbb73;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(201, 164, 92, .10),
+            rgba(201, 164, 92, .18)
+        );
+
+    border-color: rgba(201, 164, 92, .55);
+
+    box-shadow:
+        0 0 8px rgba(201, 164, 92, .10);
+}
+
+.dndc-duplicate-btn:active {
+    transform: translateY(1px) scale(.97);
+}
+
+
+
+  .dndc-coord-pozition {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .dndc-coord {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .dndc-coord label {
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: 0.68rem;
+    color: var(--dndc-text-muted);
+    flex: 0 0 auto;
+  }
+
+  .dndc-coord select {
+    all: unset;
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    padding: 5px 22px 5px 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--dndc-text);
+    background: rgba(0, 0, 0, 0.28);
+    border: 1px solid var(--dndc-border);
+    border-radius: 7px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a67c3d' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 5px center;
+    background-size: 12px;
+  }
+
+  .dndc-coord select:focus-visible {
+    outline: 2px solid var(--dndc-gold);
+    outline-offset: 1px;
+  }
+
+  .dndc-coord select option {
+    background: #141a2b;
+    color: var(--dndc-text);
+  }
+
+  /* ---------- Footer count ---------- */
+
+  .dndc-count {
+    margin: 10px 0 0;
+    text-align: center;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--dndc-text-muted);
+    letter-spacing: 0.02em;
+  }
+
+  /* ---------- Larger screens ---------- */
+
+  @media (min-width: 560px) {
+
+    .dndc-card { padding: 18px; gap: 18px; margin-bottom: 16px; }
+    .dndc-detail-organizer { display: flex; flex-direction: column;}
+
+    .dndc-avatar { width: 84px; height: 84px; border-radius: 12px; }
+    .dndc-avatar .dndc-icon { width: 40px; height: 40px; }
+
+    .dndc-name { font-size: 1.2rem; }
+
+    .dndc-stat { padding: 6px 12px; }
+    .dndc-stat-value { font-size: 0.95rem; }
+
+    .dndc-item-slot { width: 34px; height: 34px; }
+
+    .dndc-visibility { width: 34px; height: 34px; }
+    .dndc-duplicate-btn { width: 34px; height: 34px; }
+    .dndc-close-btn { width: 34px; height: 34px; }
+    .dndc-duplicate-btn .dndc-icon { width: 20px; height: 20px; }
+    .dndc-close-btn .dndc-icon { width: 20px; height: 20px; }
+    .dndc-coord select { font-size: 0.86rem; padding: 6px 24px 6px 10px; }
+  }
+
+
+    @media (min-width: 870px) {
+      .dndc-detail-organizer { display: flex; flex-direction: row;}
+      .dndc-controls { width: 96px; gap: 12px; flex-direction: column;}
+    }

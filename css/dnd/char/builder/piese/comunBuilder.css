@@ -1,0 +1,82 @@
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+    min-height: 100%;
+}
+
+
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    background:
+        radial-gradient(
+            circle at center,
+            #3b3b3b 0%,
+            #171717 70%,
+            #090909 100%
+        );
+    color: #241b14;
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.character-page {
+    min-height: 100vh;
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.10),
+            rgba(0, 0, 0, 0.10)
+        );
+}
+
+
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+.character-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+     background: var(--color-background);
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+.pozitionare_content {
+    flex: 1;
+
+    max-width: var(--max_width_main_content);
+
+    padding: 28px 32px 24px;
+
+    background: var(--color-background);
+
+    position: relative;
+}
+
+@media (max-width: 600px) {
+    .pozitionare_content {
+        padding: 0;
+    }
+}
+
+.general_sub_container {
+    
+}

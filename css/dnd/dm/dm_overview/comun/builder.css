@@ -1,0 +1,1452 @@
+/* =========================================================
+   CHARACTER BUILDER — SHARED DESIGN SYSTEM
+   Reusable visual foundation for all builder pages
+   ========================================================= */
+
+
+/* =========================================================
+   1. DESIGN TOKENS
+   ========================================================= */
+
+:root {
+
+    /* ---------- Background ---------- */
+
+    --cb-bg:
+        #060b0e;
+
+    --cb-bg-soft:
+        #080f12;
+
+    --cb-panel:
+        #0d1518;
+
+    --cb-panel-soft:
+        #111b1f;
+
+    --cb-panel-hover:
+        #152125;
+
+
+    /* ---------- Gold ---------- */
+
+    --cb-gold:
+        #a8895b;
+
+    --cb-gold-bright:
+        #c8a96d;
+
+    --cb-gold-light:
+        #d2b679;
+
+    --cb-gold-muted:
+        #756347;
+
+
+    /* ---------- Cyan ---------- */
+
+    --cb-cyan:
+        #67d7dc;
+
+    --cb-cyan-bright:
+        #8be9ed;
+
+    --cb-cyan-muted:
+        #3f8589;
+
+    --cb-cyan-dark:
+        #245457;
+
+
+    /* ---------- Text ---------- */
+
+    --cb-text:
+        #e8e3d8;
+
+    --cb-text-soft:
+        #c0bbb0;
+
+    --cb-text-muted:
+        #847f75;
+
+    --cb-text-dark:
+        #57544e;
+
+
+    /* ---------- Borders ---------- */
+
+    --cb-border:
+        rgba(168, 137, 91, .28);
+
+    --cb-border-soft:
+        rgba(168, 137, 91, .16);
+
+    --cb-border-strong:
+        rgba(168, 137, 91, .48);
+
+    --cb-border-cyan:
+        rgba(103, 215, 220, .72);
+
+
+    /* ---------- Typography ---------- */
+
+    --cb-font-ui:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    --cb-font-display:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+
+    /* ---------- Radius ---------- */
+
+    --cb-radius:
+        2px;
+
+    --cb-radius-sm:
+        1px;
+
+
+    /* ---------- Spacing ---------- */
+
+    --cb-space-1: 4px;
+    --cb-space-2: 8px;
+    --cb-space-3: 12px;
+    --cb-space-4: 16px;
+    --cb-space-5: 20px;
+    --cb-space-6: 24px;
+    --cb-space-7: 32px;
+    --cb-space-8: 40px;
+
+
+    /* ---------- Transitions ---------- */
+
+    --cb-transition-fast:
+        140ms ease;
+
+    --cb-transition:
+        220ms ease;
+
+
+    /* ---------- Shadows ---------- */
+
+    --cb-shadow-panel:
+        inset 0 1px rgba(255,255,255,.025),
+        0 4px 12px rgba(0,0,0,.24);
+
+    --cb-shadow-hover:
+        0 0 12px rgba(103,215,220,.07);
+
+    --cb-shadow-active:
+        inset 0 0 20px rgba(103,215,220,.055),
+        0 0 14px rgba(103,215,220,.10);
+
+    --cb-shadow-gold:
+        0 3px 10px rgba(0,0,0,.25);
+}
+
+
+/* =========================================================
+   2. GLOBAL RESET
+   ========================================================= */
+
+.cb-app *,
+.cb-app *::before,
+.cb-app *::after {
+    box-sizing: border-box;
+}
+
+.cb-app {
+    min-height: 100vh;
+    width: 100vw;
+    justify-content: center;
+
+    margin: 0;
+    padding: 0;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(33, 55, 60, .13),
+            transparent 38%
+        ),
+        linear-gradient(
+            180deg,
+            #080f12 0%,
+            #060b0e 100%
+        );
+
+    color: var(--cb-text);
+
+    font-family: var(--cb-font-ui);
+    font-size: 14px;
+
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+
+/* =========================================================
+   3. OUTER FRAME
+   ========================================================= */
+
+.cb-frame {
+    position: relative;
+
+
+    min-height: 100vh;
+    border: 1px solid var(--cb-border-soft);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.008),
+            transparent 30%
+        );
+}
+
+
+/* ornamental corner system */
+
+.cb-frame::before,
+.cb-frame::after {
+    content: "";
+
+    position: absolute;
+
+    width: 14px;
+    height: 14px;
+
+    pointer-events: none;
+
+    opacity: .65;
+}
+
+
+/* top-left */
+
+.cb-frame::before {
+    top: 5px;
+    left: 5px;
+
+    border-top: 1px solid var(--cb-gold-muted);
+    border-left: 1px solid var(--cb-gold-muted);
+}
+
+
+/* bottom-right */
+
+.cb-frame::after {
+    right: 5px;
+    bottom: 5px;
+
+    border-right: 1px solid var(--cb-gold-muted);
+    border-bottom: 1px solid var(--cb-gold-muted);
+}
+
+
+/* =========================================================
+   4. APPLICATION LAYOUT
+   ========================================================= */
+
+.cb-layout {
+    display: grid;
+
+    grid-template-columns:
+        120px
+        minmax(0, 1fr);
+
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   5. SIDEBAR
+   ========================================================= */
+
+.cb-sidebar {
+    position: relative;
+
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            180deg,
+            #0a1114 0%,
+            #080e11 100%
+        );
+
+    border-right:
+        1px solid var(--cb-border-soft);
+}
+
+
+/* ---------- Branding ---------- */
+
+.cb-brand {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    min-height: 110px;
+
+    padding: 18px 10px;
+
+    border-bottom:
+        1px solid var(--cb-border-soft);
+
+    text-align: center;
+}
+
+.cb-brand__icon {
+    color: var(--cb-gold-muted);
+
+    font-size: 27px;
+    line-height: 1;
+}
+
+.cb-brand__title {
+    color: var(--cb-gold-bright);
+
+    font-family: var(--cb-font-display);
+    font-size: 13px;
+    letter-spacing: .06em;
+}
+
+.cb-brand__subtitle {
+    color: var(--cb-text-muted);
+
+    font-size: 9px;
+    letter-spacing: .08em;
+}
+
+
+/* =========================================================
+   6. SIDEBAR NAVIGATION
+   ========================================================= */
+
+.cb-nav {
+    display: flex;
+
+    flex-direction: column;
+
+    margin-top: 8px;
+}
+
+.cb-nav__item {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    min-height: 40px;
+
+    padding:
+        0 14px;
+
+    border-left:
+        2px solid transparent;
+
+    color: var(--cb-text-muted);
+
+    background: transparent;
+
+    text-decoration: none;
+
+    transition:
+        background var(--cb-transition),
+        border-color var(--cb-transition),
+        color var(--cb-transition),
+        box-shadow var(--cb-transition);
+}
+
+
+/* hover */
+
+.cb-nav__item:hover {
+    color: var(--cb-text-soft);
+
+    background:
+        rgba(71, 109, 112, .08);
+
+    border-left-color:
+        rgba(103, 215, 220, .22);
+}
+
+
+/* active */
+
+.cb-nav__item.is-active {
+    color: var(--cb-text);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(61, 137, 142, .20),
+            rgba(61, 137, 142, .035)
+        );
+
+    border-left-color:
+        var(--cb-cyan);
+
+    box-shadow:
+        inset 0 0 18px rgba(103,215,220,.035);
+}
+
+.cb-nav__number {
+    width: 25px;
+
+    color: var(--cb-gold-muted);
+
+    font-family: var(--cb-font-display);
+}
+
+.cb-nav__item.is-active .cb-nav__number {
+    color: var(--cb-cyan);
+}
+
+
+/* =========================================================
+   7. MAIN AREA
+   ========================================================= */
+
+.cb-main {
+    min-width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+
+    padding:
+        24px 0;
+}
+
+/* =====================================================
+    PAGE LAYOUT
+    ===================================================== */
+
+.cb-abilities-page {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 52px);
+    width: 70vw;
+}
+
+
+
+/* =========================================================
+   8. PAGE HEADER
+   ========================================================= */
+
+.cb-page-header {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    margin-bottom: 22px;
+}
+
+.cb-page-title {
+    margin: 0;
+
+    color: var(--cb-text);
+
+    font-family: var(--cb-font-display);
+
+    font-size: 22px;
+    font-weight: 400;
+
+    line-height: 1.2;
+}
+
+.cb-page-title__index {
+    color: var(--cb-gold-bright);
+}
+
+.cb-page-subtitle {
+    margin: 0;
+
+    color: var(--cb-text-muted);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   9. PROGRESS STEPPER
+   ========================================================= */
+
+.cb-progress {
+    display: flex;
+
+    align-items: flex-start;
+
+    width: min(420px, 100%);
+
+    margin:
+        0 auto 24px;
+}
+
+.cb-progress__step {
+    position: relative;
+
+    display: flex;
+
+    flex: 1;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 6px;
+}
+
+.cb-progress__step:not(:last-child)::after {
+    content: "";
+
+    position: absolute;
+
+    top: 11px;
+    left: 50%;
+
+    width: 100%;
+    height: 1px;
+
+    background:
+        rgba(168,137,91,.18);
+}
+
+
+/* circle */
+
+.cb-progress__dot {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 23px;
+    height: 23px;
+
+    border:
+        1px solid var(--cb-gold-muted);
+
+    border-radius: 50%;
+
+    background:
+        var(--cb-bg);
+
+    color: var(--cb-text-muted);
+
+    font-family: var(--cb-font-display);
+
+    font-size: 11px;
+}
+
+.cb-progress__label {
+    color: var(--cb-text-muted);
+
+    font-family: var(--cb-font-display);
+
+    font-size: 9px;
+
+    letter-spacing: .04em;
+
+    text-transform: uppercase;
+}
+
+
+/* current */
+
+.cb-progress__step.is-current .cb-progress__dot {
+    color: var(--cb-cyan);
+
+    border-color:
+        var(--cb-cyan);
+
+    box-shadow:
+        0 0 8px rgba(103,215,220,.18);
+}
+
+.cb-progress__step.is-current .cb-progress__label {
+    color: var(--cb-text);
+}
+
+
+/* completed */
+
+.cb-progress__step.is-complete .cb-progress__dot {
+    color: var(--cb-cyan-muted);
+
+    border-color:
+        rgba(103,215,220,.45);
+}
+
+
+/* =========================================================
+   10. GENERIC PANEL
+   ========================================================= */
+
+.cb-panel {
+    position: relative;
+
+    border:
+        1px solid var(--cb-border);
+
+    border-radius:
+        var(--cb-radius);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(19,29,32,.90),
+            rgba(9,16,19,.96)
+        );
+
+    box-shadow:
+        var(--cb-shadow-panel);
+}
+
+
+/* subtle top highlight */
+
+.cb-panel::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 8px;
+    right: 8px;
+
+    height: 1px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   11. PANEL HEADER
+   ========================================================= */
+
+.cb-panel__header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 42px;
+
+    padding:
+        0 14px;
+
+    border-bottom:
+        1px solid var(--cb-border-soft);
+}
+
+.cb-panel__title {
+    margin: 0;
+
+    color: var(--cb-gold-bright);
+
+    font-family: var(--cb-font-display);
+
+    font-size: 11px;
+    font-weight: 400;
+
+    text-transform: uppercase;
+
+    letter-spacing: .05em;
+}
+
+
+/* =========================================================
+   12. GENERIC CARD
+   ========================================================= */
+
+.cb-card {
+    position: relative;
+
+    padding: 0;
+
+    overflow: hidden;
+
+    border:
+        1px solid var(--cb-border);
+
+    border-radius:
+        var(--cb-radius);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(24,34,37,.88),
+            rgba(10,17,20,.96)
+        );
+
+    color: var(--cb-text);
+
+    cursor: pointer;
+
+    transition:
+        border-color var(--cb-transition),
+        background var(--cb-transition),
+        box-shadow var(--cb-transition),
+        transform var(--cb-transition);
+}
+
+
+/* hover */
+
+.cb-card:hover {
+    border-color:
+        rgba(103,215,220,.38);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(27,42,44,.92),
+            rgba(11,20,23,.98)
+        );
+
+    box-shadow:
+        var(--cb-shadow-hover);
+}
+
+
+/* selected */
+
+.cb-card.is-selected {
+    border-color:
+        var(--cb-border-cyan);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(35,68,71,.58),
+            rgba(10,22,24,.96)
+        );
+
+    box-shadow:
+        var(--cb-shadow-active);
+}
+
+
+/* focus */
+
+.cb-card:focus-visible {
+    outline:
+        1px solid var(--cb-cyan);
+
+    outline-offset:
+        2px;
+}
+
+
+/* =========================================================
+   13. LIST ITEM
+   ========================================================= */
+
+.cb-list {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.cb-list-item {
+    display: flex;
+
+    align-items: center;
+
+    min-height: 36px;
+
+    padding:
+        0 12px;
+
+    border-bottom:
+        1px solid var(--cb-border-soft);
+
+    color: var(--cb-text-soft);
+
+    background:
+        transparent;
+
+    cursor: pointer;
+
+    transition:
+        background var(--cb-transition),
+        border-color var(--cb-transition),
+        color var(--cb-transition);
+}
+
+.cb-list-item:last-child {
+    border-bottom: 0;
+}
+
+.cb-list-item:hover {
+    color: var(--cb-text);
+
+    background:
+        rgba(103,215,220,.055);
+}
+
+.cb-list-item.is-selected {
+    color: var(--cb-text);
+
+    background:
+        rgba(63,133,137,.18);
+
+    border-left:
+        2px solid var(--cb-cyan);
+
+    box-shadow:
+        inset 0 0 16px rgba(103,215,220,.03);
+}
+
+
+/* =========================================================
+   14. SECONDARY TEXT
+   ========================================================= */
+
+.cb-label {
+    color: var(--cb-gold);
+
+    font-family: var(--cb-font-ui);
+
+    font-size: 10px;
+
+    letter-spacing: .05em;
+
+    text-transform: uppercase;
+}
+
+.cb-muted {
+    color: var(--cb-text-muted);
+}
+
+.cb-description {
+    color: var(--cb-text-soft);
+
+    font-size: 12px;
+
+    line-height: 1.55;
+}
+
+
+/* =========================================================
+   15. SECTION TITLE
+   ========================================================= */
+
+.cb-section-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin:
+        0 0 10px;
+
+    color: var(--cb-gold-bright);
+
+    font-family: var(--cb-font-display);
+
+    font-size: 11px;
+    font-weight: 400;
+
+    letter-spacing: .04em;
+
+    text-transform: uppercase;
+}
+
+.cb-section-title::after {
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background:
+        var(--cb-border-soft);
+}
+
+
+/* =========================================================
+   16. DIVIDER
+   ========================================================= */
+
+.cb-divider {
+    width: 100%;
+    height: 1px;
+
+    margin:
+        14px 0;
+
+    background:
+        rgba(168,137,91,.15);
+}
+
+
+/* =========================================================
+   17. ICON CIRCLE
+   ========================================================= */
+
+.cb-icon {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex:
+        0 0 auto;
+
+    width: 34px;
+    height: 34px;
+
+    border:
+        1px solid var(--cb-border-strong);
+
+    border-radius: 50%;
+
+    color: var(--cb-gold-bright);
+
+    background:
+        rgba(8,14,17,.72);
+
+    transition:
+        border-color var(--cb-transition),
+        color var(--cb-transition),
+        box-shadow var(--cb-transition),
+        background var(--cb-transition);
+}
+
+.cb-icon.is-active,
+.cb-icon:hover {
+    color: var(--cb-cyan);
+
+    border-color:
+        var(--cb-border-cyan);
+
+    background:
+        rgba(53,111,115,.12);
+
+    box-shadow:
+        0 0 10px rgba(103,215,220,.10);
+}
+
+
+/* =========================================================
+   18. BADGE
+   ========================================================= */
+
+.cb-badge {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 22px;
+
+    padding:
+        0 8px;
+
+    border:
+        1px solid var(--cb-border-soft);
+
+    border-radius:
+        var(--cb-radius);
+
+    color: var(--cb-text-soft);
+
+    background:
+        rgba(255,255,255,.015);
+
+    font-size: 10px;
+}
+
+.cb-badge--gold {
+    color: var(--cb-gold-bright);
+
+    border-color:
+        rgba(168,137,91,.35);
+
+    background:
+        rgba(168,137,91,.06);
+}
+
+.cb-badge--cyan {
+    color: var(--cb-cyan);
+
+    border-color:
+        rgba(103,215,220,.38);
+
+    background:
+        rgba(103,215,220,.06);
+}
+
+
+/* =========================================================
+   19. FORM CONTROLS
+   ========================================================= */
+
+.cb-input,
+.cb-select,
+.cb-textarea {
+    width: 100%;
+
+    border:
+        1px solid var(--cb-border);
+
+    border-radius:
+        var(--cb-radius);
+
+    outline: none;
+
+    color:
+        var(--cb-text);
+
+    background:
+        rgba(7,13,16,.90);
+
+    font-family:
+        var(--cb-font-ui);
+
+    transition:
+        border-color var(--cb-transition),
+        box-shadow var(--cb-transition),
+        background var(--cb-transition);
+}
+
+.cb-input,
+.cb-select {
+    min-height: 36px;
+
+    padding:
+        0 10px;
+}
+
+.cb-textarea {
+    min-height: 100px;
+
+    padding:
+        10px;
+
+    resize: vertical;
+}
+
+.cb-input:hover,
+.cb-select:hover,
+.cb-textarea:hover {
+    border-color:
+        rgba(168,137,91,.42);
+}
+
+.cb-input:focus,
+.cb-select:focus,
+.cb-textarea:focus {
+    border-color:
+        var(--cb-cyan);
+
+    background:
+        rgba(10,22,24,.95);
+
+    box-shadow:
+        0 0 0 1px rgba(103,215,220,.10),
+        0 0 10px rgba(103,215,220,.07);
+}
+
+
+/* =========================================================
+   20. BUTTON SYSTEM
+   ========================================================= */
+
+.cb-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    min-height: 38px;
+
+    padding:
+        0 20px;
+
+    border:
+        1px solid var(--cb-border);
+
+    border-radius:
+        var(--cb-radius);
+
+    color: var(--cb-text-soft);
+
+    background:
+        linear-gradient(
+            180deg,
+            #10191c,
+            #0b1215
+        );
+
+    font-family:
+        var(--cb-font-ui);
+
+    font-size: 11px;
+
+    letter-spacing: .04em;
+
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    transition:
+        color var(--cb-transition),
+        border-color var(--cb-transition),
+        background var(--cb-transition),
+        box-shadow var(--cb-transition),
+        transform var(--cb-transition);
+}
+
+
+/* secondary */
+
+.cb-btn:hover {
+    color: var(--cb-text);
+
+    border-color:
+        rgba(103,215,220,.35);
+
+    background:
+        linear-gradient(
+            180deg,
+            #152225,
+            #0d171a
+        );
+}
+
+
+/* primary gold */
+
+.cb-btn--primary {
+    color:
+        #16130d;
+
+    border-color:
+        #c4a15f;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ceb071,
+            #a17c42
+        );
+
+    box-shadow:
+        var(--cb-shadow-gold);
+}
+
+.cb-btn--primary:hover {
+    color:
+        #100e0a;
+
+    border-color:
+        #e0c17d;
+
+    background:
+        linear-gradient(
+            180deg,
+            #dbc17f,
+            #b18a4a
+        );
+
+    box-shadow:
+        0 0 14px rgba(200,169,109,.12);
+}
+
+
+/* cyan action */
+
+.cb-btn--cyan {
+    color:
+        var(--cb-text);
+
+    border-color:
+        rgba(103,215,220,.62);
+
+    background:
+        linear-gradient(
+            180deg,
+            #244448,
+            #14282b
+        );
+}
+
+.cb-btn--cyan:hover {
+    border-color:
+        var(--cb-cyan);
+
+    box-shadow:
+        0 0 12px rgba(103,215,220,.10);
+}
+
+
+/* =========================================================
+   21. BOTTOM ACTION BAR
+   ========================================================= */
+
+.cb-actions {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-top: 24px;
+}
+
+.cb-actions__right {
+    display: flex;
+
+    gap: 10px;
+
+    margin-left: auto;
+}
+
+
+/* =========================================================
+   22. SUMMARY PANEL
+   ========================================================= */
+
+.cb-summary {
+    position: relative;
+
+    border:
+        1px solid var(--cb-border);
+
+    border-radius:
+        var(--cb-radius);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(16,27,30,.92),
+            rgba(8,15,18,.98)
+        );
+
+    box-shadow:
+        var(--cb-shadow-panel);
+}
+
+.cb-summary__header {
+    padding:
+        10px 14px;
+
+    border-bottom:
+        1px solid var(--cb-border-soft);
+
+    color:
+        var(--cb-gold-bright);
+
+    font-size:
+        10px;
+
+    letter-spacing:
+        .06em;
+
+    text-transform:
+        uppercase;
+}
+
+.cb-summary__body {
+    padding:
+        14px;
+}
+
+
+/* =========================================================
+   23. TOOLTIP
+   ========================================================= */
+
+.cb-tooltip {
+    position: absolute;
+
+    z-index: 100;
+
+    max-width: 260px;
+
+    padding:
+        10px 12px;
+
+    border:
+        1px solid var(--cb-border-strong);
+
+    border-radius:
+        var(--cb-radius);
+
+    color:
+        var(--cb-text-soft);
+
+    background:
+        #0a1215;
+
+    box-shadow:
+        0 8px 22px rgba(0,0,0,.35);
+
+    font-size:
+        11px;
+
+    line-height:
+        1.5;
+}
+
+
+/* =========================================================
+   24. SCROLLBAR
+   ========================================================= */
+
+.cb-app ::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+.cb-app ::-webkit-scrollbar-track {
+    background:
+        #080e11;
+}
+
+.cb-app ::-webkit-scrollbar-thumb {
+    border:
+        1px solid rgba(168,137,91,.18);
+
+    background:
+        #2a3336;
+}
+
+.cb-app ::-webkit-scrollbar-thumb:hover {
+    background:
+        #465456;
+}
+
+
+/* =========================================================
+   25. UTILITY STATES
+   ========================================================= */
+
+.cb-hidden {
+    display: none !important;
+}
+
+.cb-disabled {
+    opacity: .45;
+
+    pointer-events: none;
+}
+
+.cb-clickable {
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   26. RESPONSIVE FOUNDATION
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .cb-layout {
+        grid-template-columns: 90px minmax(0, 1fr);
+    }
+
+    .cb-main {
+        padding:
+            20px;
+    }
+
+    .cb-nav__item {
+        padding:
+            0 10px;
+    }
+}
+
+
+@media (max-width: 680px) {
+
+    .cb-layout {
+        display: block;
+    }
+
+    .cb-sidebar {
+        min-height: auto;
+
+        border-right: 0;
+        border-bottom:
+            1px solid var(--cb-border-soft);
+    }
+
+    .cb-brand {
+        min-height: 72px;
+    }
+
+    .cb-nav {
+        flex-direction: row;
+
+        overflow-x: auto;
+
+        margin: 0;
+    }
+
+    .cb-nav__item {
+        flex: 0 0 auto;
+
+        min-width: 110px;
+
+        border-left: 0;
+        border-bottom: 2px solid transparent;
+
+        justify-content: center;
+    }
+
+    .cb-nav__item.is-active {
+        border-left: 0;
+
+        border-bottom-color:
+            var(--cb-cyan);
+    }
+
+    .cb-main {
+        padding:
+            16px;
+    }
+
+    .cb-page-title {
+        font-size: 19px;
+    }
+
+    .cb-progress {
+        width: 100%;
+    }
+
+    .cb-actions {
+        flex-wrap: wrap;
+    }
+}

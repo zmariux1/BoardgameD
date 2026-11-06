@@ -1,0 +1,74 @@
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root {
+    --color-background: 
+        radial-gradient(
+            circle at center top,
+            rgba(255, 255, 255, 0.13),
+            transparent 45%
+        ),
+        linear-gradient(
+            180deg,
+            #e8d1aa 0%,
+            #dbc095 100%
+    );
+
+    /* width */
+    --max_width_main_content: 1150px;
+
+    
+    --color-sidebar: #101619;
+
+    --color-paper: #d9bd8b;
+    --color-paper-light: #ead5a9;
+    --color-paper-dark: #b89561;
+
+    --color-border: #81643b;
+    --color-border-light: #b99a65;
+
+    --color-text: #21190f;
+    --color-text-light: #51432f;
+
+    --color-red: #8f2318;
+    --color-red-dark: #5d140f;
+    --color-red-light: #b12d1e;
+
+    --color-gold: #b99a5c;
+    --color-gold-light: #d6bb7d;
+
+    --shadow-dark: rgba(0, 0, 0, 0.55);
+
+    --font-heading: Georgia, "Times New Roman", serif;
+    --font-body: Georgia, "Times New Roman", serif;
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+body {
+    background:
+        radial-gradient(
+            circle at center,
+            #1a1e1d 0%,
+            #090d0f 80%
+        );
+
+    color: var(--color-text);
+
+    font-family: var(--font-body);
+}
