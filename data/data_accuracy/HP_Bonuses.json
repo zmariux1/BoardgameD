@@ -1,0 +1,62 @@
+[
+  {
+    "conditions": [
+      {
+        "modelPath": "race.subRace",
+        "operator": "equals",
+        "value": "hill-dwarf"
+      }
+    ],
+    "label": "Hill Dwarf: Dwarven Toughness",
+    "effect": {
+      "target": "maxHp",
+      "operation": "add",
+      "calculation": {
+        "type": "levelMultiplier",
+        "levelSource": "characterLevel",
+        "multiplier": 1
+      }
+    }
+  },
+  {
+    "conditions": [
+      {
+        "modelPath": "classes.abilities.index",
+        "operator": "equals",
+        "value": "tough"
+      }
+    ],
+    "label": "Feat: Tough",
+    "effect": {
+      "target": "maxHp",
+      "operation": "add",
+      "calculation": {
+        "type": "levelMultiplier",
+        "levelSource": "characterLevel",
+        "multiplier": 2
+      }
+    }
+  },
+  {
+    "conditions": [
+      {
+        "modelPath": "race.index",
+        "operator": "equals",
+        "value": "abyssal-tiefling"
+      }
+    ],
+    "label": "Abyssal Tiefling: Abyssal Fortitude",
+    "effect": {
+      "target": "maxHp",
+      "operation": "add",
+      "calculation": {
+        "type": "levelFraction",
+        "levelSource": "characterLevel",
+        "numerator": 1,
+        "denominator": 2,
+        "rounding": "floor",
+        "minimum": 1
+      }
+    }
+  }
+]

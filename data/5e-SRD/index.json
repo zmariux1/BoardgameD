@@ -1,0 +1,29 @@
+{
+  "version": "1.0",
+  "base": "https://raw.githubusercontent.com/vohsolutions/D-Library/main/",
+  "files": {
+    "abilityScores": "5e-SRD-Ability-Scores.json",
+    "alignments": "5e-SRD-Alignments.json",
+    "backgrounds": "5e-SRD-Backgrounds.json",
+    "classes": "5e-SRD-Classes.json",
+    "conditions": "5e-SRD-Conditions.json",
+    "damageTypes": "5e-SRD-Damage-Types.json",
+    "equipmentCategories": "5e-SRD-Equipment-Categories.json",
+    "equipment": "5e-SRD-Equipment.json",
+    "feats": "5e-SRD-Feats.json",
+    "features": "5e-SRD-Features.json",
+    "languages": "5e-SRD-Languages.json",
+    "magicItems": "5e-SRD-Magic-Items.json",
+    "magicSchools": "5e-SRD-Magic-Schools.json",
+    "monsters": "5e-SRD-Monsters.json",
+    "poisons": "5e-SRD-Poisons.json",
+    "proficiencies": "5e-SRD-Proficiencies.json",
+    "skills": "5e-SRD-Skills.json",
+    "species": "5e-SRD-Species.json",
+    "subclasses": "5e-SRD-Subclasses.json",
+    "subspecies": "5e-SRD-Subspecies.json",
+    "traits": "5e-SRD-Traits.json",
+    "weaponMasteryProperties": "5e-SRD-Weapon-Mastery-Properties.json",
+    "weaponProperties": "5e-SRD-Weapon-Properties.json"
+  }
+}

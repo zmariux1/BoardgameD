@@ -1,0 +1,14 @@
+
+**5e-SRD-Levels.json**
+- exista in 5e-SRD-Levels.json anumite levele la cateva subclase sau clase, care nu contin valori de tipul a ce se afla in "subclass_specific" sau "class_specific". Acest lucru se intampla spre final
+
+
+
+
+
+Neterminat:
+Variants - races - nu calculeaza stats si nici feats.
+Psychic Blades - rogue, Nu ia in considerare un al doilea atack.
+trebuie sa iau speed-ul de la subrase (trebuie sa inlocuiesc orice ce ofera Subrasa, vs rasa)
+Traits - "index": "high-elf-cantrip", nu se potriveaste stilul de alegere ales de mince (choice) cu cel existent "trait_specific".
+
