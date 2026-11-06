@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/css/insertTermsAndConditionsEditor.css">
+</head>
+<body>
+  <div class="container">
+    <div class="mainTitle_agreements_Submit">
+      <title>"Important: Please Read and Agree to Terms & Conditions to Complete Your Account Registration"</title>
+      <div class="allTheRules">
+        <!-- generator - for each   -->
+        <!-- template with title and content  -->
+
+
+        <div class="category">
+          <% if (termsAndConditions && termsAndConditions.length > 0) { %>
+            <% termsAndConditions.forEach(termsAndConditions => { %>
+              <div class="stretch_title">
+                <h2>Category: <%= termsAndConditions.category %></h2>
+              </div>
+              <ul>
+                  <% termsAndConditions.items.forEach(item => { %>
+                    <li class="anItem">
+                      <div class="condition_title">
+                        <h3>Title: <%= item.condition_title %></h3>
+                      </div>
+                      <ul class="condition_content">
+                        <% item.condition_content.forEach(content => { %>
+                          <li ><%= content %></li>
+                        <% }); %>
+                      </ul>
+                      <div class="insertAnotherContent">
+                        <form action="/admin/zmr/generator_legal" method="POST" class="newContent_form">
+                          <input type="hidden" name="category_id" value="<%= termsAndConditions._id %>">
+                          <input type="hidden" name="item_id" value="<%= item._id %>">
+                          <button type="submit" name="newContent" value="newContent">Generate an entire new Content</button>
+                        </form>
+                      </div>
+                    </li>
+                  <% }); %>
+                  <div class="insertAnotherTitle">
+                    <form action="/admin/zmr/generator_legal" method="POST" class="newTitle_form">
+                      <input type="hidden" name="category_id" value="<%= termsAndConditions._id %>">
+                      <button type="submit" name="newTitle" value="newTitle">Generate an entire new Title</button>
+                    </form>
+                  </div>
+              </ul>
+            <% }); %>
+          <% } else { %>
+            <p>No room data found</p>
+          <% } %>
+
+
+        </div>
+        <div class="insertAnotherCategory stretch_title">
+          <form action="/admin/zmr/generator_legal" method="POST" class="newCategory_form">
+            <button type="submit" name="newCategory" value="newCategory">Generate an entire new Category</button>
+          </form>
+        </div>
+      </div>
+      <div class="alltheChecks">
+        <label for="something">
+          <input type="checkbox" id="something"> Something
+        </label>
+        <label for="checkbox1">
+          <input type="checkbox" id="checkbox1"> I have read and agree to the Terms & Conditions
+        </label>
+
+      </div>
+      <button type="submit" class="last_agreement">I agreed and I wish to continue to create and use the account</button>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+</body>
+</html>

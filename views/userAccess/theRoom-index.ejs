@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+    
+
+  <link rel="icon" href="img/title/">
+
+
+  <link rel="stylesheet" href="/css/theRoom-style2.css">
+  <link rel="stylesheet" href="/css/elements/header.css">
+  <link rel="stylesheet" href="/css/elements/botNavBar.css">
+  <link rel="stylesheet" href="/css/elements/standardAll.css">
+  <script
+    type="module"
+    src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+  ></script>
+  <!-- Include jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+  <%- include('../layouts/header') %>
+
+
+
+  
+
+  <% if (userRooms && userRooms.length > 0) { %>
+    <% userRooms.forEach(room => { %>
+
+      <% let isIdentical = false; %>
+      <% if (joinedGuestUsers && joinedGuestUsers.length > 0) { %>
+        <% joinedGuestUsers.forEach(guestUser => { %>
+          <%if (guestUser._id.toString() === user._id.toString()) {%>
+            <%isIdentical = true;%>
+          <%}%>
+        <% }); %>
+      <% } else { %>
+      <% } %>
+
+
+
+
+      <% if (isIdentical ) { %>
+        <div class="container">
+          <section class="center_perception">
+            <!-- lista cu detalii  -->
+            <div class="detailsTopField_div">
+              <div class="userIDOwner">
+                <div class="avatarImgOwner">
+                  <img class="profileGuest" src="/userImages/<%= room.user.images %>">
+                </div>
+
+                <div name="dosarRep">
+                  <% let groupedData_honer = []; %>
+                  <% let groupedData_stain = []; %>
+                
+                  <% if (userPlus && userPlus.length > 0) { %>
+                    <% userPlus.forEach(data => { %>
+                      <% if (data.userLink.toString() == room.user._id.toString()) { %>
+                        
+                        <% data.allReputation.forEach(reputation => { %>
+                
+                          <!-- match with honor  -->
+                          <% if (importHonorDetail && importHonorDetail.length > 0) { %>
+                            <% Object.entries(importHonorDetail).forEach(([nothing, nothing2]) => { %>
+                
+                              <% Object.entries(nothing2).forEach(([stillNothing, stillNothing2]) => { %>
+                                <% Object.entries(stillNothing2).forEach(([Category, value]) => { %>
+                                  <% if (Category !== '_id' && Category !== '__v' && Category !== 'skipId' && Category !== 'activePaths') { %>
+                                    <% Object.entries(value).forEach(([sdfg, subCategory]) => { %> 
+                                      <% if (subCategory.permanentReputationNumber == reputation.get_permanentReputationNumber) { %>
+                                        <% groupedData_honer.push(subCategory); %>
+                                      <% }; %>
+                                    <% }); %>
+                                  <% } %>
+                                <% }); %>
+                              <% }); %>
+                
+                            <% }); %>
+                          <% } %>
+                
+                          <!-- match with stain  -->
+                          <% if (importStainDetail && importStainDetail.length > 0) { %>
+                            <% Object.entries(importStainDetail).forEach(([nothing, nothing2]) => { %>
+                
+                              <% Object.entries(nothing2).forEach(([stillNothing, stillNothing2]) => { %>
+                                <% Object.entries(stillNothing2).forEach(([Category, value]) => { %>
+                                  <% if (Category !== '_id' && Category !== '__v' && Category !== 'skipId' && Category !== 'activePaths') { %>
+                                    <% Object.entries(value).forEach(([sdfg, subCategory]) => { %> 
+                                      <% if (subCategory.permanentReputationNumber == reputation.get_permanentReputationNumber) { %>
+                                        <% groupedData_stain.push(subCategory); %>
+                                      <% }; %>
+                                    <% }); %>
+                                  <% } %>
+                                <% }); %>
+                              <% }); %>
+                
+                            <% }); %>
+                          <% } %>
+                
+                
+                        <% }); %>
+                      <% } %>
+                    <% }); %>
+                    
+                  <% } %>
+                </div>
+                <div class="reputationBoxOnwer">
+                  <div class="honorsOwner">
+                      <% if (groupedData_honer && groupedData_honer.length > 0) { %>
+                        <!-- Shuffle the badReputation array -->
+                        <% const owner_shuffled_honer = groupedData_honer.sort(() => Math.random() - 0.5); %>
+                        <% owner_shuffled_honer.slice(0, 3).forEach(item => { %>
+                          <div class="honorOwner" title="<%= item.description %>">
+                            <img src="/img/reputation/<%= item.type %>/<%= item.fileCateg %>/<%= item.name %>"  class="repProfileIcon">
+                          </div>
+                        <% }) %>
+                      <% } %>
+                  </div>
+
+                  <div class="redFlagsOwner">
+                    <% if (groupedData_stain && groupedData_stain.length > 0) { %>
+                      <!-- Shuffle the badReputation array -->
+                      <% const owner_shuffled_stain = groupedData_stain.sort(() => Math.random() - 0.5); %>
+                      <% owner_shuffled_stain.slice(0, 2).forEach(item => { %>
+                        <div class="flagOwner" title="<%= item.description %>">
+                          <img src="/img/reputation/<%= item.type %>/<%= item.fileCateg %>/<%= item.name %>" class="repProfileIcon">
+                        </div>
+                      <% }) %>
+                    <% } %>
+                  </div>
+
+                </div>
+
+
+              </div>
+              <div class="inviteDetails_div">
+                <div class="categoryTitles">
+                  <h4>Invite details</h4>
+                  <i class="customArrow fa-solid fa-arrow-down"></i>
+                </div>
+                <hr>
+                <div class="details_div">
+                  <div class="detailsItem_div">
+                    <p>Time:</p>
+                    <p><%= room.selectedTime %></p>
+                  </div>
+                  <div class="detailsItem_div">
+                    <p>Date:</p>
+                    <p><%= room.selectedDate %></p>
+                  </div>
+                  <div class="detailsItem_div">
+                    <p>Location:</p>
+                    <p><%= room.location %></p>
+                  </div>
+                  <div class="detailsItem_div">
+                    <p>Players:</p>
+                    <p><%= room.joined_guest.length %> / <%= room.numberOfInvites %></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- lista cu jocuri  -->
+            <div class="selectedBGList_div">
+              <div class="categoryTitles">
+                <h4>Board Games</h4>
+                <i class="fa-solid fa-arrow-down"></i>
+              </div>
+              <hr>
+              <div class="BGList_div">
+                <% room.theBoardgames_name.forEach(boardgame => { %>
+                  <a><%= boardgame %></a>
+                <% }) %>
+              </div>
+            </div>
+
+            <div class="participants">
+              <div class="categoryTitles">
+                <h4>Participants</h4>
+                <i class="customArrow fa-solid fa-arrow-down"></i>
+              </div>
+              <hr>
+              <div class="btnList_div">
+                <button  class="rep_btn showHonor">Honor</button>
+                <button  class="rep_btn showFeedback">Feedback</button>
+                <button  class="rep_btn showStain">Report</button>
+              </div>
+              <div class="participants_container">
+
+                <% if (joinedGuestUsers && joinedGuestUsers.length > 0 && isIdentical) { %>
+                    <% joinedGuestUsers.forEach(guestUser => { %>
+                      <div class="userPlusRemove">
+                        <div class="userID ">
+                          <div class="avatarImg">
+                            <img class="profileGuest" src="/userImages/<%= guestUser.images %>">
+                            <button type="submit" class="clean_btn fix_honorBtn open_honer_popup"><i class="custom_icon fa-solid fa-medal " ></i></button>
+                            <button type="submit" class="clean_btn fix_feedbackBtn open_feedback_popup"><i class="custom_icon fa-solid fa-heart-pulse " ></i></button>
+                            <button type="submit" class="clean_btn fix_stainBtn open_stain_popup"><i class="custom_icon fa-solid fa-disease "></i></button>
+                          </div>
+
+                          <div name="dosarRep">
+                            <% let groupedData_honer = []; %>
+                            <% let groupedData_stain = []; %>
+                          
+                            <% if (userPlus && userPlus.length > 0) { %>
+                              <% userPlus.forEach(data => { %>
+                                <% if (data.userLink.toString() == guestUser._id.toString()) { %>
+                                  
+                                  <% data.allReputation.forEach(reputation => { %>
+                          
+                                    <!-- match with honor  -->
+                                    <% if (importHonorDetail && importHonorDetail.length > 0) { %>
+                                      <% Object.entries(importHonorDetail).forEach(([nothing, nothing2]) => { %>
+                          
+                                        <% Object.entries(nothing2).forEach(([stillNothing, stillNothing2]) => { %>
+                                          <% Object.entries(stillNothing2).forEach(([Category, value]) => { %>
+                                            <% if (Category !== '_id' && Category !== '__v' && Category !== 'skipId' && Category !== 'activePaths') { %>
+                                              <% Object.entries(value).forEach(([sdfg, subCategory]) => { %> 
+                                                <% if (subCategory.permanentReputationNumber == reputation.get_permanentReputationNumber) { %>
+                                                  <% groupedData_honer.push(subCategory); %>
+                                                <% }; %>
+                                              <% }); %>
+                                            <% } %>
+                                          <% }); %>
+                                        <% }); %>
+                          
+                                      <% }); %>
+                                    <% } %>
+                          
+                                    <!-- match with stain  -->
+                                    <% if (importStainDetail && importStainDetail.length > 0) { %>
+                                      <% Object.entries(importStainDetail).forEach(([nothing, nothing2]) => { %>
+                          
+                                        <% Object.entries(nothing2).forEach(([stillNothing, stillNothing2]) => { %>
+                                          <% Object.entries(stillNothing2).forEach(([Category, value]) => { %>
+                                            <% if (Category !== '_id' && Category !== '__v' && Category !== 'skipId' && Category !== 'activePaths') { %>
+                                              <% Object.entries(value).forEach(([sdfg, subCategory]) => { %> 
+                                                <% if (subCategory.permanentReputationNumber == reputation.get_permanentReputationNumber) { %>
+                                                  <% groupedData_stain.push(subCategory); %>
+                                                <% }; %>
+                                              <% }); %>
+                                            <% } %>
+                                          <% }); %>
+                                        <% }); %>
+                          
+                                      <% }); %>
+                                    <% } %>
+                          
+                          
+                                  <% }); %>
+                                <% } %>
+                              <% }); %>
+                              
+                            <% } %>
+                          </div>
+                          <div class="reputationBox">
+                            <div class="honors">
+                              <% if (groupedData_honer && groupedData_honer.length > 0) { %>
+                                <!-- Shuffle the badReputation array -->
+                                <% const owner_shuffled_honer = groupedData_honer.sort(() => Math.random() - 0.5); %>
+                                <% owner_shuffled_honer.slice(0, 2).forEach(item => { %>
+                                  <div class="honor" title="<%= item.description %>">
+                                    <img src="/img/reputation/<%= item.type %>/<%= item.fileCateg %>/<%= item.name %>" class="repProfileIcon">
+                                  </div>
+                                <% }) %>
+                              <% } %>
+                            </div>
+                            <div class="redFlags">
+                              <% if (groupedData_stain && groupedData_stain.length > 0) { %>
+                                <!-- Shuffle the badReputation array -->
+                                <% const owner_shuffled_stain = groupedData_stain.sort(() => Math.random() - 0.5); %>
+                                <% owner_shuffled_stain.slice(0, 1).forEach(item => { %>
+                                  <div class="flag" title="<%= item.description %>">
+                                    <img src="/img/reputation/<%= item.type %>/<%= item.fileCateg %>/<%= item.name %>" class="repProfileIcon">
+                                  </div>
+                                <% }) %>
+                              <% } %>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="removeOrBan">
+                          <!-- daca Session User == Owner, grant access to forms -->
+                          <% if ( user._id.toString() == room.user._id.toString() && isIdentical) { %>
+                            <form action="/removeRoomPlayerUp" method="POST" class="fix_trash">
+                              <input type="hidden" name="removePlayer" value="<%= guestUser._id %>" id="">
+                              <input type="hidden" name="roomID" value="<%= room._id %>" id="">
+                              <button type="submit" class="clean_btn"><i class="center_icon custom_icon_out  fa-solid fa-trash-can fa-xl " style="color: #e7e7e7;"></i></button>
+                            </form>
+                            <form action="/banRoomPlayerUp" method="POST" class="fix_ban">
+                              <input type="hidden" name="banPlayer" value="<%= guestUser._id %>" id="">
+                              <input type="hidden" name="roomID" value="<%= room._id %>" id="">
+                              <button type="submit" class="clean_btn"><i class="center_icon custom_icon_out fa-solid fa-ban fa-xl " style="color: #e7e7e7;"></i></button>
+                            </form>
+
+                            <!-- daca Participant == Current session User, grant access to selfRemove -->
+                          <% } else if ( guestUser._id.toString() == user._id.toString() && isIdentical) { %>
+                            <form action="/removeRoomPlayerUp" method="POST" class="fix_trash">
+                              <input type="hidden" name="removePlayer" value="<%= guestUser._id %>" id="">
+                              <input type="hidden" name="roomID" value="<%= room._id %>" id="">
+                              <button type="submit" class="clean_btn"><i class="custom_icon_out fa-solid fa-trash-can fa-xl center_icon" style="color: #e7e7e7;"></i></button>
+                            </form>
+                          <% } else { %>
+                          <% } %>
+                        </div>
+                      </div>
+
+
+
+
+
+
+
+                      <div class="overlaySearch"></div>
+                      <div class="popup_honer">
+                        <% if ( guestUser._id.toString() !== userSession._id.toString() && isIdentical) { %>
+                          <div class="whosThePlayer">
+                            <div class="userIDOwner">
+                              <div class="avatarImgOwner">
+                                <img class="profileGuest" src="/userImages/<%= guestUser.images %>">
+                              </div>
+                              <div class="reputationBox">
+                                <div class="honors">
+                                  <div class="honor1">
+                                    <img>
+                                  </div>
+                                  <div class="honor2">
+                                    <img>
+                                  </div>
+                                </div>
+                                <div class="redFlags">
+                                  <div class="flag1">
+                                    <img>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <p class="title">How was <br> your interaction <br> with <span><%= guestUser.yourName %></span>?</p>
+                          </div>
+
+                          <div>
+                            <h3>Select a Honor category:</h3>
+                            <!-- Honor  -->
+                            <% let avoidDuplicate_honor = true; %>
+                            <div class="Verify_if_the_player_is_Honored">
+                              <% if (guestUser.honor) { %>
+                                <% Object.entries(guestUser.honor).forEach(([category, values]) => { %>
+                                  <% Object.entries(values).forEach(([Categories, subCategories]) => { %>
+                                    <!-- ATTENTIE LA FILTRUL PUS, IN CAZ CA SE MODIFICA MODELUL BAZEI DE DATE!!! -->
+                                    <% if (['Environment', 'Food & Drinks', 'Gaming Style', 'Personality', 'Good manners'].includes(Categories)) { %>
+                                      <% Object.entries(subCategories).forEach(([item, itemDetails]) => { %>
+                                        <% Object.entries(itemDetails.reportedBy).forEach(([report, nefolositor]) => { %>
+                                          <% Object.entries(nefolositor).forEach(([nefolositor2, eachReport]) => { %>
+      
+                                            <% if (eachReport.whichRoom == room._id && eachReport.userSessionId == userSession._id.toString()) { %> 
+                                              <% avoidDuplicate_honor = false; %>
+                                            <% } %>
+                                            
+                                            
+                                          <% }); %>
+                                        <% }); %>
+                                      <% }); %>
+                                    <% } %>
+                                  <% }); %>
+                                <% }); %>
+                              <% } else { %>
+                              <% } %>
+                            </div>
+                            <div class="split">
+                              <% if ( importHonorDetail && importHonorDetail.length > 0 && avoidDuplicate_honor === true) { %>
+                                <% Object.entries(importHonorDetail).forEach(([nothing, nothing2]) => { %>
+
+                                  <% Object.entries(nothing2).forEach(([stillNothing, stillNothing2]) => { %>
+                                    <% Object.entries(stillNothing2).forEach(([Category, value]) => { %>
+                                      <% if (Category !== '_id' && Category !== '__v' && Category !== 'skipId' && Category !== 'activePaths') { %>
+                                        <details class="reportingList">
+                                          <summary class="reportItems"><%= Category %></summary>
+                                          <ul>
+                                            <% Object.entries(value).forEach(([sdfg, subCategory]) => { %>
+                                              <!-- <li> subCategories:  item %>. It's details:  itemDetails.val %> -  itemDetails.report_title %> -  itemDetails.name %></li> -->
+                                              <li>
+                                                <form action="/room/report" method="POST" class="stretch">
+                                                  <input type="hidden" name="whichRoom" value="<%= room._id %>">
+                                                  <input type="hidden" name="whichReputationModel" value="honor">
+                                                  <input type="hidden" name="userSession" value="<%= user._id %>">
+                                                  <input type="hidden" name="whoIsReported" value="<%= guestUser._id %>">
+                                                  <input type="hidden" name="mainCategory" value="<%= Category %>"> 
+                                                  <input type="hidden" name="permanentReputationNumber" value="<%= subCategory.permanentReputationNumber %>">
+                                                  <input type="hidden" name="displayRep" value="yes">
+                                                  <input type="hidden" name="folder" value="<%= subCategory.type %>">
+                                                  <input type="hidden" name="itemHeadTitle" value="<%= sdfg %>">
+                                                  <button type="submit"> <%= subCategory.report_title %> </button>
+                                                </form>
+                                              </li>
+                                            <% }); %>
+                                          </ul>
+                                        </details>
+                                      <% } %>
+                                    <% }); %>
+                                  <% }); %>
+                                  
+                                <% }); %>
+                              <% } %>
+                            </div>
+                          </div>
+                          <p style="color: rgb(57, 150, 74); text-align: center;">Celebrate and acknowledge <br> the player’s positive impact <br> on the board games community.</p>
+                        <% } else { %>
+                          <h5 class="notForSelf">You cannot Honor yourself</h5>
+                        <% } %>
+
+
+                        <a class="closeSearch" href="#">X</a>
+                      </div>
+
+
+
+                      <div class="popup_feedback">
+                        <% if ( guestUser._id.toString() !== userSession._id.toString() && isIdentical) { %>
+                          <div class="whosThePlayer">
+                            <div class="userIDOwner">
+                              <div class="avatarImgOwner">
+                                <img class="profileGuest" src="/userImages/<%= guestUser.images %>">
+                              </div>
+                              <div class="reputationBox">
+                                <div class="honors">
+                                  <div class="honor1">
+                                    <img>
+                                  </div>
+                                  <div class="honor2">
+                                    <img>
+                                  </div>
+                                </div>
+                                <div class="redFlags">
+                                  <div class="flag1">
+                                    <img>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <p class="title">How was <br> your interaction <br> with <span><%= guestUser.yourName %></span>?</p>
+                          </div>
+
+                          <div>
+                            <h3>Select a Feedback category:</h3>
+                            <!-- Feedback  -->
+                            <% let avoidDuplicate_feedback = true; %>
+                            <div class="Verify_if_the_player_is_feedbacked">
+                              <% if (guestUser.feedback) { %>
+                                <% Object.entries(guestUser.feedback).forEach(([category, values]) => { %>
+                                  <% Object.entries(values).forEach(([Categories, subCategories]) => { %>
+                                    <% if (["Vibe", "Environment", "Discrimination", "Hygiene"].includes(Categories)) { %>
+                                      <% Object.entries(subCategories).forEach(([item, itemDetails]) => { %>
+                                        <% if (itemDetails.reportedBy && typeof itemDetails.reportedBy === 'object') { %>
+                                          <% Object.entries(itemDetails.reportedBy).forEach(([report, nefolositor]) => { %>
+                                            <% if (nefolositor && typeof nefolositor === 'object') { %>
+                                              <% Object.entries(nefolositor).forEach(([nefolositor2, eachReport]) => { %>
+                                                <% if (eachReport && eachReport.whichRoom == room._id && eachReport.userSessionId == userSession._id.toString()) { %>
+                                                  <% avoidDuplicate_feedback = false; %>
+                                                <% } %>
+                                              <% }); %>
+                                            <% } %>
+                                          <% }); %>
+                                        <% } %>
+                                      <% }); %>
+                                    <% } %>
+                                  <% }); %>
+                                <% }); %>
+                              <% } else { %>
+                                
+                              <% } %>
+                            </div>
+                            
+                            <div class="split">
+                              <% if ( importFeedbackDetail && importFeedbackDetail.length > 0 && avoidDuplicate_feedback === true) { %>
+                                <% Object.entries(importFeedbackDetail).forEach(([nothing, nothing2]) => { %>
+
+                                  <% Object.entries(nothing2).forEach(([stillNothing, stillNothing2]) => { %>
+                                    <% Object.entries(stillNothing2).forEach(([Category, value]) => { %>
+                                      <% if (Category !== '_id' && Category !== '__v' && Category !== 'skipId' && Category !== 'activePaths') { %>
+                                        <details class="reportingList">
+                                          <summary class="reportItems"><%= Category %></summary> 
+                                          <ul>
+                                            <% Object.entries(value).forEach(([sdfg, subCategory]) => { %>
+                                              <!-- <li> subCategories:  item %>. It's details:  itemDetails.val %> -  itemDetails.report_title %> -  itemDetails.name %></li> -->
+                                              <li>
+                                                <form action="/room/report" method="POST" class="stretch">
+                                                  <input type="hidden" name="whichRoom" value="<%= room._id %>">
+                                                  <input type="hidden" name="whichReputationModel" value="feedback">
+                                                  <input type="hidden" name="userSession" value="<%= user._id %>">
+                                                  <input type="hidden" name="whoIsReported" value="<%= guestUser._id %>">
+                                                  <input type="hidden" name="mainCategory" value="<%= Category %>">
+                                                  <input type="hidden" name="permanentReputationNumber" value="<%= subCategory.permanentReputationNumber %>">
+                                                  <input type="hidden" name="displayRep" value="yes">
+                                                  <input type="hidden" name="folder" value="<%= subCategory.type %>"> 
+                                                  <input type="hidden" name="itemHeadTitle" value="<%= sdfg %>"> 
+                                                  <button type="submit"><%= subCategory.report_title %></button>
+                                                </form>
+                                              </li>
+                                            <% }); %>
+                                          </ul>
+                                        </details>
+                                      <% } %>
+                                    <% }); %>
+                                  <% }); %>
+                  
+                                <% }); %>
+                              <% } %>
+                            </div>
+
+                          </div>
+                          <p style="color: rgb(84, 90, 0); text-align: center;">Give a constructive feedback to the player <br> if you found something <br> that they could improve</p>
+                        <% } else { %>
+                          <h5 class="notForSelf">You cannot Feedback yourself</h5>
+                        <% } %>
+
+
+                        <a class="closeSearch" href="#">X</a>
+                      </div>
+
+
+
+                      <div class="popup_stain">
+                        <% if ( guestUser._id.toString() !== userSession._id.toString() && isIdentical) { %>
+                          <div class="whosThePlayer">
+                            <div class="userIDOwner">
+                              <div class="avatarImgOwner">
+                                <img class="profileGuest" src="/userImages/<%= guestUser.images %>">
+                              </div>
+                              <div class="reputationBox">
+                                <div class="honors">
+                                  <div class="honor1">
+                                    <img>
+                                  </div>
+                                  <div class="honor2">
+                                    <img>
+                                  </div>
+                                </div>
+                                <div class="redFlags">
+                                  <div class="flag1">
+                                    <img>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <p class="title">How was <br> your interaction <br> with <span><%= guestUser.yourName %></span>?</p>
+                          </div>
+
+                          <div>
+                            <h3>Select a Stain category:</h3>
+                            <!-- Stain  -->
+                            <% let avoidDuplicate_stain = true; %>
+                            <div class="Verify_if_the_player_is_stained">
+                              <% if (guestUser.stain && avoidDuplicate_stain === true) { %>
+                                <% Object.entries(guestUser.stain).forEach(([category, values]) => { %>
+                                  <% Object.entries(values).forEach(([Categories, subCategories]) => { %>
+                                    <% if (["Security", "Playing style" , "Environment", "Personality", "Good Manners", "Display"].includes(Categories)) { %>
+                                      <% Object.entries(subCategories).forEach(([item, itemDetails]) => { %>
+                                        <% Object.entries(itemDetails.reportedBy).forEach(([report, nefolositor]) => { %>
+                                          <% Object.entries(nefolositor).forEach(([nefolositor2, eachReport]) => { %>
+      
+                                            <% if (eachReport.whichRoom == room._id && eachReport.userSessionId == userSession._id.toString()) { %> 
+                                              <% avoidDuplicate_stain = false; %>
+                                            <% } %>
+                                            
+                                          <% }); %>
+                                        <% }); %>
+                                      <% }); %>
+                                    <% } %>
+                                  <% }); %>
+                                <% }); %>
+                              <% } else { %>
+                              <% } %>
+                            </div>
+
+                            <div class="split">
+                              <% if ( importStainDetail && importStainDetail.length > 0 && avoidDuplicate_stain === true) { %>
+                                <% Object.entries(importStainDetail).forEach(([nothing, nothing2]) => { %>
+
+                                  <% Object.entries(nothing2).forEach(([stillNothing, stillNothing2]) => { %>
+                                    <% Object.entries(stillNothing2).forEach(([Category, value]) => { %>
+                                      <% if (Category !== '_id' && Category !== '__v' && Category !== 'skipId' && Category !== 'activePaths') { %>
+                                        <details class="reportingList">
+                                          <summary class="reportItems"><%= Category %></summary>
+                                          <ul>
+                                            <% Object.entries(value).forEach(([sdfg, subCategory]) => { %>
+                                              <!-- <li> subCategories:  item %>. It's details:  itemDetails.val %> -  itemDetails.report_title %> -  itemDetails.name %></li> -->
+                                              <li>
+                                                <form action="/room/report" method="POST" class="stretch">
+                                                  <input type="hidden" name="whichRoom" value="<%= room._id %>">
+                                                  <input type="hidden" name="whichReputationModel" value="stain">
+                                                  <input type="hidden" name="userSession" value="<%= user._id %>">
+                                                  <input type="hidden" name="whoIsReported" value="<%= guestUser._id %>">
+                                                  <input type="hidden" name="mainCategory" value="<%= Category %>">
+                                                  <input type="hidden" name="permanentReputationNumber" value="<%= subCategory.permanentReputationNumber %>">
+                                                  <input type="hidden" name="folder" value="<%= subCategory.type %>">
+                                                  <input type="hidden" name="itemHeadTitle" value="<%= sdfg %>">
+                                                  <input type="hidden" name="displayRep" value="yes">
+                                                  <button type="submit" name="item" value="<%= sdfg %>" ><%= subCategory.report_title %></button>
+                                                </form>
+                                              </li>
+                                            <% }); %>
+                                          </ul>
+                                        </details>
+                                      <% } %>
+                                    <% }); %>
+                                  <% }); %>
+                  
+                                <% }); %>
+                              <% } %>
+                            </div>
+                          </div>
+                          <p style="color: rgb(126, 15, 15); text-align: center;">Report only if the player has engaged in a disruptive behavior, violated community standards, or created an environment that is harmful or unwelcoming.</p>
+                        <% } else { %>
+                          <h5 class="notForSelf">You cannot Stain yourself</h5>
+                        <% } %>
+
+
+                        <a class="closeSearch" href="#">X</a>
+                      </div>
+
+
+                    <% }); %>
+
+                <% } else { %>
+                  <p>No joined guests found</p>
+                <% } %>
+
+
+              </div>
+              
+            </div>
+          </section>
+
+
+
+
+
+
+
+          <section class="features">
+            <div class="availableGames">
+              <div class="categoryTitles">
+                <h4>Available Games</h4>
+                <div class="display_organizer">
+                  <button class="css_display_organizer_btn owned_btn active_btn_tab">
+                    <div class="displayOurGames">
+                      <p>All the</p>
+                      <p>Games </p>
+                    </div>
+                    <i class="fa-solid fa-hand-holding-heart fa-xl"></i>
+                  </i></button>
+                  <button class="css_display_organizer_btn wish_btn">
+                    
+                    <div class="displayOurGames">
+                      <p>Wished to</p>
+                      <p>play Games</p>
+                    </div>
+                    <i class="fa-solid fa-heart fa-xl"></i>
+                  </button>
+                </div>
+                <i class="fa-solid fa-arrow-down"></i>
+              </div>
+              <hr>
+              <div class="allGames-participants leftSideScroll_Design owned_section">
+                <h4 class="marginLeft15">Owned games by the participants:</h4>
+                <ul class="SpaceRoomBoardgames">
+                  <%
+                    // Define uniqueOwnedNames array at the beginning of the template
+                    const uniqueOwnedNames = [];
+                  %>
+                  <% if (joinedGuestUsers && joinedGuestUsers.length > 0) { %>
+                    <% joinedGuestUsers.forEach(guestUser => { %>
+                  
+                      <!-- guestUser will access each user -->
+                      <% userPlus_owned_BG.forEach(userPlus => { %>
+                        <!-- guestUser._id will specify for which user the data will be accessed -->
+                        <% if (userPlus.userLink.equals(guestUser._id)) { %>
+                          <!-- This will identify all the IDs of all the games that the user owns -->
+                          <% userPlus.owned_boardgames_ID.forEach(boardgame => { %>
+                  
+                            <!-- Check for matching InternalBgData.objectid -->
+                            <% InternalBgData.forEach(internalBg => { %>
+                              <% if (boardgame.objectid == internalBg.objectid) { %>
+                                <!-- Display a list of InternalBgData.name when there's a match -->
+                                <% if (!uniqueOwnedNames.includes(internalBg.name)) { %>
+                                  <li><a class="cancel_a_effects" href="https://boardgamegeek.com/boardgame/<%= internalBg.objectid %>" target="_blank"><%= internalBg.name %> (<%= internalBg.yearPublished %>)</a></li>
+                                  <% uniqueOwnedNames.push(internalBg.name); %>
+                                <% } %>
+                              <% } %>
+                            <% }) %>
+                  
+                          <% }) %>
+                        <% } %>
+                      <% }) %>
+                  
+                    <% }); %>
+                  <% } else { %>
+                    <!-- <p>No games has been added in the Owned-Boardgame list.</p> -->
+                  <% } %>
+                  
+                </ul>
+              </div>
+    
+              <div class="allGames-participants leftSideScroll_Design wish_section">
+                <h3 class="marginLeft15">Players might want to play:</h3>
+                <ul class="SpaceRoomBoardgames">
+  
+                  <% if (internalMatchWantToPlayBg && internalMatchWantToPlayBg.length > 0) { %>
+                    <% internalMatchWantToPlayBg.forEach(MatchWantToPlay => { %>
+                      <li><a class="cancel_a_effects" href="https://boardgamegeek.com/boardgame/<%= MatchWantToPlay.objectid %>" target="_blank"><%= MatchWantToPlay.name %> (<%= MatchWantToPlay.yearPublished %>)</a></li>
+                    <% }); %>
+                  <% } else { %>
+                    <p class="marginLeft15">No matching Wish-to-Play Games in all the Owened Boardgame lists.</p>
+                  <% } %>
+                  
+                </ul>
+              </div>
+            </div>
+
+            <div class="votingPulls">
+              <div class="categoryTitles">
+                <h4>Votes</h4>
+                <div class="display_organizer">
+                  <form action="/seenNotification" method="POST" class="w100">
+                    <input type="hidden" name="roomID" value="<%= room._id %>">
+                    <input type="hidden" name="notifType" value="vote">
+                    <input type="hidden" name="reason" value="time">
+                    <input type="hidden" name="participantID" value="<%= user._id %>">
+                    <input type="hidden" name="theActualNotifItem" value="seen">
+                    <input type="hidden" name="bell" value="seen">
+                    <input type="hidden" name="navBar" value="seen">
+                    <input type="hidden" name="indexInviteBox" value="seen">
+                    <button type="submit" name="clearNotifification" value="time" class="css_votes_display_organizer_btn time_btn active_btn_tab">
+                      <% room.notification.forEach(notif => { %>
+                        <!-- verifica daca se potriveste motivul sau categoria  -->
+                        <% if (notif.reason == "time") { %>
+                          <!-- acceseaza lista de user care au vazut  -->
+                          <% notif.notificationStatus.forEach(userStat => { %>
+                            <!-- verifica daca se potriveste cu userul curent  -->
+                            <% if (userStat.participantID.toString() == user._id.toString() && userStat.theActualNotifItem == "new_time") { %>
+                              <i class="fa-solid fa-circle fa-2xs notificationDot"></i>
+                            <% } %>
+                          <% }); %>
+                        <% } %>
+                      <% }); %>
+                      <div class="displayOurGames">
+                        <p>Time</p>
+                      </div>
+                      <i class="fa-solid fa-clock"></i>
+                    </button>
+                  </form>
+
+                  <form action="/seenNotification" method="POST" class="w100">
+                    <input type="hidden" name="roomID" value="<%= room._id %>">
+                    <input type="hidden" name="notifType" value="vote">
+                    <input type="hidden" name="reason" value="date">
+                    <input type="hidden" name="participantID" value="<%= user._id %>">
+                    <input type="hidden" name="theActualNotifItem" value="seen">
+                    <input type="hidden" name="bell" value="seen">
+                    <input type="hidden" name="navBar" value="seen">
+                    <input type="hidden" name="indexInviteBox" value="seen">
+                    <button type="submit" name="clearNotifification" value="date" class="css_votes_display_organizer_btn date_btn">
+                      <% room.notification.forEach(notif => { %>
+                        <!-- verifica daca se potriveste motivul sau categoria  -->
+                        <% if (notif.reason == "date") { %>
+                          <!-- acceseaza lista de user care au vazut  -->
+                          <% notif.notificationStatus.forEach(userStat => { %>
+                            <!-- verifica daca se potriveste cu userul curent  -->
+                            <% if (userStat.participantID.toString() == user._id.toString() && userStat.theActualNotifItem == "new_date") { %>
+                              <i class="fa-solid fa-circle fa-2xs notificationDot"></i>
+                            <% } %>
+                          <% }); %>
+                        <% } %>
+                      <% }); %>
+                      <div class="displayOurGames">
+                        <p>Date</p>
+                      </div>
+                      <i class="fa-solid fa-calendar-days"></i>
+                    </button>
+                  </form>
+
+
+                  <form action="/seenNotification" method="POST" class="w100">
+                    <input type="hidden" name="roomID" value="<%= room._id %>">
+                    <input type="hidden" name="notifType" value="vote">
+                    <input type="hidden" name="reason" value="location">
+                    <input type="hidden" name="participantID" value="<%= user._id %>">
+                    <input type="hidden" name="theActualNotifItem" value="seen">
+                    <input type="hidden" name="bell" value="seen">
+                    <input type="hidden" name="navBar" value="seen">
+                    <input type="hidden" name="indexInviteBox" value="seen">
+                    <button type="submit" name="clearNotifification" value="location" class="css_votes_display_organizer_btn location_btn">
+                      <% room.notification.forEach(notif => { %>
+                        <!-- verifica daca se potriveste motivul sau categoria  -->
+                        <% if (notif.reason == "location") { %>
+                          <!-- acceseaza lista de user care au vazut  -->
+                          <% notif.notificationStatus.forEach(userStat => { %>
+                            <!-- verifica daca se potriveste cu userul curent  -->
+                            <% if (userStat.participantID.toString() == user._id.toString() && userStat.theActualNotifItem == "new_location") { %>
+                              <i class="fa-solid fa-circle fa-2xs notificationDot"></i>
+                            <% } %>
+                          <% }); %>
+                        <% } %>
+                      <% }); %>
+                      <div class="displayOurGames">
+                        <p>Location</p>
+                      </div>
+                      <i class="fa-solid fa-location-dot"></i>
+                    </button>
+                  </form>
+
+
+                  <form action="/seenNotification" method="POST" class="w100">
+                    <input type="hidden" name="roomID" value="<%= room._id %>">
+                    <input type="hidden" name="notifType" value="vote">
+                    <input type="hidden" name="reason" value="boardGame">
+                    <input type="hidden" name="participantID" value="<%= user._id %>">
+                    <input type="hidden" name="theActualNotifItem" value="seen">
+                    <input type="hidden" name="bell" value="seen">
+                    <input type="hidden" name="navBar" value="seen">
+                    <input type="hidden" name="indexInviteBox" value="seen">
+                    <button type="submit" name="clearNotifification" value="boardGame" class="css_votes_display_organizer_btn bg_btn">
+                      <% room.notification.forEach(notif => { %>
+                        <!-- verifica daca se potriveste motivul sau categoria  -->
+                        <% if (notif.reason == "boardGame") { %>
+                          <!-- acceseaza lista de user care au vazut  -->
+                          <% notif.notificationStatus.forEach(userStat => { %>
+                            <!-- verifica daca se potriveste cu userul curent  -->
+                            <% if (userStat.participantID.toString() == user._id.toString()&& userStat.theActualNotifItem == "new_boardGame") { %>
+                              <i class="fa-solid fa-circle fa-2xs notificationDot"></i>
+                            <% } %>
+                          <% }); %>
+                        <% } %>
+                      <% }); %>
+                      <div class="displayOurGames">
+                        <p>Games</p>
+                      </div>
+                      <i class="fa-solid fa-chess-knight"></i>
+                    </button>
+                  </form>
+                </div>
+                <i class="fa-solid fa-arrow-down"></i>
+              </div>
+              <hr>
+
+
+              <div class="votingPolls_container">
+                <div class="time_poll aPoll">
+                  <% if ( user._id.toString() == room.user._id.toString() && isIdentical) { %>
+                    <form action="/inviteVotes" method="post" class="finVote">
+                      <input type="hidden" name="votingCategory" value="time">
+                      <input type="hidden" name="roomID" value="<%= room._id %>">
+                      <button name="updateInvite" value="updateInvite" class="time_category category_button">Update the invite with the most voted Time &nbsp;<i class="fa-solid fa-list-check fa-lg"></i></button>
+                    </form>
+                  <% } %>
+                  <div class="scrollableList leftSideScroll_Design">
+                    <div class="correctReversion">
+                      <form action="/inviteVotes" method="post" class="addAVote">
+                        <label for="time">Select a new Time to propose:</label>
+                        <div>
+                          <input type="time" name="newValue" id="time" required>
+          
+                        <input type="hidden" name="roomID" value="<%= room._id %>">
+                        <input type="hidden" name="userSessionID" value="<%= user._id %>">
+                        <input type="hidden" name="votingCategory" value="time">
+                        <button class="poll_td_btn" name="newVote" value="newVote">Add <i class="fa-solid fa-arrow-turn-down fa-lg"></i></button>
+                        </div>
+                      </form>
+                      <!-- template  -->
+                      <% room.votes.forEach(function(vote) { %>
+                        <% if (vote.votingCategory === "time") { %>
+                          <form action="/inviteVotes" method="post" class="fullW100">
+                            <button type="submit" class="skill-box" name="plusOneVote" value="plusOneVote">
+                              <div class="pull_item">
+                                <div class="leftSide_item">
+                                  <input type="hidden" name="roomID" value="<%= room._id %>">
+                                  <input type="hidden" name="userSessionID" value="<%= user._id %>">
+                                  <input type="hidden" name="item_ID" value="<%= vote._id %>">
+          
+          
+                                  <%var matchFound = false; // Flag variable to track if match is found %>
+                                  <%var count = 0; // Initialize counter variable %>
+                              
+                                  <%if (joinedGuestUsers && joinedGuestUsers.length > 0 && isIdentical) {%>
+                                    <%joinedGuestUsers.forEach(guestUser => {%>
+                                      <%if (Array.isArray(vote.votedBy_ID) && vote.votedBy_ID.includes(guestUser._id.toString())) {%>
+                                        <% count++; // Increment counter %>
+                                        <%if (guestUser._id.toString() == user._id.toString()) {%>
+                                          <%matchFound = true; // Set flag if match is found%>
+                                          
+                                        <%}%>
+                                      <%}%>
+                                    <%});%>
+                                  <%}%>
+          
+                                  <!-- Check the flag variable and display appropriate icon -->
+                                  <%if (matchFound) { %>
+                                      <i class="fa-regular fa-circle-check"></i>
+                                  <% } else { %>
+                                      <i class="fa-regular fa-circle"></i>
+                                  <% } %>
+                                  
+                                  <!-- generate a procentage of how many of the participants have agreed in the poll -->
+                                  <%let totalParticipants = room.joined_guest.length; // Total number of participants%>
+                                  <%let percentage = parseInt((count / totalParticipants * 100).toFixed(2));%>
+                                  <%let truncatedPercentage = Math.floor(percentage / 10); // Remove the last digit%>
+                                  
+          
+                                  <%let majorityThreshold = Math.ceil(totalParticipants / 2); // Calculate majority threshold%>
+          
+                                  <%let successfulResult = count >= majorityThreshold; // Check if count meets or exceeds the majority threshold%>
+          
+          
+                                  <div class="item_name">
+                                    <span class="title"><%= vote.newValue %></span>
+                                  </div>
+                                </div>
+                                <div class="item_voters">
+                                  <% if (joinedGuestUsers && joinedGuestUsers.length > 0 && isIdentical) { %>
+                                    <% joinedGuestUsers.forEach(guestUser => { %>
+                                      <% if (Array.isArray(vote.votedBy_ID) && vote.votedBy_ID.includes(guestUser._id.toString())) { %>
+                                        <%if (guestUser._id.toString() == user._id.toString()) {%>
+                                          <img class="votingImg" title="<%= guestUser.yourName %>" src="/userImages/<%= guestUser.images %>" style="border: 2px solid rgb(84, 84, 134);">
+                                        <% } else { %>
+                                          <img class="votingImg" title="<%= guestUser.yourName %>" src="/userImages/<%= guestUser.images %>">
+                                        <% } %>
+                                        
+                                      <% } %>
+                                    <% }) %>
+                                  <% } %>
+                                </div>
+                              </div>
+                  
+                              <div class="skill-bar">
+                                  <span class="skill-per percentage<%=truncatedPercentage%> <%= successfulResult %>">
+                                      <span class="tooltip pop<%= successfulResult %>"><%= percentage %>% </span>
+                                  </span>
+                              </div>
+          
+                            </button>
+                          </form>
+                        <% } %>
+                      <% }); %>
+                    </div>
+                  
+                  </div>
+                </div>
+      
+                <div class="date_poll aPoll">
+                  <% if ( user._id.toString() == room.user._id.toString() && isIdentical) { %>
+                    <form action="/inviteVotes" method="post" class="finVote">
+                      <input type="hidden" name="votingCategory" value="date">
+                      <input type="hidden" name="roomID" value="<%= room._id %>">
+                      <button type="submit" name="updateInvite" value="updateInvite" class="date_category category_button">Update the invite with the most voted Date &nbsp;<i class="fa-solid fa-list-check fa-lg"></i></button>
+                    </form>
+                  <% } %>
+                  <div class="scrollableList leftSideScroll_Design">
+                    <div class="correctReversion">
+                      <form action="/inviteVotes" method="post" class="addAVote">
+                        <label for="date">Select a new Date to propose:</label>
+                        <div>
+                          <input type="date" name="newValue" id="date" required>
+                          <input type="hidden" name="roomID" value="<%= room._id %>">
+                          <input type="hidden" name="userSessionID" value="<%= user._id %>">
+                          <input type="hidden" name="votingCategory" value="date">
+                          <button class="poll_td_btn" name="newVote" value="newVote">Add <i class="fa-solid fa-arrow-turn-down fa-lg"></i></button>
+                        </div>
+                        
+                      </form>
+                      <!-- template  -->
+                      <% room.votes.forEach(function(vote) { %>
+                        <% if (vote.votingCategory === "date") { %>
+                          <form action="/inviteVotes" method="post" class="fullW100">
+                            <button type="submit" class="skill-box" name="plusOneVote" value="plusOneVote">
+                              <div class="pull_item">
+                                <div class="leftSide_item">
+                                  <input type="hidden" name="roomID" value="<%= room._id %>">
+                                  <input type="hidden" name="userSessionID" value="<%= user._id %>">
+                                  <input type="hidden" name="item_ID" value="<%= vote._id %>">
+          
+          
+                                  <%var matchFound = false; // Flag variable to track if match is found %>
+                                  <%var count = 0; // Initialize counter variable %>
+                              
+                                  <%if (joinedGuestUsers && joinedGuestUsers.length > 0 && isIdentical) {%>
+                                    <%joinedGuestUsers.forEach(guestUser => {%>
+                                      <%if (Array.isArray(vote.votedBy_ID) && vote.votedBy_ID.includes(guestUser._id.toString())) {%>
+                                        <% count++; // Increment counter %>
+                                        <%if (guestUser._id.toString() == user._id.toString()) {%>
+                                          <%matchFound = true; // Set flag if match is found%>
+                                          
+                                        <%}%>
+                                      <%}%>
+                                    <%});%>
+                                  <%}%>
+          
+                                  <!-- Check the flag variable and display appropriate icon -->
+                                  <%if (matchFound) { %>
+                                      <i class="fa-regular fa-circle-check"></i>
+                                  <% } else { %>
+                                      <i class="fa-regular fa-circle"></i>
+                                  <% } %>
+                                  
+                                  <!-- generate a procentage of how many of the participants have agreed in the poll -->
+                                  <%let totalParticipants = room.joined_guest.length; // Total number of participants%>
+                                  <%let percentage = parseInt((count / totalParticipants * 100).toFixed(2));%>
+                                  <%let truncatedPercentage = Math.floor(percentage / 10); // Remove the last digit%>
+                                  
+          
+                                  <%let majorityThreshold = Math.ceil(totalParticipants / 2); // Calculate majority threshold%>
+          
+                                  <%let successfulResult = count >= majorityThreshold; // Check if count meets or exceeds the majority threshold%>
+          
+          
+                                  <div class="item_name">
+                                    <span class="title"><%= vote.newValue %></span>
+                                  </div>
+                                </div>
+                                <div class="item_voters">
+                                  <% if (joinedGuestUsers && joinedGuestUsers.length > 0 && isIdentical) { %>
+                                    <% joinedGuestUsers.forEach(guestUser => { %>
+                                      <% if (Array.isArray(vote.votedBy_ID) && vote.votedBy_ID.includes(guestUser._id.toString())) { %>
+                                        <%if (guestUser._id.toString() == user._id.toString()) {%>
+                                          <img class="votingImg" title="<%= guestUser.yourName %>" src="/userImages/<%= guestUser.images %>" style="border: 2px solid rgb(84, 84, 134);">
+                                        <% } else { %>
+                                          <img class="votingImg" title="<%= guestUser.yourName %>" src="/userImages/<%= guestUser.images %>">
+                                        <% } %>
+                                      <% } %>
+                                    <% }) %>
+                                  <% } %>
+                                </div>
+                              </div>
+                  
+                              <div class="skill-bar">
+                                  <span class="skill-per percentage<%=truncatedPercentage%> <%= successfulResult %>">
+                                      <span class="tooltip pop<%= successfulResult %>"><%= percentage %>% </span>
+                                  </span>
+                              </div>
+          
+                            </button>
+                          </form>
+                        <% } %>
+                      <% }); %>
+                    </div>
+                  </div>
+
+                </div>
+      
+                <div class="boardgame_poll aPoll">
+                  <% if ( user._id.toString() == room.user._id.toString() && isIdentical) { %>
+                    <form action="/inviteVotes" method="post" class="finVote">
+                      <input type="hidden" name="votingCategory" value="boardGame">
+                      <input type="hidden" name="roomID" value="<%= room._id %>">
+                      <button type="submit" name="updateInvite" value="updateInvite" class="date_category category_button">Update the invite with the 3 most voted board game &nbsp;<i class="fa-solid fa-list-check fa-lg"></i></button>
+                    </form>
+                  <% } %>
+                  <div class="scrollableList leftSideScroll_Design">
+                    <div class="correctReversion">
+                      <form action="/inviteVotes" method="post" class="addAVote">
+                        <label for="boardGames_list">Select a new Game to propose:</label>
+                        <div class="centerv">
+                          <select name="newValue" id="boardGames_list" class="boardGames_list">
+                            <option value="" disabled>Add/Select a Board Game</option>
+                            <optgroup label="Everybody's Owned Games">
+                              <%
+                                // Define uniqueNames array at the beginning of the template
+                                const uniqueNames = [];
+                              %>
+                              <% if (joinedGuestUsers && joinedGuestUsers.length > 0) { %>
+                                <% joinedGuestUsers.forEach(guestUser => { %>
+                              
+                                  <!-- guestUser will access each user -->
+                                  <% userPlus_owned_BG.forEach(userPlus => { %>
+                                    <!-- guestUser._id will specify for which user the data will be accessed -->
+                                    <% if (userPlus.userLink.equals(guestUser._id)) { %>
+                                      <!-- This will identify all the IDs of all the games that the user owns -->
+                                      <% userPlus.owned_boardgames_ID.forEach(boardgame => { %>
+                                        <!-- <p><%= boardgame.objectid %></p> -->
+                              
+                                        <!-- Check for matching InternalBgData.objectid -->
+                                        <% InternalBgData.forEach(internalBg => { %>
+                                          <% if (boardgame.objectid == internalBg.objectid) { %>
+                                            <!-- Display a list of InternalBgData.name when there's a match -->
+                                            <% if (!uniqueNames.includes(internalBg.name)) { %>
+                                              <option value="<%= internalBg.objectid %>"><%= internalBg.name %> (<%= internalBg.yearPublished %>)</option>
+                                              <% uniqueNames.push(internalBg.name); %>
+                                            <% } %>
+                                          <% } %>
+                                        <% }) %>
+                              
+                                      <% }) %>
+                                    <% } %>
+                                  <% }) %>
+                              
+                                <% }); %>
+                              <% } else { %>
+                                <option value="" disabled>No player has added an owned games to their lists.</option>
+                              <% } %>
+                              
+                            </optgroup>
+                            <optgroup label="Everybody's Wish to Play Games">
+                              <% if (internalMatchWantToPlayBg && internalMatchWantToPlayBg.length > 0) { %>
+                                <% internalMatchWantToPlayBg.forEach(MatchWantToPlay => { %>
+                                  <option value="<%= MatchWantToPlay.objectid %>"><%= MatchWantToPlay.name %> (<%= MatchWantToPlay.yearPublished %>)</option>
+                                  <li><a class="cancel_a_effects" href="https://boardgamegeek.com/boardgame/<%= MatchWantToPlay.objectid %>" target="_blank"><%= MatchWantToPlay.name %> (<%= MatchWantToPlay.yearPublished %>)</a></li>
+                                <% }); %>
+                              <% } else { %>
+                                <option value="" disabled>No wish to play game is found in any owned games lists.</option>
+                              <% } %>
+                              
+                            </optgroup>
+            
+                            <optgroup label="Other">
+                              <option value="other1">Other Options</option>
+                            </optgroup>
+                          </select>
+    
+                          <input type="hidden" name="roomID" value="<%= room._id %>">
+                          <input type="hidden" name="userSessionID" value="<%= user._id %>">
+                          <input type="hidden" name="votingCategory" value="boardGame">
+                          <button class="poll_td_btn" name="newVote" value="newVote">Add <i class="fa-solid fa-arrow-turn-down fa-lg"></i></button>
+                        </div>
+                      </form>
+                      <!-- template  -->
+                      <% room.votes.forEach(function(vote) { %>
+                        <% if (vote.votingCategory === "boardGame") { %>
+                          <form action="/inviteVotes" method="post" class="fullW100">
+                            <button type="submit" class="skill-box" name="plusOneVote" value="plusOneVote">
+                              <div class="pull_item">
+                                <div class="leftSide_item">
+                                  <input type="hidden" name="roomID" value="<%= room._id %>">
+                                  <input type="hidden" name="userSessionID" value="<%= user._id %>">
+                                  <input type="hidden" name="item_ID" value="<%= vote._id %>">
+          
+          
+                                  <%var matchFound = false; // Flag variable to track if match is found %>
+                                  <%var count = 0; // Initialize counter variable %>
+                              
+                                  <%if (joinedGuestUsers && joinedGuestUsers.length > 0 && isIdentical) {%>
+                                    <%joinedGuestUsers.forEach(guestUser => {%>
+                                      <%if (Array.isArray(vote.votedBy_ID) && vote.votedBy_ID.includes(guestUser._id.toString())) {%>
+                                        <% count++; // Increment counter %>
+                                        <%if (guestUser._id.toString() == user._id.toString()) {%>
+                                          <%matchFound = true; // Set flag if match is found%>
+                                          
+                                        <%}%>
+                                      <%}%>
+                                    <%});%>
+                                  <%}%>
+          
+                                  <!-- Check the flag variable and display appropriate icon -->
+                                  <%if (matchFound) { %>
+                                      <i class="fa-regular fa-circle-check"></i>
+                                  <% } else { %>
+                                      <i class="fa-regular fa-circle"></i>
+                                  <% } %>
+                                  
+                                  <!-- generate a procentage of how many of the participants have agreed in the poll -->
+                                  <%let totalParticipants = room.joined_guest.length; // Total number of participants%>
+                                  <%let percentage = parseInt((count / totalParticipants * 100).toFixed(2));%>
+                                  <%let truncatedPercentage = Math.floor(percentage / 10); // Remove the last digit%>
+                                  
+          
+                                  <%let majorityThreshold = Math.ceil(totalParticipants / 2); // Calculate majority threshold%>
+          
+                                  <%let successfulResult = count >= majorityThreshold; // Check if count meets or exceeds the majority threshold%>
+          
+          
+                                  <div class="item_name">
+                                    <%
+                                      // Define uniqueNames array at the beginning of the template
+                                      const uniqueNames = [];
+                                    %>
+                                    <% if (joinedGuestUsers && joinedGuestUsers.length > 0) { %>
+                                      <% joinedGuestUsers.forEach(guestUser => { %>
+                                    
+                                        <!-- guestUser will access each user -->
+                                        <% userPlus_owned_BG.forEach(userPlus => { %>
+                                          <!-- guestUser._id will specify for which user the data will be accessed -->
+                                          <% if (userPlus.userLink.equals(guestUser._id)) { %>
+                                            <!-- this will run through each of the existing bg -->
+                                            <% InternalBgData.forEach(boardgame => { %>
+                                              <!-- Check for matching InternalBgData.objectid -->
+                                              <% InternalBgData.forEach(internalBg => { %>
+                                                <% if (boardgame.objectid == internalBg.objectid) { %>
+                                                  <!-- Display a list of InternalBgData.name when there's a match -->
+                                                  <% if (!uniqueNames.includes(internalBg.name)) { %>
+                                                    <!-- find the vote.newValue ojbectID into the current existing list of owned game  -->
+                                                    <% if (vote.newValue.toString() == internalBg.objectid.toString()) { %>
+                                                      <span class="title"><%= internalBg.name %> (<%= internalBg.yearPublished %>)</span>
+                                                    <% } %>
+                                                    <% uniqueNames.push(internalBg.name); %>
+                                                  <% } %>
+                                                <% } %>
+                                              <% }) %>
+                                    
+                                            <% }) %>
+                                            
+                                            
+                                          <% } %>
+                                        <% }) %>
+                                    
+                                      <% }); %>
+                                    <% } else { %>
+                                      <!-- <p>The platicipants haven't added any owned games in ther lists</p> -->
+                                    <% } %>
+                                    
+                                  </div>
+          
+          
+          
+                                </div>
+                                <div class="item_voters">
+                                  <% if (joinedGuestUsers && joinedGuestUsers.length > 0 && isIdentical) { %>
+                                    <% joinedGuestUsers.forEach(guestUser => { %>
+                                      <% if (Array.isArray(vote.votedBy_ID) && vote.votedBy_ID.includes(guestUser._id.toString())) { %>
+                                        <%if (guestUser._id.toString() == user._id.toString()) {%>
+                                          <img class="votingImg" title="<%= guestUser.yourName %>" src="/userImages/<%= guestUser.images %>" style="border: 2px solid rgb(84, 84, 134);">
+                                        <% } else { %>
+                                          <img class="votingImg" title="<%= guestUser.yourName %>" src="/userImages/<%= guestUser.images %>">
+                                        <% } %>
+                                      <% } %>
+                                    <% }) %>
+                                  <% } %>
+                                </div>
+                              </div>
+                  
+                              <div class="skill-bar">
+                                  <span class="skill-per percentage<%=truncatedPercentage%> <%= successfulResult %>">
+                                      <span class="tooltip pop<%= successfulResult %>"><%= percentage %>% </span>
+                                  </span>
+                              </div>
+          
+                            </button>
+                          </form>
+                        <% } %>
+                      <% }); %>
+                    </div>
+
+                  </div>
+                  
+                </div>
+      
+                <div class="location_poll aPoll">
+                  <% if ( user._id.toString() == room.user._id.toString() && isIdentical) { %>
+                    <form action="/inviteVotes" method="post" class="finVote">
+                      <input type="hidden" name="votingCategory" value="location">
+                      <input type="hidden" name="roomID" value="<%= room._id %>">
+                      <button type="submit" name="updateInvite" value="updateInvite" class="date_category category_button"><i class="fa-solid fa-arrow-up-right-dots"></i> Update the invite with the most voted location &nbsp;<i class="fa-solid fa-list-check fa-lg"></i></button>
+                    </form>
+                  <% } %>
+                  <div class="scrollableList leftSideScroll_Design">
+                    <div class="correctReversion">
+                      <form action="/inviteVotes" method="post" class="addAVote fullW100">
+                        <label for="location">Select a new Location to propose:</label>
+                        <div>
+                          <select name="newValue" id="location" class="location">
+                            <option value="" disabled>Add/Select a Location</option>
+                            <optgroup label="Inside">
+                              <option value="Home" selected>Home</option>
+                            </optgroup>
+                            <optgroup label="Pubs">
+                              <option value="1UP Gamers Pub">1UP Gamers Pub</option>
+                              <option value="Aria Cafe">Aria Cafe</option>
+                              <option value="Arcade Cafe">Arcade Cafe</option>
+                              <option value="Ceainăria Cinci">Ceainăria Cinci</option>
+                              <option value="Lente Lupu">Lente Lupu</option>
+                              <option value="Modelier">Modelier</option>
+                              <option value="Snakes & Wizards">Snakes & Wizards</option>
+                              <option value="Snatch Pub">Snatch Pub</option>
+                              <option value="Time Out Cafe">Time Out Cafe</option>
+                            </optgroup>
+            
+                            <optgroup label="Other">
+                              <option value="other1">Other Options</option>
+                            </optgroup>
+                          </select>
+                          
+                          <input type="hidden" name="roomID" value="<%= room._id %>">
+                          <input type="hidden" name="userSessionID" value="<%= user._id %>">
+                          <input type="hidden" name="votingCategory" value="location">
+                          <button class="poll_td_btn" name="newVote" value="newVote">Add <i class="fa-solid fa-arrow-turn-down fa-lg"></i></button>
+                        </div>
+                      </form>
+                      <!-- template  -->
+                      <% room.votes.forEach(function(vote) { %>
+                        <% if (vote.votingCategory === "location") { %>
+                          <form action="/inviteVotes" method="post" class="addAVote fullW100">
+                            <button type="submit" class="skill-box" name="plusOneVote" value="plusOneVote">
+                              <div class="pull_item">
+                                <div class="leftSide_item">
+                                  <input type="hidden" name="roomID" value="<%= room._id %>">
+                                  <input type="hidden" name="userSessionID" value="<%= user._id %>">
+                                  <input type="hidden" name="item_ID" value="<%= vote._id %>">
+          
+          
+                                  <%var matchFound = false; // Flag variable to track if match is found %>
+                                  <%var count = 0; // Initialize counter variable %>
+                              
+                                  <%if (joinedGuestUsers && joinedGuestUsers.length > 0 && isIdentical) {%>
+                                    <%joinedGuestUsers.forEach(guestUser => {%>
+                                      <%if (Array.isArray(vote.votedBy_ID) && vote.votedBy_ID.includes(guestUser._id.toString())) {%>
+                                        <% count++; // Increment counter %>
+                                        <%if (guestUser._id.toString() == user._id.toString()) {%>
+                                          <%matchFound = true; // Set flag if match is found%>
+                                          
+                                        <%}%>
+                                      <%}%>
+                                    <%});%>
+                                  <%}%>
+          
+                                  <!-- Check the flag variable and display appropriate icon -->
+                                  <%if (matchFound) { %>
+                                      <i class="fa-regular fa-circle-check"></i>
+                                  <% } else { %>
+                                      <i class="fa-regular fa-circle"></i>
+                                  <% } %>
+                                  
+                                  <!-- generate a procentage of how many of the participants have agreed in the poll -->
+                                  <%let totalParticipants = room.joined_guest.length; // Total number of participants%>
+                                  <%let percentage = parseInt((count / totalParticipants * 100).toFixed(2));%>
+                                  <%let truncatedPercentage = Math.floor(percentage / 10); // Remove the last digit%>
+                                  
+          
+                                  <%let majorityThreshold = Math.ceil(totalParticipants / 2); // Calculate majority threshold%>
+          
+                                  <%let successfulResult = count >= majorityThreshold; // Check if count meets or exceeds the majority threshold%>
+          
+          
+                                  <div class="item_name">
+                                    <span class="title"><%= vote.newValue %></span>
+                                  </div>
+                                </div>
+                                <div class="item_voters">
+                                  <% if (joinedGuestUsers && joinedGuestUsers.length > 0 && isIdentical) { %>
+                                    <% joinedGuestUsers.forEach(guestUser => { %>
+                                      <% if (Array.isArray(vote.votedBy_ID) && vote.votedBy_ID.includes(guestUser._id.toString())) { %>
+                                        <%if (guestUser._id.toString() == user._id.toString()) {%>
+                                          <img class="votingImg" title="<%= guestUser.yourName %>" src="/userImages/<%= guestUser.images %>" style="border: 2px solid rgb(84, 84, 134);">
+                                        <% } else { %>
+                                          <img class="votingImg" title="<%= guestUser.yourName %>" src="/userImages/<%= guestUser.images %>">
+                                        <% } %>
+                                      <% } %>
+                                    <% }) %>
+                                  <% } %>
+                                </div>
+                              </div>
+                  
+                              <div class="skill-bar">
+                                  <span class="skill-per percentage<%=truncatedPercentage%> <%= successfulResult %>">
+                                      <span class="tooltip pop<%= successfulResult %>"><%= percentage %>% </span>
+                                  </span>
+                              </div>
+          
+                            </button>
+                          </form>
+                        <% } %>
+                      <% }); %>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          <section class="comment_section">
+            <div class="comment_container">
+              <div class="spinerPositioning">
+                <img class="sizeCap" src="/img/delayBG/spinner (2).gif" alt="">
+              </div>
+              <ul class="com_ul" id="commentList">
+                <% room.chat.forEach(message => { %>
+                  <% if (message.userID && message.userID.toString() === userSession._id.toString()) { %>
+                      <li class="com_li_session">
+                        <div class="com_li_session_sub">
+                          <div class="com_li_session_div_msg">
+                            <p> <%= message.message %>  </p>
+                          </div>
+                          <div class="com_li_session_div_time">
+                            <p> <%= message.date %> - <%= message.time %> </p>
+                          </div>
+                        </div>
+
+                        <% if (joinedGuestUsers && joinedGuestUsers.length > 0) { %>
+                          <% joinedGuestUsers.forEach(guestUser => { %>
+                            <% if (guestUser._id.toString() === message.userID.toString()) { %>
+
+                              <div class="chat_userID open-add-popup">
+                                <div class="chat_avatarImg">
+                                  <img class="profileGuest" src="/userImages/<%= guestUser.images %>">
+                                </div>
+                                <div class="chat_nameDisplay">
+                                  
+                                  <div class="com_li_session_div_name">
+                                    <p><i><%= message.name %> </i> </b> </p>
+                                  </div>
+                                </div>
+                              </div>
+                            <% } %>
+                          <% }); %>
+          
+                        <% } else { %>
+                          <p>No joined guests found</p>
+                        <% } %>
+
+                      </li>
+                  <% } else { %>
+                    <li class="com_li_others">
+                      <% if (joinedGuestUsers && joinedGuestUsers.length > 0) { %>
+                        <% joinedGuestUsers.forEach(guestUser => { %>
+                          <% if (guestUser._id && message.userID && guestUser._id.toString() === message.userID.toString()) { %>
+
+                            <div class="chat_userID open-add-popup">
+                              <div class="chat_avatarImg">
+                                <img class="profileGuest" src="/userImages/<%= guestUser.images %>">
+                              </div>
+                              <div class="chat_nameDisplay">
+                                
+                                <div class="com_li_others_div_name">
+                                  <p><i><%= message.name %> </i> </b> </p>
+                                </div>
+                              </div>
+                            </div>
+                          <% } %>
+                        <% }); %>
+        
+                      <% } else { %>
+                        <p>No joined guests found</p>
+                      <% } %>
+
+                      <div class="com_li_others_sub">
+                        <div class="com_li_others_div_msg">
+                          <p> <%= message.message %>  </p>
+                        </div>
+                        <div class="com_li_others_div_time">
+                          <p> <%= message.date %> - <%= message.time %> </p>
+                        </div>
+                      </div>
+
+                    </li>
+                  <% } %>
+              <% }); %>
+              </ul>
+
+              
+            </div>
+            <form action="/comment" id="commentForm" method="POST" class="comm_form">
+              <input type="hidden" name="roomID" value="<%= roomID %>">
+              <input type="hidden" name="userID" value="<%= userSession._id%>">
+              <input type="hidden" name="yourName" id="nameInput" value="<%= userSession.yourName%>">
+              <textarea name="msg" class="comm_input" id="msg" placeholder="Message"></textarea>
+              <div class="spinerPositioning">
+                <img class="sizeCap" src="/img/delayBG/spinner (2).gif" alt="">
+              </div>
+              <button type="submit" class="comm_btn" id="sendButton">Send <i class="fa-solid fa-paper-plane"></i></button>
+
+            </form>
+
+            <form action="/seenNotification" method="post" class="triggerSeenChatNotif">
+              <input type="hidden" name="roomID" value="<%= room._id %>">
+                <input type="hidden" name="notifType" value="chat">
+                <input type="hidden" name="reason" value="new_msg">
+                <input type="hidden" name="participantID" value="<%= user._id %>">
+                <input type="hidden" name="theActualNotifItem" value="seen">
+                <input type="hidden" name="bell" value="seen">
+                <input type="hidden" name="navBar" value="seen">
+                <input type="hidden" name="indexInviteBox" value="seen">
+                <input type="hidden" name="clearNotifification" value="new_msg" class="css_votes_display_organizer_btn time_btn active_btn_tab">
+            </form>
+          </section>
+
+
+        </div>
+      <% } else { %>
+        <div class="roomBox">
+          <div class="mainBox">
+            <div class="mainBox-owner">
+              
+              <div class="mainBox-owner-top">
+                <div class="userID">
+                  <div class="avatarImg">
+                    <img class="profileGuest" src="/userImages/<%= room.user.images %>">
+                  </div>
+
+                  <div name="dosarRep">
+                    <% let groupedData_honer2 = []; %>
+                    <% let groupedData_stain2 = []; %>
+                  
+                    <% if (userPlus && userPlus.length > 0) { %>
+                      <% userPlus.forEach(data => { %>
+                        <% if (data.userLink.toString() == room.user._id.toString()) { %>
+                          
+                          <% data.allReputation.forEach(reputation => { %>
+                  
+                            <!-- match with honor  -->
+                            <% if (importHonorDetail && importHonorDetail.length > 0) { %>
+                              <% Object.entries(importHonorDetail).forEach(([nothing, nothing2]) => { %>
+                  
+                                <% Object.entries(nothing2).forEach(([stillNothing, stillNothing2]) => { %>
+                                  <% Object.entries(stillNothing2).forEach(([Category, value]) => { %>
+                                    <% if (Category !== '_id' && Category !== '__v' && Category !== 'skipId' && Category !== 'activePaths') { %>
+                                      <% Object.entries(value).forEach(([sdfg, subCategory]) => { %> 
+                                        <% if (subCategory.permanentReputationNumber == reputation.get_permanentReputationNumber) { %>
+                                          <% groupedData_honer2.push(subCategory); %>
+                                        <% }; %>
+                                      <% }); %>
+                                    <% } %>
+                                  <% }); %>
+                                <% }); %>
+                  
+                              <% }); %>
+                            <% } %>
+                  
+                            <!-- match with stain  -->
+                            <% if (importStainDetail && importStainDetail.length > 0) { %>
+                              <% Object.entries(importStainDetail).forEach(([nothing, nothing2]) => { %>
+                  
+                                <% Object.entries(nothing2).forEach(([stillNothing, stillNothing2]) => { %>
+                                  <% Object.entries(stillNothing2).forEach(([Category, value]) => { %>
+                                    <% if (Category !== '_id' && Category !== '__v' && Category !== 'skipId' && Category !== 'activePaths') { %>
+                                      <% Object.entries(value).forEach(([sdfg, subCategory]) => { %> 
+                                        <% if (subCategory.permanentReputationNumber == reputation.get_permanentReputationNumber) { %>
+                                          <% groupedData_stain2.push(subCategory); %>
+                                        <% }; %>
+                                      <% }); %>
+                                    <% } %>
+                                  <% }); %>
+                                <% }); %>
+                  
+                              <% }); %>
+                            <% } %>
+                  
+                  
+                          <% }); %>
+                        <% } %>
+                      <% }); %>
+                      
+                    <% } %>
+                  </div>
+                  <div class="reputationBox">
+                    <div class="honors">
+                      <% if (groupedData_honer2 && groupedData_honer2.length > 0) { %>
+                        <!-- Shuffle the badReputation array -->
+                        <% const owner_shuffled_honer2 = groupedData_honer2.sort(() => Math.random() - 0.5); %>
+                        <% owner_shuffled_honer2.slice(0, 2).forEach(item => { %>
+                          <div class="honor" title="<%= item.description %>">
+                            <img src="/img/reputation/<%= item.type %>/<%= item.fileCateg %>/<%= item.name %>" class="repProfileIcon">
+                          </div>
+                        <% }) %>
+                      <% } %>
+                    </div>
+                    <div class="redFlags">
+                      <% if (groupedData_stain2 && groupedData_stain2.length > 0) { %>
+                        <!-- Shuffle the badReputation array -->
+                        <% const owner_shuffled_stain2 = groupedData_stain2.sort(() => Math.random() - 0.5); %>
+                        <% owner_shuffled_stain2.slice(0, 1).forEach(item => { %>
+                          <div class="flag" title="<%= item.description %>">
+                            <img src="/img/reputation/<%= item.type %>/<%= item.fileCateg %>/<%= item.name %>" class="repProfileIcon">
+                          </div>
+                        <% }) %>
+                      <% } %>
+                    </div>
+                  </div>
+                </div>
+                <div class="inviteDetails">
+                  <p class="topSpaceText"><%= room.selectedDate %></p>
+                  <p class="zeroSpaceText"><%= room.selectedTime %></p>
+                  <p class="zeroSpaceText">Location: My home</p>
+                  <p class="zeroSpaceText"><br> No. of players: <%= room.joined_guest.length %> / <%= room.numberOfInvites %></p>
+                </div>
+              </div>
+              <div class="proposedGames">
+                <ul class="SpaceRoomBoardgames">
+                  <% room.theBoardgames_name.forEach(boardgame => { %>
+                    <li class="SpaceRoomBoardgamesLi"><%= boardgame %></li>
+                  <% }) %>
+                </ul>
+              </div>
+            </div>
+            <div class="join-div">
+              <%
+                let hasBennBanned = false;
+                room.banned_players.forEach(banned_player => {
+                    if (banned_player.toString() === user._id.toString()) {
+                        hasBennBanned = true;
+                    }
+                });
+              %>
+              <form action="/index_append_joined_guest" method="post">
+                <input type="hidden" name="userRoomId" value="<%= room._id %>">
+                <input type="hidden" name="joined_guest" value="<%= user._id %>">
+                <input type="hidden" name="selectedTime" value="<%= room.selectedTime %>">
+                <input type="hidden" name="selectedDate" value="<%= room.selectedDate %>">
+                <input type="hidden" name="theBoardgames_id" value="<%= room.theBoardgames_id %>">
+                <input type="hidden" name="location" value="<%= room.location %>">
+                <input type="hidden" name="numberOfInvites" value="<%= room.numberOfInvites %>">
+                <input type="hidden" name="joined_guest_length" value="<%= room.joined_guest.length %>">
+                <!-- Check if any ban has been given to the player  -->
+                <% if (joinedGuestUsers) { %>
+                  <!-- Display user details -->
+                  <% let foundMatchingUser = false; %>
+
+
+
+
+                    <!-- Display other user details as needed -->
+                    <% if ( !hasBennBanned && user._id.toString() == userSession._id.toString() ) { %>
+                      <% foundMatchingUser = true; %>
+                      <!-- Check if the user has already joined  -->
+
+                        <button type="submit" id="buttonX" value="add an user" class="joinRoomButton"> Enter the invite</button>
+
+                    <% } else if ( !hasBennBanned && !foundMatchingUser &&  room.joined_guest.length  < room.numberOfInvites) { %>
+                      <!-- Check if the user did not join previously and if there is still space to join -->
+                      
+                      <button type="submit" id="buttonX" value="add an user" class="joinRoomButton"> Join the invite</button>
+                    <% } else if ( hasBennBanned ) { %>
+                      <!-- Check if any ban has been given to the player  -->
+                      <div class="restrictedAccess">
+                        <p>Restricted access</p>
+                      </div>
+                      
+                    <% } else { %>
+
+                    <% } %>
+              
+                <% } else { %>
+                  <p>Server is down for the moment</p>
+                <% } %>
+              </form>
+            </div>
+            
+            <div id="resizableDiv" class="mainBox-participants">
+              
+
+            <!-- Check if joinedGuestUsers contains data for the current room ID -->
+            <% if (joinedGuestUsers ) { %>
+              <!-- Display user details -->
+              <% joinedGuestUsers.forEach(user => { %>
+
+                <!-- Display other user details as needed -->
+                <a href="/userProfile/<%= user._id %>" class="userID">
+                  <div class="avatarImg">
+                    <img class="profileGuest" src="/userImages/<%= user.images %>">
+                  </div>
+
+                </a>
+                
+              <% }) %>
+            <% } else { %>
+              <p>No user data found for this room</p>
+            <% } %>
+
+
+
+
+
+<!-- sa-io scriu sa mi faca userID pe baza la ce am facut in the room -->
+
+
+
+
+
+
+
+            </div>
+            <button id="buttonX" class="turnPageButton"> <i class="fa-solid fa-angle-down fa-xl"></i></button>
+          </div>
+          <div class="sideBoxPics">
+            
+          </div>
+        </div>
+      <% } %>
+
+    <% }); %>
+  <% } else { %>
+    <p>No room data found</p>
+  <% } %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Bottom bar  -->
+  <div class="bottom-bar">
+    <ion-icon name="person-outline" class="icon" 
+    onclick="change(this); window.location.href='/userProfile/<%= userSession._id %>'">
+    </ion-icon>
+    <ion-icon name="folder-outline" class="icon positionRelative" 
+    onclick="change(this); window.location.href='/preRoom-index/<%= userSession._id %>'">
+    </ion-icon>
+    <ion-icon name="home-outline" class="icon" 
+    onclick="change(this); window.location.href='/index'">
+    </ion-icon>
+    <ion-icon name="add-circle-outline" class="icon longLoading" 
+    onclick="change(this); window.location.href='/createRoom-index'" >
+    </ion-icon>
+    <!-- <ion-icon name="image-outline" class="icon" 
+    onclick="change(this); window.location.href='/gallery'">
+    </ion-icon> -->
+    <div class="titleNav_div">
+    </div>
+  </div>
+
+
+
+
+
+  <script src="/js/theRoom-script.js"></script>
+  <script src="https://kit.fontawesome.com/19568ad9a4.js" crossorigin="anonymous"></script>
+  
+</body>
+</html>

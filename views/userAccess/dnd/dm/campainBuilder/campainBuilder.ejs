@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Create Campaign</title>
+
+    <link
+        rel="stylesheet"
+        href="/css/dnd/dm/campainBuilder.css"
+    >
+
+</head>
+
+
+<body>
+
+    <div class="app-shell">
+
+
+        <!-- =====================================================
+             TOPBAR
+        ====================================================== -->
+
+        <header class="app-topbar">
+
+            <div class="app-topbar__brand">
+
+                <div class="brand-emblem" aria-hidden="true">
+                    ✧
+                </div>
+
+                <div class="brand-copy">
+
+                    <span class="brand-copy__title">
+                        CAMPAIGNS
+                    </span>
+
+                    <span class="brand-copy__subtitle">
+                        YOUR WORLDS · YOUR STORIES
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="app-topbar__actions">
+
+                <button
+                    class="topbar-icon-button"
+                    type="button"
+                    aria-label="Notifications"
+                >
+                    ♧
+                </button>
+
+
+                <button
+                    class="user-menu"
+                    type="button"
+                    aria-label="Open user menu"
+                >
+
+                    <span class="user-menu__avatar">
+                        AS
+                    </span>
+
+                    <span class="user-menu__name">
+                        Aric Stoneblade
+                    </span>
+
+                    <span
+                        class="user-menu__chevron"
+                        aria-hidden="true"
+                    >
+                        ▾
+                    </span>
+
+                </button>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =====================================================
+             DESKTOP SIDEBAR
+        ====================================================== -->
+
+        <aside class="app-sidebar">
+
+            <nav
+                class="sidebar-nav"
+                aria-label="Main navigation"
+            >
+
+                <a
+                    href="#"
+                    class="sidebar-link"
+                >
+
+                    <span
+                        class="sidebar-link__icon"
+                        aria-hidden="true"
+                    >
+                        ⌂
+                    </span>
+
+                    <span class="sidebar-link__label">
+                        Home
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="/<%= userId %>/dnd/myCampaigns"
+                    class="sidebar-link sidebar-link--active"
+                >
+
+                    <span
+                        class="sidebar-link__icon"
+                        aria-hidden="true"
+                    >
+                        ✧
+                    </span>
+
+                    <span class="sidebar-link__label">
+                        Campaigns
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="#"
+                    class="sidebar-link"
+                >
+
+                    <span
+                        class="sidebar-link__icon"
+                        aria-hidden="true"
+                    >
+                        ♙
+                    </span>
+
+                    <span class="sidebar-link__label">
+                        Characters
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="#"
+                    class="sidebar-link"
+                >
+
+                    <span
+                        class="sidebar-link__icon"
+                        aria-hidden="true"
+                    >
+                        ▤
+                    </span>
+
+                    <span class="sidebar-link__label">
+                        Library
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="#"
+                    class="sidebar-link"
+                >
+
+                    <span
+                        class="sidebar-link__icon"
+                        aria-hidden="true"
+                    >
+                        ⚙
+                    </span>
+
+                    <span class="sidebar-link__label">
+                        Settings
+                    </span>
+
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-decoration">
+
+                <div
+                    class="sidebar-decoration__mark"
+                    aria-hidden="true"
+                >
+                    ✦
+                </div>
+
+                <p class="sidebar-decoration__quote">
+                    "Not all who wander<br>
+                    are lost."
+                </p>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =====================================================
+             MOBILE NAV
+        ====================================================== -->
+
+        <nav
+            class="mobile-nav"
+            aria-label="Mobile navigation"
+        >
+
+            <a
+                href="#"
+                class="mobile-nav__item"
+            >
+
+                <span
+                    class="mobile-nav__icon"
+                    aria-hidden="true"
+                >
+                    ⌂
+                </span>
+
+                <span class="mobile-nav__label">
+                    Home
+                </span>
+
+            </a>
+
+
+            <a
+                href="/<%= userId %>/dnd/myCampaigns"
+                class="mobile-nav__item"
+            >
+
+                <span
+                    class="mobile-nav__icon"
+                    aria-hidden="true"
+                >
+                    ✧
+                </span>
+
+                <span class="mobile-nav__label">
+                    Campaigns
+                </span>
+
+            </a>
+
+
+            <a
+                href="#"
+                class="mobile-nav__item"
+            >
+
+                <span
+                    class="mobile-nav__icon"
+                    aria-hidden="true"
+                >
+                    ♙
+                </span>
+
+                <span class="mobile-nav__label">
+                    Characters
+                </span>
+
+            </a>
+
+
+            <a
+                href="#"
+                class="mobile-nav__item"
+            >
+
+                <span
+                    class="mobile-nav__icon"
+                    aria-hidden="true"
+                >
+                    ▤
+                </span>
+
+                <span class="mobile-nav__label">
+                    Library
+                </span>
+
+            </a>
+
+
+            <a
+                href="#"
+                class="mobile-nav__item"
+            >
+
+                <span
+                    class="mobile-nav__icon"
+                    aria-hidden="true"
+                >
+                    ⚙
+                </span>
+
+                <span class="mobile-nav__label">
+                    Settings
+                </span>
+
+            </a>
+
+        </nav>
+
+
+
+        <!-- =====================================================
+             MAIN CONTENT
+        ====================================================== -->
+
+        <main class="app-main">
+
+            <div class="campaign-page">
+
+                <div class="page-frame">
+
+
+                    <!-- =================================================
+                         PAGE HEADER
+                    ================================================== -->
+
+                    <header class="campaign-hero">
+
+                        <div class="campaign-hero__content">
+
+                            <div
+                                class="campaign-hero__emblem"
+                                aria-hidden="true"
+                            >
+                                ✧
+                            </div>
+
+
+                            <div class="campaign-hero__text">
+
+                                <span class="campaign-hero__eyebrow">
+                                    CAMPAIGNS
+                                </span>
+
+                                <h1 class="campaign-hero__title">
+                                    CREATE CAMPAIGN
+                                </h1>
+
+                                <p class="campaign-hero__description">
+                                    Start a new adventure and bring
+                                    your world to life.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="campaign-hero__art"
+                            aria-hidden="true"
+                        >
+
+                            <div class="campaign-hero__mountain"></div>
+
+                            <div class="campaign-hero__castle">
+                                ✦
+                            </div>
+
+                        </div>
+
+                    </header>
+
+
+
+                    <!-- =================================================
+                         CAMPAIGN FORM
+                    ================================================== -->
+
+                    <form
+                        class="campaign-form"
+                        action="/<%= userId %>/dnd/campaignBuilder/<%= campaignId %>"
+                        method="post"
+                    >
+
+
+                        <!-- =============================================
+                             CAMPAIGN DETAILS
+                        ============================================== -->
+
+                        <section class="ui-section">
+
+                            <div class="ui-section__heading">
+
+                                <span
+                                    class="ui-section__icon"
+                                    aria-hidden="true"
+                                >
+                                    ◎
+                                </span>
+
+                                <h2 class="ui-section__title">
+                                    CAMPAIGN DETAILS
+                                </h2>
+
+                            </div>
+
+
+                            <div class="details-grid">
+
+
+                                <!-- Campaign Name -->
+
+                                <div class="form-field">
+
+                                    <label
+                                        class="form-field__label"
+                                        for="campaign-name"
+                                    >
+                                        Campaign Name
+                                        <span class="required">
+                                            *
+                                        </span>
+                                    </label>
+
+
+                                    <div class="input-shell">
+
+                                        <span
+                                            class="input-shell__icon"
+                                            aria-hidden="true"
+                                        >
+                                            ▣
+                                        </span>
+
+                                        <input
+                                            id="campaign-name"
+                                            name="name"
+                                            class="form-control"
+                                            type="text"
+                                            value="<%= name || '' %>"
+                                            placeholder="Enter campaign name..."
+                                            required
+                                        >
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- Join Code -->
+
+                                <div class="form-field">
+
+                                    <label
+                                        class="form-field__label"
+                                        for="join-code"
+                                    >
+                                        Join Code / Access Code
+                                    </label>
+
+
+                                    <div class="input-shell">
+
+                                        <span
+                                            class="input-shell__icon"
+                                            aria-hidden="true"
+                                        >
+                                            🔗
+                                        </span>
+
+                                        <input
+                                            id="join-code"
+                                            name="accessCode"
+                                            class="form-control"
+                                            type="password"
+                                            placeholder="<%= passwordHash ? 'Access code is set; enter a new code to change it...' : 'Leave empty for invite only...' %>"
+                                        >
+
+                                        <button
+                                            class="input-info"
+                                            type="button"
+                                            aria-label="Access code information"
+                                        >
+                                            i
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- Description -->
+
+                                <div class="form-field">
+
+                                    <label
+                                        class="form-field__label"
+                                        for="campaign-description"
+                                    >
+                                        Short Description
+                                        <span class="required">
+                                            *
+                                        </span>
+                                    </label>
+
+
+                                    <div class="input-shell input-shell--textarea">
+
+                                        <span
+                                            class="input-shell__icon input-shell__icon--textarea"
+                                            aria-hidden="true"
+                                        >
+                                            ▤
+                                        </span>
+
+                                        <textarea
+                                            id="campaign-description"
+                                            name="shortDescription"
+                                            class="form-control form-control--textarea"
+                                            placeholder="A brief description of your campaign..."
+                                            required
+                                        ><%= shortDescription || '' %></textarea>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- Maximum Participants -->
+
+                                <div class="form-field">
+
+                                    <label
+                                        class="form-field__label"
+                                        for="maximum-participants"
+                                    >
+                                        Maximum Participants
+                                    </label>
+
+
+                                    <div class="input-shell">
+
+                                        <span
+                                            class="input-shell__icon"
+                                            aria-hidden="true"
+                                        >
+                                            ♟
+                                        </span>
+
+
+                                        <div class="select-shell">
+
+                                            <select
+                                                id="maximum-participants"
+                                                name="max_nr_users"
+                                                class="form-control form-control--select"
+                                            >
+
+                                                <option value="2" <%= Number(max_nr_users) === 2 ? 'selected' : '' %>>
+                                                    2
+                                                </option>
+
+                                                <option value="3" <%= Number(max_nr_users) === 3 ? 'selected' : '' %>>
+                                                    3
+                                                </option>
+
+                                                <option
+                                                    value="4"
+                                                    <%= Number(max_nr_users) === 4 || !max_nr_users ? 'selected' : '' %>
+                                                >
+                                                    4
+                                                </option>
+
+                                                <option value="5" <%= Number(max_nr_users) === 5 ? 'selected' : '' %>>
+                                                    5
+                                                </option>
+
+                                                <option value="6" <%= Number(max_nr_users) === 6 ? 'selected' : '' %>>
+                                                    6
+                                                </option>
+
+                                                <option value="7" <%= Number(max_nr_users) === 7 ? 'selected' : '' %>>
+                                                    7
+                                                </option>
+
+                                                <option value="8" <%= Number(max_nr_users) === 8 ? 'selected' : '' %>>
+                                                    8
+                                                </option>
+
+                                            </select>
+
+                                            <span
+                                                class="select-shell__arrow"
+                                                aria-hidden="true"
+                                            >
+                                                ▾
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <p class="form-field__helper">
+                                        Set the maximum number of players (2–8).
+                                    </p>
+
+                                </div>
+
+                                <div class="form-field">
+
+                                    <label
+                                        class="form-field__label"
+                                        for="minimum-participants"
+                                    >
+                                        Minimum Participants
+                                    </label>
+
+                                    <div class="input-shell">
+
+                                        <span
+                                            class="input-shell__icon"
+                                            aria-hidden="true"
+                                        >
+                                            ♟
+                                        </span>
+
+                                        <div class="select-shell">
+
+                                            <select
+                                                id="minimum-participants"
+                                                name="min_nr_users"
+                                                class="form-control form-control--select"
+                                            >
+                                                <% for (let count = 1; count <= 8; count += 1) { %>
+                                                <option value="<%= count %>" <%= Number(min_nr_users) === count || (!min_nr_users && count === 1) ? 'selected' : '' %>>
+                                                    <%= count %>
+                                                </option>
+                                                <% } %>
+                                            </select>
+
+                                            <span
+                                                class="select-shell__arrow"
+                                                aria-hidden="true"
+                                            >
+                                                ▾
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <p class="form-field__helper">
+                                        Set the minimum number of players (1–8).
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+
+                        <!-- =============================================
+                             CAMPAIGN CONDITIONS
+                        ============================================== -->
+
+                        <section class="ui-section">
+
+                            <div class="ui-section__heading">
+
+                                <span
+                                    class="ui-section__icon"
+                                    aria-hidden="true"
+                                >
+                                    ◉
+                                </span>
+
+                                <h2 class="ui-section__title">
+                                    CAMPAIGN CONDITIONS
+                                </h2>
+
+                            </div>
+
+
+                            <div class="starting-level">
+
+                                <span
+                                    class="starting-level__icon"
+                                    aria-hidden="true"
+                                >
+                                    ▥
+                                </span>
+
+
+                                <div class="starting-level__content">
+
+                                    <label
+                                        class="form-field__label"
+                                        for="starting-level"
+                                    >
+                                        Starting Level
+                                        <span class="required">
+                                            *
+                                        </span>
+                                    </label>
+
+
+                                    <div class="select-shell select-shell--level">
+
+                                        <select
+                                            id="starting-level"
+                                            name="starting_lvl"
+                                            class="form-control form-control--select"
+                                        >
+
+                                            <% for (let level = 1; level <= 20; level += 1) { %>
+                                            <option value="<%= level %>" <%= Number(starting_lvl) === level || (!starting_lvl && level === 1) ? 'selected' : '' %>>
+                                                <%= level %>
+                                            </option>
+                                            <% } %>
+
+                                        </select>
+
+                                        <span
+                                            class="select-shell__arrow"
+                                            aria-hidden="true"
+                                        >
+                                            ▾
+                                        </span>
+
+                                    </div>
+
+
+                                    <p class="form-field__helper">
+                                        The level at which the party will begin the campaign.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+
+                        <!-- =============================================
+                             BANNED OPTIONS
+                        ============================================== -->
+
+                        <section class="options-grid">
+
+
+                            <!-- =========================================
+                                 CLASSES
+                            ========================================== -->
+
+                            <fieldset class="option-panel">
+
+                                <legend class="option-panel__heading">
+
+                                    <span
+                                        class="option-panel__icon"
+                                        aria-hidden="true"
+                                    >
+                                        ◈
+                                    </span>
+
+                                    <span class="option-panel__title">
+                                        CLASSES
+                                    </span>
+
+                                    <span class="option-panel__limit">
+                                        Select up to 4
+                                    </span>
+
+                                </legend>
+
+
+                                <div class="option-panel__list">
+
+                                    <% classes.forEach((item) => { %>
+                                    <label class="check-option">
+                                        <input type="checkbox" name="classes" value="<%= item.index %>" <%= allowedIndexes.classes.includes(item.index) ? 'checked' : '' %>>
+                                        <span class="check-option__box">&#10003;</span>
+                                        <span class="check-option__label"><%= item.name %></span>
+                                    </label>
+                                    <% }); %>
+
+                                </div>
+
+                            </fieldset>
+
+
+
+                            <!-- =========================================
+                                 RACES
+                            ========================================== -->
+
+                            <fieldset class="option-panel">
+
+                                <legend class="option-panel__heading">
+
+                                    <span
+                                        class="option-panel__icon"
+                                        aria-hidden="true"
+                                    >
+                                        ♙
+                                    </span>
+
+                                    <span class="option-panel__title">
+                                        RACES
+                                    </span>
+
+                                    <span class="option-panel__limit">
+                                        Select up to 6
+                                    </span>
+
+                                </legend>
+
+
+                                <div class="option-panel__list">
+
+                                    <% races.forEach((item) => { %>
+                                    <label class="check-option">
+                                        <input type="checkbox" name="races" value="<%= item.index %>" <%= allowedIndexes.races.includes(item.index) ? 'checked' : '' %>>
+                                        <span class="check-option__box">&#10003;</span>
+                                        <span class="check-option__label"><%= item.name %></span>
+                                    </label>
+                                    <% }); %>
+
+                                </div>
+
+                            </fieldset>
+
+
+
+                            <!-- =========================================
+                                 BACKGROUNDS
+                            ========================================== -->
+
+                            <fieldset class="option-panel">
+
+                                <legend class="option-panel__heading">
+
+                                    <span
+                                        class="option-panel__icon"
+                                        aria-hidden="true"
+                                    >
+                                        ▤
+                                    </span>
+
+                                    <span class="option-panel__title">
+                                        BACKGROUNDS
+                                    </span>
+
+                                    <span class="option-panel__limit">
+                                        Select up to 4
+                                    </span>
+
+                                </legend>
+
+
+                                <div class="option-panel__list">
+
+                                    <% backgrounds.forEach((item) => { %>
+                                    <label class="check-option">
+                                        <input type="checkbox" name="backgrounds" value="<%= item.index %>" <%= allowedIndexes.backgrounds.includes(item.index) ? 'checked' : '' %>>
+                                        <span class="check-option__box">&#10003;</span>
+                                        <span class="check-option__label"><%= item.name %></span>
+                                    </label>
+                                    <% }); %>
+
+                                </div>
+
+                            </fieldset>
+
+
+
+                            <!-- =========================================
+                                 FEATS
+                            ========================================== -->
+
+                            <fieldset class="option-panel">
+
+                                <legend class="option-panel__heading">
+
+                                    <span
+                                        class="option-panel__icon"
+                                        aria-hidden="true"
+                                    >
+                                        ★
+                                    </span>
+
+                                    <span class="option-panel__title">
+                                        FEATS
+                                    </span>
+
+                                    <span class="option-panel__limit">
+                                        Select up to 4
+                                    </span>
+
+                                </legend>
+
+
+                                <div class="option-panel__list">
+
+                                    <% feats.forEach((item) => { %>
+                                    <label class="check-option">
+                                        <input type="checkbox" name="feats" value="<%= item.index %>" <%= allowedIndexes.feats.includes(item.index) ? 'checked' : '' %>>
+                                        <span class="check-option__box">&#10003;</span>
+                                        <span class="check-option__label"><%= item.name %></span>
+                                    </label>
+                                    <% }); %>
+
+                                </div>
+
+                            </fieldset>
+
+                        </section>
+
+
+
+                        <!-- =============================================
+                             ACTION BUTTONS
+                        ============================================== -->
+
+                        <div class="form-actions">
+
+                            <button
+                                class="action-button action-button--primary"
+                                type="submit"
+                            >
+
+                                <span
+                                    class="action-button__icon"
+                                    aria-hidden="true"
+                                >
+                                    ✧
+                                </span>
+
+                                <span>
+                                    CREATE CAMPAIGN
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                class="action-button action-button--secondary"
+                                type="button"
+                            >
+                                CANCEL
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<div name="dosarRep">
+  <% let groupedData_honer = []; %>
+  <% let groupedData_stain = []; %>
+
+  <% if (userPlus && userPlus.length > 0) { %>
+    <% userPlus.forEach(data => { %>
+      <% if (data.userLink.toString() == user._id.toString()) { %>
+        
+        <% data.allReputation.forEach(reputation => { %>
+
+          <!-- match with honor  -->
+          <% if (importHonorDetail && importHonorDetail.length > 0) { %>
+            <% Object.entries(importHonorDetail).forEach(([nothing, nothing2]) => { %>
+
+              <% Object.entries(nothing2).forEach(([stillNothing, stillNothing2]) => { %>
+                <% Object.entries(stillNothing2).forEach(([Category, value]) => { %>
+                  <% if (Category !== '_id' && Category !== '__v' && Category !== 'skipId' && Category !== 'activePaths') { %>
+                    <% Object.entries(value).forEach(([sdfg, subCategory]) => { %> 
+                      <% if (subCategory.permanentReputationNumber == reputation.get_permanentReputationNumber) { %>
+                        <% groupedData_honer.push(subCategory); %>
+                      <% }; %>
+                    <% }); %>
+                  <% } %>
+                <% }); %>
+              <% }); %>
+
+            <% }); %>
+          <% } %>
+
+          <!-- match with stain  -->
+          <% if (importStainDetail && importStainDetail.length > 0) { %>
+            <% Object.entries(importStainDetail).forEach(([nothing, nothing2]) => { %>
+
+              <% Object.entries(nothing2).forEach(([stillNothing, stillNothing2]) => { %>
+                <% Object.entries(stillNothing2).forEach(([Category, value]) => { %>
+                  <% if (Category !== '_id' && Category !== '__v' && Category !== 'skipId' && Category !== 'activePaths') { %>
+                    <% Object.entries(value).forEach(([sdfg, subCategory]) => { %> 
+                      <% if (subCategory.permanentReputationNumber == reputation.get_permanentReputationNumber) { %>
+                        <% groupedData_stain.push(subCategory); %>
+                      <% }; %>
+                    <% }); %>
+                  <% } %>
+                <% }); %>
+              <% }); %>
+
+            <% }); %>
+          <% } %>
+
+
+        <% }); %>
+      <% } %>
+    <% }); %>
+    
+  <% } %>
+</div>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Signup Page</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+  <header class="navBar">
+    <div class="account_not_connected"> 
+      <a href="/login" class="login paragraph0">Log In</a>
+      <a href="/register" class="signup paragraph0">Sign Up</a>
+    </div>
+  </header>
+
+
+  <div class="splitScreen">
+    <div class="container">
+      <h1>Login</h1>
+      <h5>By clicking Sign In, you agree to our <a href="/legal/terms">Terms</a>. 
+        Learn how we process your data in our <a href="/legal/privacy_policy">Privacy Policy</a> 
+        and <a href="/legal/cookie_policy">Cookie Policy</a>.
+      </h5>
+      <div class="tab-content active" id="loginContent">
+  
+        <% if(typeof message !== "undefined"){%>
+          <h4><%= message %></h4>
+        <% }%>
+        <form action="/login" id="form" method="post">
+          <div class="mb-3">
+              <input type="email" placeholder="Email" class="form-control email" id="email"  name="email"autocomplete="off" required>
+          </div>
+          <div class="mb-3">
+              <input type="password" placeholder="Password" class="form-control password" id="password" name="password" autocomplete="off" required>
+          </div>
+          <button type="submit" class="btn btn-primary" value="login">Log In</button>
+        </form>
+      </div>
+  
+      <div class="switch">
+        <!-- <p>You forgot your password? <a href="/forgot">Reset Password</a></p> -->
+        <p>Create your account with <a href="/register">Sign Up</a></p>
+        <h5 style="color: rgb(92, 0, 0)">Do not lose your password, as you won't have the option to recover/change it</h5>
+      </div>
+    </div>
+    <div class="container_about">
+      <section class="section1">
+        <div class="hostItem">
+          <img class="host_img" src="img\about\Oras.png" alt="">
+          <div class="div_text">
+            <h3>So, here's the deal </h3>
+            <p class="text1"> &nbsp; &nbsp; I love playing board games. Like, seriously love it. 
+              It all started as a fun hobby with my buddies, and before I knew it, 
+              I was hooked.
+            </p>
+  
+          </div>
+        </div>
+      </section>
+  
+      <section class="section2">
+        <div class="hostItem">
+          <div class="div_text">
+            <p class="text2">
+              &nbsp; &nbsp;But you know what's even better than playing games? 
+              Playing games with more people!
+            </p>
+            <hr>
+            <p class="text2">
+              &nbsp; &nbsp;So here we are. I came up with this idea to gather people in one place 
+              so that they can see who is interested in playing the board games they like.
+            </p>
+          </div>
+          <img class="host_img" src="img\about\People.png" alt="">
+        </div>
+      </section>
+  
+    </div>
+  </div>
+
+
+  <script>
+    if (message) {
+        document.querySelector(".container").innerHTML += `<h4 class="alert alert-danger mt-4">${message}</h4>`
+    }
+</script>
+  <script src="js/login.js"></script>
+</body>
+</html>

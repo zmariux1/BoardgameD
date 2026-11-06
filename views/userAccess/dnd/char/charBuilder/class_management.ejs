@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Alege-ți Clasa</title>
+
+    
+    <link rel="stylesheet" href="/css/dnd/char/builder/piese/root.css">
+    <link rel="stylesheet" href="/css/dnd/char/builder/piese/comunBuilder.css">
+    
+    <link rel="stylesheet" href="/css/dnd/char/builder/class_selection.css">
+    <link rel="stylesheet" href="/css/dnd/char/builder/classlistBar.css">
+    
+    <link rel="stylesheet" href="/css/dnd/char/builder/piese/asideBar.css">
+    <link rel="stylesheet" href="/css/dnd/char/builder/piese/header.css">
+
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+</head>
+
+<body>
+
+    <div class="character-page">
+
+        <!-- =========================================================
+             TOP BAR
+        ========================================================== -->
+        <%- include('piese/header') %>
+
+
+        <!-- =========================================================
+             MAIN LAYOUT
+        ========================================================== -->
+
+        <div class="character-layout">
+
+            <!-- =====================================================
+                 LEFT SIDEBAR
+            ====================================================== -->
+            <%- include('piese/asideBar') %>
+
+
+
+            <!-- =====================================================
+                 MAIN CONTENT
+            ====================================================== -->
+
+            <main class="character-content">
+                <div class="pozitionare_content">
+                    
+                    <!-- =================================================
+                            PAGE HEADER
+                    ================================================== -->
+
+                    <section class="class-selection-header">
+
+                        <h1 class="class-selection-header__title">
+                            Alege-ți Clasa
+                        </h1>
+
+                        <p class="class-selection-header__description">
+                            Clasa ta definește abilitățile, stilul de joc și rolul
+                            tău în aventură.
+                        </p>
+
+                        <p class="class-selection-header__subtitle">
+                            Alege cu înțelepciune, erou!
+                        </p>
+
+                    </section>
+
+
+
+
+                    <!-- =================================================
+                            CLASS LIST
+                    ================================================== -->
+                    <%
+                        const getAbilityShortCode = (value) => {
+                            const mapping = {
+                                strength: 'str',
+                                dexterity: 'dex',
+                                constitution: 'con',
+                                intelligence: 'int',
+                                wisdom: 'wis',
+                                charisma: 'cha',
+                                str: 'str',
+                                dex: 'dex',
+                                con: 'con',
+                                int: 'int',
+                                wis: 'wis',
+                                cha: 'cha'
+                            };
+
+                            const normalized = String(value || '').trim().toLowerCase();
+                            return mapping[normalized] || normalized;
+                        };
+
+                        const normalizeChoiceIndex = (value) =>
+                            String(value || '').trim().toLowerCase().replace(/[_-]+/g, '-');
+
+                        const getFeatAbilityIndex = (name) =>
+                            `feat-${String(name || '')
+                                .trim()
+                                .toLowerCase()
+                                .replace(/[^a-z0-9]+/g, '-')
+                                .replace(/^-|-$/g, '')}`;
+                    %>
+                    <% if (Array.isArray(classes) && classes.length) { %>
+                        <section class="multisub_container" aria-label="Clase disponibile">
+                            <!-- =================================================
+                                bara cu clasele selectate
+                            ================================================== -->
+
+                            <div class="class-level-bar">
+
+                                <!-- Rama exterioară -->
+                                <div class="class-level-bar__frame">
+
+                                    <!-- Ornamente colțuri -->
+                                    <span class="class-level-bar__corner class-level-bar__corner--tl"></span>
+                                    <span class="class-level-bar__corner class-level-bar__corner--tr"></span>
+                                    <span class="class-level-bar__corner class-level-bar__corner--bl"></span>
+                                    <span class="class-level-bar__corner class-level-bar__corner--br"></span>
+
+                                    <!-- Ornamente suplimentare pe ramă -->
+                                    <span class="class-level-bar__frame-detail class-level-bar__frame-detail--top"></span>
+                                    <span class="class-level-bar__frame-detail class-level-bar__frame-detail--bottom"></span>
+
+                                    <!-- Conținutul barei -->
+                                    <div class="class-level-bar__content">
+
+                                        <!--
+                                            EJS:
+
+                                            < % selectedClasses.forEach(function(classItem, index) { % >
+                                                ...
+                                            < % }); % >
+                                        -->
+
+                                        <!-- Add multiclass -->
+                                        <a
+                                            href="/<%= userId %>/dnd/builder/<%= characterId %>/class/choose"
+                                            class="add-class-button"
+                                            aria-label="Add new class"
+                                        >
+                                            <span class="add-class-button__icon-frame">
+                                                <span class="add-class-button__icon-ring">
+                                                    <span class="add-class-button__icon">+</span>
+                                                </span>
+                                            </span>
+                                            <p class="add-class-button__text">
+                                                ADD NEW CLASS
+                                            </p>
+                                        </a>
+
+                                        <% if (Array.isArray(character.classes) && character.classes.length > 0) { %>
+                                            <div class="class-level-separator class-level-separator--button" aria-hidden="true">
+                                                <span class="class-level-separator__line"></span>
+                                                <span class="class-level-separator__ornament">
+                                                    <i></i>
+                                                    <b></b>
+                                                    <i></i>
+                                                </span>
+                                            </div>
+                                        <% } %>
+
+                                    <!-- ITERATE THROUGH CHARACTER CLASSES -->
+                                    <% if (character.classes && Array.isArray(character.classes)) { %>
+                                        <% character.classes.forEach(function(cls, classIndex) {
+                                            const classData = classes.find(c => c.index === cls.index);
+                                            const className = classData ? classData.name : cls.index;
+                                            const classImagePath = `/img/dnd/classes/${cls.index}.png`;
+                                        %>
+                                            <article class="class-level-item <%= classIndex === 0 ? 'class-level-item--active' : '' %>">
+
+                                                <div class="class-level-item__icon-frame">
+
+                                                    <div class="class-level-item__icon-ring">
+
+                                                        <div class="class-level-item__icon">
+                                                            <img
+                                                                src="<%= classImagePath %>"
+                                                                alt="<%= className %>"
+                                                                onerror="this.onerror=null;this.src='https://placehold.co/600x400/1f2937/ffffff?text=<%= encodeURIComponent(className) %>'"
+                                                            >
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="class-level-item__body">
+
+                                                    <div class="class-level-item__title-row">
+                                                        <div class="class-level-item__name">
+                                                            <%= className %>
+                                                        </div>
+                                                        <form
+                                                            action="/<%= userId %>/dnd/builder/<%= characterId %>/class/management/delete"
+                                                            method="POST"
+                                                            class="class-level-item__delete-form"
+                                                            onsubmit="return confirm('Sigur vrei să ștergi această clasă și toate alegerile ei?');"
+                                                        >
+                                                            <input type="hidden" name="classEntryId" value="<%= cls._id %>">
+                                                            <button
+                                                                type="submit"
+                                                                class="class-level-item__delete-button"
+                                                                aria-label="Șterge clasa <%= className %>"
+                                                                title="Șterge clasa"
+                                                            >Șterge</button>
+                                                        </form>
+                                                    </div>
+
+                                                    <form
+                                                    action="/<%= userId %>/dnd/builder/<%= characterId %>/class/management/level"
+                                                    method="POST"
+                                                     class="class-level-item__level-control">
+
+                                                        <input type="hidden" name="classIndex" value="<%= cls.index %>">
+
+                                                        <select class="level-control__dropdown" name="levelControlDropdown" aria-label="Selectează nivelul" data-class-index="<%= cls.index %>" required>
+                                                            <% if (!Number.isInteger(Number(cls.level)) || Number(cls.level) < 1 || Number(cls.level) > 20) { %>
+                                                                <option value="" selected disabled>Alege o opțiune</option>
+                                                            <% } %>
+                                                            <option value="1" <%= cls.level === '1' ? 'selected' : '' %>>Level 1</option>
+                                                            <option value="2" <%= cls.level === '2' ? 'selected' : '' %>>Level 2</option>
+                                                            <option value="3" <%= cls.level === '3' ? 'selected' : '' %>>Level 3</option>
+                                                            <option value="4" <%= cls.level === '4' ? 'selected' : '' %>>Level 4</option>
+                                                            <option value="5" <%= cls.level === '5' ? 'selected' : '' %>>Level 5</option>
+                                                            <option value="6" <%= cls.level === '6' ? 'selected' : '' %>>Level 6</option>
+                                                            <option value="7" <%= cls.level === '7' ? 'selected' : '' %>>Level 7</option>
+                                                            <option value="8" <%= cls.level === '8' ? 'selected' : '' %>>Level 8</option>
+                                                            <option value="9" <%= cls.level === '9' ? 'selected' : '' %>>Level 9</option>
+                                                            <option value="10" <%= cls.level === '10' ? 'selected' : '' %>>Level 10</option>
+                                                            <option value="11" <%= cls.level === '11' ? 'selected' : '' %>>Level 11</option>
+                                                            <option value="12" <%= cls.level === '12' ? 'selected' : '' %>>Level 12</option>
+                                                            <option value="13" <%= cls.level === '13' ? 'selected' : '' %>>Level 13</option>
+                                                            <option value="14" <%= cls.level === '14' ? 'selected' : '' %>>Level 14</option>
+                                                            <option value="15" <%= cls.level === '15' ? 'selected' : '' %>>Level 15</option>
+                                                            <option value="16" <%= cls.level === '16' ? 'selected' : '' %>>Level 16</option>
+                                                            <option value="17" <%= cls.level === '17' ? 'selected' : '' %>>Level 17</option>
+                                                            <option value="18" <%= cls.level === '18' ? 'selected' : '' %>>Level 18</option>
+                                                            <option value="19" <%= cls.level === '19' ? 'selected' : '' %>>Level 19</option>
+                                                            <option value="20" <%= cls.level === '20' ? 'selected' : '' %>>Level 20</option>
+                                                        </select>
+
+                                                    </form>
+
+                                                </div>
+
+                                            </article>
+
+                                            <!-- Separator between classes (not after the last one) -->
+                                            <% if (classIndex < character.classes.length - 1) { %>
+                                                <div class="class-level-separator" aria-hidden="true">
+                                                    <span class="class-level-separator__line"></span>
+                                                    <span class="class-level-separator__ornament">
+                                                        <i></i>
+                                                        <b></b>
+                                                        <i></i>
+                                                    </span>
+                                                </div>
+                                            <% } %>
+                                        <% }); %>
+                                    <% } %>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <% classes.forEach(function(item) { %>
+                                <%
+                                    const classIndex = item && item.index ? item.index : '';
+                                    const selectedCharacterClass = character.classes && Array.isArray(character.classes)
+                                        ? character.classes.find(function(characterClass) {
+                                            return characterClass.index === classIndex;
+                                        })
+                                        : null;
+                                    const classLevelLimit = temporaryClassLevels && temporaryClassLevels[classIndex]
+                                        ? temporaryClassLevels[classIndex]
+                                        : 1;
+                                    const classFeatures = Array.isArray(features)
+                                        ? features
+                                            .filter(function(feature) {
+                                                if (!feature || !feature.class || feature.class.index !== classIndex) {
+                                                    return false;
+                                                }
+
+                                                if ((feature.level || 0) > classLevelLimit) {
+                                                    return false;
+                                                }
+
+                                                // Feature-urile generale sunt disponibile fără alegerea unei subclase.
+                                                if (!feature.subclass || !feature.subclass.index) {
+                                                    return true;
+                                                }
+
+                                                // Feature-ul de subclasă apare doar după alegerea subclasei.
+                                                const classAbilities = selectedCharacterClass &&
+                                                    Array.isArray(selectedCharacterClass.abilities)
+                                                    ? selectedCharacterClass.abilities
+                                                    : [];
+                                                const subclassIsSelected = classAbilities.some(function(ability) {
+                                                    return String(ability.conditionId || '') !== 'feat' &&
+                                                        normalizeChoiceIndex(ability.optionIndex) ===
+                                                            normalizeChoiceIndex(feature.subclass.index);
+                                                });
+
+                                                if (!subclassIsSelected) {
+                                                    return false;
+                                                }
+
+                                                // Feature-urile cu subchoice apar doar după selectarea acelei opțiuni.
+                                                if (feature.subclass.subchoice) {
+                                                    return classAbilities.some(function(ability) {
+                                                        return String(ability.conditionId || '') !== 'feat' &&
+                                                            normalizeChoiceIndex(ability.index) ===
+                                                                normalizeChoiceIndex(feature.subclass.subchoice) &&
+                                                            normalizeChoiceIndex(ability.optionIndex) ===
+                                                                normalizeChoiceIndex(feature.index);
+                                                    });
+                                                }
+
+                                                return true;
+                                            })
+                                            .sort(function(a, b) {
+                                                return (a.level || 0) - (b.level || 0);
+                                            })
+                                        : [];
+                                %>
+                                <article class="class_modal-wide" aria-labelledby="class-modal-title">
+                                    
+                                    <!-- =====================================================
+                                        HEADER
+                                    ====================================================== -->
+
+                                    <header class="class-modal__header">
+
+                                        <div class="class-modal__class-icon">
+                                            <span>⚔</span>
+                                        </div>
+
+                                        <div class="class-modal__title-area">
+                                            <h1 id="class-modal-title"><%= item.name %></h1>
+
+                                            <div class="class-modal__ornament">
+                                                
+                                                <span class="class-modal__meta-label">
+                                                    ◆ ─ HP Die
+                                                    <strong class="">
+                                                        <% if (item.hit_die) { %>
+                                                            <%= item.hit_die %>
+                                                        <% } %>
+                                                        
+                                                    </strong>
+                                                    ─ ◆
+                                                    <button
+                                                        type="button"
+                                                        class="hp-roll-button"
+                                                        aria-label="Aruncă pentru punctele de viață"
+                                                    >
+                                                        <i class="fa-light fa-dice-d20"></i>
+                                                    </button>
+                                                </span>
+                                                
+                                            </div>
+                                        </div>
+
+
+                                        <button
+                                            type="button"
+                                            class="class-modal__close"
+                                            aria-label="Închide"
+                                        >
+                                            ×
+                                        </button>
+
+                                    </header>
+
+
+                                    <!-- =====================================================
+                                        BASIC CLASS INFORMATION
+                                    ====================================================== -->
+
+                                    <div class="class-modal__meta">
+
+                                        <div class="class-modal__meta-item">
+
+                                            <div class="class-modal__meta-icon">
+                                                ◈
+                                            </div>
+
+                                            <div>
+                                                <span class="class-modal__meta-label">
+                                                    Hit Point Die
+                                                </span>
+
+                                                <strong class="class-modal__meta-value">
+                                                    <% if (item.hit_die) { %>
+                                                        <%= item.hit_die %>
+                                                    <% } %>
+                                                </strong>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="class-modal__meta-divider"></div>
+
+
+                                        <div class="class-modal__meta-item">
+
+                                            <div class="class-modal__meta-icon">
+                                                ♜
+                                            </div>
+
+                                            <div>
+                                                <span class="class-modal__meta-label">
+                                                    Saves
+                                                </span>
+
+                                                <strong class="class-modal__meta-value">
+
+                                                    <% if (
+                                                        item.multi_classing &&
+                                                        item.multi_classing.prerequisite_options &&
+                                                        item.multi_classing.prerequisite_options.from &&
+                                                        Array.isArray(item.multi_classing.prerequisite_options.from.options) &&
+                                                        item.multi_classing.prerequisite_options.from.options.length
+                                                    ) { %>
+
+                                                        <% item.multi_classing.prerequisite_options.from.options.forEach(function(option, index) { %>
+
+                                                            <%= option.ability_score.name %>
+
+                                                            <% if (
+                                                                index <
+                                                                item.multi_classing.prerequisite_options.from.options.length - 1
+                                                            ) { %>
+                                                                /
+                                                            <% } %>
+
+                                                        <% }); %>
+
+                                                    <% } else { %>
+
+                                                        -
+
+                                                    <% } %>
+
+                                                </strong>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="class-modal__meta-divider"></div>
+
+
+                                        <div class="class-modal__meta-item class-modal__meta-item--link">
+
+                                            <div>
+                                                <span class="class-modal__meta-label">
+                                                    Details Page
+                                                </span>
+
+                                                <a
+                                                    href="/api/2024/classes/barbarian"
+                                                    class="class-modal__details-link"
+                                                >
+                                                    Barbarian Details Page
+                                                    <span>↗</span>
+                                                </a>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- =====================================================
+                                        SCROLLABLE FEATURES AREA
+                                    ====================================================== -->
+                                    
+                                    <div class="class-modal__content">
+
+                                        <div class="class-modal__features">
+
+                                            <!-- =================================================
+                                                Proficiency choices 
+                                            ================================================== -->
+                                            <% if (Array.isArray(item.proficiency_choices)) { %>
+                                                <% item.proficiency_choices.forEach(function(choice, proficiencyChoiceIndex) {
+                                                    const options = choice.from && Array.isArray(choice.from.options)
+                                                        ? choice.from.options
+                                                        : [];
+                                                    const chooseCount = Number(choice.choose) || 0;
+                                                %>
+                                                    <div class="class-feature">
+                                                        <% if (choice.desc) { %>
+                                                            <div class="class-feature__body">
+                                                                <%= choice.desc %>
+                                                            </div>
+                                                        <% } %>
+
+                                                        <% for (let choiceIndex = 0; choiceIndex < chooseCount; choiceIndex++) { %>
+                                                            <%
+                                                                const savedProficiencyChoice = selectedCharacterClass && Array.isArray(selectedCharacterClass.abilities)
+                                                                    ? selectedCharacterClass.abilities.find(function(ability) {
+                                                                        return ability.index === 'proficiency-choice-' + proficiencyChoiceIndex &&
+                                                                            ability.conditionId === proficiencyChoiceIndex + '-' + choiceIndex;
+                                                                    })
+                                                                    : null;
+                                                                const savedProficiencyIndex = savedProficiencyChoice
+                                                                    ? savedProficiencyChoice.optionIndex || ''
+                                                                    : '';
+                                                            %>
+                                                            <form
+                                                                action="/<%= userId %>/dnd/builder/<%= characterId %>/class/management/class_skills"
+                                                                method="POST"
+                                                                class="class-feature__body class-proficiency-choice-control"
+                                                            >
+                                                                <input type="hidden" name="classIndex" value="<%= item.index %>">
+                                                                <input type="hidden" name="featureIndex" value="proficiency-choice-<%= proficiencyChoiceIndex %>">
+                                                                <input type="hidden" name="featureName" value="Proficiency choice">
+                                                                <input type="hidden" name="choiceType" value="<%= choice.type || 'proficiencies' %>">
+                                                                <input type="hidden" name="conditionId" value="<%= proficiencyChoiceIndex %>-<%= choiceIndex %>">
+                                                                <input type="hidden" name="conditionLabel" value="<%= choice.desc || '' %>">
+                                                                <input type="hidden" name="value" value="0">
+                                                                <input type="hidden" name="slot" value="0">
+                                                                <input type="hidden" name="optionName" value="">
+
+                                                                <label>
+                                                                    Alege opțiunea <%= choiceIndex + 1 %>:
+
+                                                                    <select name="optionIndex" class="proficiency-choice-dropdown" required>
+                                                                        <% if (!savedProficiencyIndex) { %>
+                                                                            <option value="" selected disabled>Alege o opțiune</option>
+                                                                        <% } %>
+
+                                                                        <% options.forEach(function(option) { %>
+                                                                            <% if (option.item && option.item.index && option.item.name) { %>
+                                                                                <%
+                                                                                    const optionValue = option.item.index;
+                                                                                %>
+
+                                                                                <option
+                                                                                    value="<%= optionValue %>"
+                                                                                    data-option-name="<%= option.item.name %>"
+                                                                                    data-option-value="<%= optionValue %>"
+                                                                                    <%= savedProficiencyIndex === option.item.index ||
+                                                                                        (savedProficiencyChoice && savedProficiencyChoice.decision === option.item.name)
+                                                                                        ? 'selected'
+                                                                                        : '' %>
+                                                                                >
+                                                                                    <%= option.item.name %>
+                                                                                </option>
+                                                                            <% } %>
+                                                                        <% }); %>
+                                                                    </select>
+
+                                                                </label>
+                                                            </form>
+                                                        <% } %>
+                                                    </div>
+                                                <% }); %>
+                                            <% } %>
+
+                                            <!-- Proficiencies: ordinary items inline, saving throws vertically -->
+                                            <% if (Array.isArray(item.proficiencies)) { %>
+                                                <div class="class-feature__body">
+                                                    <strong>Proficiencies:</strong>
+                                                    <div>
+                                                        <% item.proficiencies
+                                                            .filter(function(proficiency) {
+                                                                return proficiency.name && !proficiency.name.includes('Saving Throw:');
+                                                            })
+                                                            .forEach(function(proficiency, proficiencyIndex, proficiencies) { %>
+                                                                <span><%= proficiency.name %></span><%= proficiencyIndex < proficiencies.length - 1 ? ', ' : '' %>
+                                                        <% }); %>
+                                                    </div>
+
+                                                    <div>
+                                                        <% item.proficiencies
+                                                            .filter(function(proficiency) {
+                                                                return proficiency.name && proficiency.name.includes('Saving Throw:');
+                                                            })
+                                                            .forEach(function(proficiency) { %>
+                                                                <div><%= proficiency.name %></div>
+                                                        <% }); %>
+                                                    </div>
+                                                </div>
+                                            <% } %>
+
+                                            <!-- Starting equipment -->
+                                            <% if (Array.isArray(item.starting_equipment) && item.starting_equipment.length) { %>
+                                                <div class="class-feature__body">
+                                                    <strong>Starting equipment:</strong>
+                                                    <%= item.starting_equipment
+                                                        .map(function(equipment) {
+                                                            return equipment.equipment && equipment.equipment.name;
+                                                        })
+                                                        .filter(Boolean)
+                                                        .join(', ') %>
+                                                </div>
+                                            <% } %>
+
+
+
+                                            <% classFeatures.forEach(function(feature) { %>
+                                                <!-- =================================================
+                                                    FEATURE 
+                                                ================================================== -->
+                                                <details class="class-feature">
+
+                                                    <summary class="class-feature__header">
+
+                                                        <div class="class-feature__icon">
+                                                            ⚔
+                                                        </div>
+
+                                                        <div class="class-feature__title">
+
+                                                            <strong>
+                                                                    <%= feature.name %>
+                                                            </strong>
+
+                                                            <span>
+                                                                <%= feature.level || '' %> level
+                                                            </span>
+
+                                                        </div>
+
+                                                        <span class="class-feature__arrow">
+                                                            ◆
+                                                        </span>
+
+                                                    </summary>
+
+
+
+                                                    <div class="class-feature__body">
+
+                                                        <% if (Array.isArray(feature.desc)) { %>
+
+                                                            <%- feature.desc
+                                                                .map(function(paragraph) {
+                                                                    return paragraph
+                                                                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                                                                        .replace(/\n/g, '<br>');
+                                                                })
+                                                                .join('<br>') %>
+
+                                                        <% } else if (feature.desc) { %>
+
+                                                            <%- String(feature.desc)
+                                                                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                                                                .replace(/\n/g, '<br>') %>
+
+                                                        <% } %>
+
+                                                    </div>
+
+                                                    <% if (
+                                                        feature.choice &&
+                                                        Array.isArray(feature.choice.options_conditions) &&
+                                                        feature.choice.options_conditions.length &&
+                                                        (
+                                                            feature.choice.options_conditions.some(function(condition) {
+                                                                return condition.id === 'feat';
+                                                            }) ||
+                                                            feature.choice.from &&
+                                                            Array.isArray(feature.choice.from.options) &&
+                                                            feature.choice.from.options.length
+                                                        )
+                                                    ) { %>
+                                                        <div class="class-feature__choices">
+                                                            <%
+                                                                const featureChoiceConditions = feature.choice.options_conditions || [];
+                                                                const selectedFeatureChoice = featureChoiceConditions.find(function(condition) {
+                                                                    return selectedCharacterClass && Array.isArray(selectedCharacterClass.abilities)
+                                                                        ? selectedCharacterClass.abilities.some(function(ability) {
+                                                                            return String(ability.index || '') === String(feature.index) &&
+                                                                                String(ability.conditionId || '') === String(condition.id || '');
+                                                                        })
+                                                                        : false;
+                                                                }) || null;
+                                                                const selectedFeatureConditionId = selectedFeatureChoice
+                                                                    ? (selectedFeatureChoice.id || '')
+                                                                    : '';
+                                                                const hasMultipleFeatureChoices = featureChoiceConditions.length > 1 || !selectedFeatureChoice;
+                                                            %>
+
+                                                            <% if (hasMultipleFeatureChoices) { %>
+                                                                <form
+                                                                    action="/<%= userId %>/dnd/builder/<%= characterId %>/class/management/class_skills"
+                                                                    method="POST"
+                                                                    class="class-feature__choice-condition-control"
+                                                                >
+                                                                    <input type="hidden" name="classIndex" value="<%= item.index %>">
+                                                                    <input type="hidden" name="featureIndex" value="<%= feature.index %>">
+                                                                    <input type="hidden" name="featureName" value="<%= feature.name %>">
+                                                                    <input type="hidden" name="choiceType" value="<%= feature.choice.type || '' %>">
+                                                                    <input type="hidden" name="conditionLabel" value="<%= selectedFeatureChoice && selectedFeatureChoice.label ? selectedFeatureChoice.label : '' %>">
+                                                                    <input type="hidden" name="selectionMode" value="condition">
+                                                                    <input type="hidden" name="optionIndex" value="<%= selectedFeatureConditionId %>">
+                                                                    <input type="hidden" name="optionName" value="<%= selectedFeatureChoice && selectedFeatureChoice.label ? selectedFeatureChoice.label : '' %>">
+                                                                    <input type="hidden" name="value" value="<%= selectedFeatureChoice && selectedFeatureChoice.value !== undefined ? selectedFeatureChoice.value : 0 %>">
+                                                                    <input type="hidden" name="slot" value="0">
+
+                                                                    <label>
+                                                                        <span>
+                                                                            Alege varianta de condiție
+                                                                        </span>
+
+                                                                        <select name="conditionId" class="feature-choice-condition-dropdown" required>
+                                                                            <% if (!selectedFeatureChoice) { %>
+                                                                                <option value="" selected disabled>Alege o opțiune</option>
+                                                                            <% } %>
+                                                                            <% featureChoiceConditions.forEach(function(condition) { %>
+                                                                                <option
+                                                                                    value="<%= condition.id || '' %>"
+                                                                                    data-option-name="<%= condition.label || condition.id || '' %>"
+                                                                                    data-condition-value="<%= condition.value !== undefined ? condition.value : 0 %>"
+                                                                                    <%= String(selectedFeatureConditionId) === String(condition.id || '') ? 'selected' : '' %>
+                                                                                >
+                                                                                    <%= condition.label || condition.id || 'Opțiune' %>
+                                                                                </option>
+                                                                            <% }); %>
+                                                                        </select>
+                                                                    </label>
+                                                                </form>
+                                                            <% } %>
+
+                                                            <% if (selectedFeatureConditionId) { %>
+                                                                <% featureChoiceConditions.filter(function(condition) {
+                                                                    return String(condition.id || '') === String(selectedFeatureConditionId);
+                                                                }).forEach(function(condition) {
+                                                                    const optionCount = Number(condition.choose) || 0;
+                                                                    const optionValue = condition.value !== undefined
+                                                                        ? condition.value
+                                                                        : '';
+                                                                %>
+                                                                    <div class="class-feature__choice-group">
+                                                                        <% if (condition.label) { %>
+                                                                            <strong class="class-feature__choice-label">
+                                                                                <%= condition.label %>
+                                                                            </strong>
+                                                                        <% } %>
+
+                                                                        <% for (let optionIndex = 0; optionIndex < optionCount; optionIndex++) { %>
+                                                                            <%
+                                                                                const savedFeatureChoice = selectedCharacterClass && Array.isArray(selectedCharacterClass.abilities)
+                                                                                    ? selectedCharacterClass.abilities.find(function(ability) {
+                                                                                        return ability.index === feature.index &&
+                                                                                            ability.conditionId === (condition.id || '') &&
+                                                                                            Number(ability.slot || 0) === optionIndex;
+                                                                                    })
+                                                                                    : null;
+                                                                                const savedFeatureOptionIndex = savedFeatureChoice
+                                                                                    ? savedFeatureChoice.optionIndex || ''
+                                                                                    : '';
+                                                                            %>
+                                                                            <form
+                                                                                action="/<%= userId %>/dnd/builder/<%= characterId %>/class/management/class_skills"
+                                                                                method="POST"
+                                                                                class="class-feature__choice-control"
+                                                                            >
+                                                                                <input type="hidden" name="classIndex" value="<%= item.index %>">
+                                                                                <input type="hidden" name="featureIndex" value="<%= feature.index %>">
+                                                                                <input type="hidden" name="featureName" value="<%= feature.name %>">
+                                                                                <input type="hidden" name="choiceType" value="<%= feature.choice.type || '' %>">
+                                                                                <input type="hidden" name="conditionId" value="<%= condition.id || '' %>">
+                                                                                <input type="hidden" name="conditionLabel" value="<%= condition.label || '' %>">
+                                                                                <input type="hidden" name="value" value="<%= optionValue %>">
+                                                                                <input type="hidden" name="slot" value="<%= optionIndex %>">
+                                                                                <input type="hidden" name="optionName" value="">
+
+                                                                                <label>
+                                                                                    <span>
+                                                                                        Alege opțiunea <%= optionIndex + 1 %>
+                                                                                    </span>
+
+
+                                                                                    <select
+                                                                                        name="optionIndex"
+                                                                                        data-choice-value="<%= optionValue %>"
+                                                                                        required
+                                                                                        <%= condition.different ? 'data-must-be-different="true"' : '' %>
+                                                                                    >
+                                                                                        <% if (!savedFeatureOptionIndex) { %>
+                                                                                            <option value="" selected disabled>Alege o opțiune</option>
+                                                                                        <% } %>
+
+                                                                                        <% if (condition.id === 'feat') { %>
+                                                                                            <% (Array.isArray(feats) ? feats : []).forEach(function(feat) { %>
+                                                                                                <% if (feat && feat.index && feat.name) { %>
+                                                                                                    <option
+                                                                                                        value="<%= feat.index %>"
+                                                                                                        data-option-name="<%= feat.name %>"
+                                                                                                        data-option-value="<%= feat.index %>"
+                                                                                                        <%= savedFeatureOptionIndex === feat.index ||
+                                                                                                            (savedFeatureChoice && savedFeatureChoice.decision === feat.name)
+                                                                                                            ? 'selected'
+                                                                                                            : '' %>
+                                                                                                    >
+                                                                                                        <%= feat.name %>
+                                                                                                    </option>
+                                                                                                <% } %>
+                                                                                            <% }); %>
+
+                                                                                        <% } else if (feature.choice.from && Array.isArray(feature.choice.from.options)) { %>
+                                                                                            <% feature.choice.from.options.forEach(function(option) { %>
+                                                                                                <% if (option.item && option.item.index && option.item.name) { %>
+                                                                                                    <%
+                                                                                                        const featureOptionIndex = String(option.item.index || '').trim();
+
+                                                                                                        const isAbilityScoreImprovement =
+                                                                                                            feature.choice.type === 'ability_score_improvement';
+
+                                                                                                        const featureOptionValue = isAbilityScoreImprovement
+                                                                                                            ? getAbilityShortCode(featureOptionIndex)
+                                                                                                            : featureOptionIndex;
+                                                                                                    %>
+
+                                                                                                    <option
+                                                                                                        value="<%= featureOptionValue %>"
+                                                                                                        data-option-name="<%= option.item.name %>"
+                                                                                                        data-option-value="<%= featureOptionValue %>"
+                                                                                                        <%= savedFeatureOptionIndex === option.item.index ||
+                                                                                                            (savedFeatureChoice && savedFeatureChoice.decision === option.item.name)
+                                                                                                            ? 'selected'
+                                                                                                            : '' %>
+                                                                                                    >
+                                                                                                        <%= option.item.name %>
+                                                                                                    </option>
+                                                                                                <% } %>
+                                                                                            <% }); %>
+                                                                                        <% } %>
+                                                                                    </select>
+
+                                                                                </label>
+                                                                            </form>
+
+                                                                        <% if (condition.id === 'feat' && savedFeatureChoice) {
+                                                                            const selectedFeat = (Array.isArray(feats) ? feats : []).find(function(feat) {
+                                                                                return String(feat.index || '') === String(savedFeatureChoice.optionIndex || '');
+                                                                            });
+                                                                            const featImprovement = selectedFeat
+                                                                                ? (Array.isArray(statsImprovements) ? statsImprovements : []).find(function(improvement) {
+                                                                                    return improvement.reference === 'feats' &&
+                                                                                        Array.isArray(improvement.givenBy) &&
+                                                                                        improvement.givenBy.some(function(givenBy) {
+                                                                                            return String(givenBy.index || '') === String(selectedFeat.index);
+                                                                                        });
+                                                                                })
+                                                                                : null;
+                                                                            const featImprovementConditions = featImprovement &&
+                                                                                featImprovement.choice &&
+                                                                                Array.isArray(featImprovement.choice.options_conditions)
+                                                                                ? featImprovement.choice.options_conditions
+                                                                                : [];
+                                                                            const featAbilityIndex = selectedFeat
+                                                                                ? getFeatAbilityIndex(selectedFeat.name || selectedFeat.index)
+                                                                                : '';
+                                                                            const featChoiceScope = `feat:${feature.index}:${optionIndex}:`;
+                                                                            const savedImprovementCondition = selectedCharacterClass &&
+                                                                                Array.isArray(selectedCharacterClass.abilities)
+                                                                                ? featImprovementConditions.find(function(improvementCondition) {
+                                                                                    return selectedCharacterClass.abilities.some(function(ability) {
+                                                                                        return String(ability.index || '') === featAbilityIndex &&
+                                                                                            String(ability.conditionId || '') ===
+                                                                                                featChoiceScope + String(improvementCondition.id || '');
+                                                                                    });
+                                                                                })
+                                                                                : null;
+                                                                            const savedImprovementConditionId = savedImprovementCondition
+                                                                                ? String(savedImprovementCondition.id || '')
+                                                                                : '';
+                                                                        %>
+                                                                            <% if (featImprovementConditions.length && featImprovement.choice && featImprovement.choice.from && Array.isArray(featImprovement.choice.from.options)) { %>
+                                                                                <div class="class-feature__feat-improvement">
+                                                                                    <label>
+                                                                                        <span>Alege îmbunătățirea pentru <%= selectedFeat.name %></span>
+                                                                                        <select class="feat-improvement-condition" required>
+                                                                                            <% if (!savedImprovementCondition) { %>
+                                                                                                <option value="" selected disabled>Alege o opțiune</option>
+                                                                                            <% } %>
+                                                                                            <% featImprovementConditions.forEach(function(improvementCondition) { %>
+                                                                                                <option
+                                                                                                    value="<%= improvementCondition.id || '' %>"
+                                                                                                    <%= savedImprovementConditionId === String(improvementCondition.id || '') ? 'selected' : '' %>
+                                                                                                >
+                                                                                                    <%= improvementCondition.label || improvementCondition.id || 'Opțiune' %>
+                                                                                                </option>
+                                                                                            <% }); %>
+                                                                                        </select>
+                                                                                    </label>
+
+                                                                                    <% featImprovementConditions.forEach(function(improvementCondition) {
+                                                                                        const improvementConditionId = String(improvementCondition.id || '');
+                                                                                        const savedConditionId = featChoiceScope + improvementConditionId;
+                                                                                        const improvementChooseCount = Number(improvementCondition.choose) || 0;
+                                                                                        const savedConditionAbilities = selectedCharacterClass && Array.isArray(selectedCharacterClass.abilities)
+                                                                                            ? selectedCharacterClass.abilities
+                                                                                            : [];
+                                                                                    %>
+                                                                                        <div
+                                                                                            class="feat-improvement-options"
+                                                                                            data-condition-id="<%= improvementConditionId %>"
+                                                                                            <%= savedImprovementConditionId === improvementConditionId ? '' : 'hidden' %>
+                                                                                        >
+                                                                                            <% for (let featOptionSlot = 0; featOptionSlot < improvementChooseCount; featOptionSlot++) {
+                                                                                                const savedFeatImprovement = savedConditionAbilities.find(function(ability) {
+                                                                                                    return String(ability.index || '') === featAbilityIndex &&
+                                                                                                        String(ability.conditionId || '') === savedConditionId &&
+                                                                                                        Number(ability.slot || 0) === featOptionSlot;
+                                                                                                });
+                                                                                                const savedFeatOptionIndex = savedFeatImprovement
+                                                                                                    ? String(savedFeatImprovement.optionIndex || '')
+                                                                                                    : '';
+                                                                                            %>
+                                                                                                <form
+                                                                                                    action="/<%= userId %>/dnd/builder/<%= characterId %>/class/management/class_skills"
+                                                                                                    method="POST"
+                                                                                                    class="feat-improvement-choice-control"
+                                                                                                >
+                                                                                                    <input type="hidden" name="classIndex" value="<%= item.index %>">
+                                                                                                    <input type="hidden" name="featureIndex" value="<%= feature.index %>">
+                                                                                                    <input type="hidden" name="featIndex" value="<%= selectedFeat.index %>">
+                                                                                                    <input type="hidden" name="featSlot" value="<%= optionIndex %>">
+                                                                                                    <input type="hidden" name="conditionId" value="<%= improvementConditionId %>">
+                                                                                                    <input type="hidden" name="selectionMode" value="feat-improvement">
+                                                                                                    <input type="hidden" name="slot" value="<%= featOptionSlot %>">
+                                                                                                    <input type="hidden" name="optionName" value="">
+                                                                                                    <input type="hidden" name="value" value="<%= improvementCondition.value || 0 %>">
+
+                                                                                                    <label>
+                                                                                                        <span>Alege abilitatea <%= featOptionSlot + 1 %></span>
+                                                                                                        <select name="optionIndex" required <%= improvementCondition.different ? 'data-must-be-different="true"' : '' %>>
+                                                                                                            <% if (!savedFeatOptionIndex) { %>
+                                                                                                                <option value="" selected disabled>Alege o abilitate</option>
+                                                                                                            <% } %>
+                                                                                                            <% featImprovement.choice.from.options.forEach(function(improvementOption) { %>
+                                                                                                                <% if (improvementOption.item && improvementOption.item.name) {
+                                                                                                                    const improvementOptionName = String(improvementOption.item.name).trim();
+                                                                                                                    const improvementOptionIndex = improvementOptionName.slice(0, 3).toUpperCase();
+                                                                                                                %>
+                                                                                                                    <option
+                                                                                                                        value="<%= improvementOptionIndex %>"
+                                                                                                                        data-option-name="<%= improvementOptionName %>"
+                                                                                                                        <%= savedFeatOptionIndex === improvementOptionIndex ? 'selected' : '' %>
+                                                                                                                    >
+                                                                                                                        <%= improvementOptionName %>
+                                                                                                                    </option>
+                                                                                                                <% } %>
+                                                                                                            <% }); %>
+                                                                                                        </select>
+                                                                                                    </label>
+                                                                                                </form>
+                                                                                            <% } %>
+                                                                                        </div>
+                                                                                    <% }); %>
+                                                                                </div>
+                                                                            <% } %>
+                                                                        <% } %>
+                                                                        <% } %>
+
+                                                                        <% if (optionValue !== '') { %>
+                                                                            <span class="class-feature__choice-value">
+                                                                                Valoare: +<%= optionValue %>
+                                                                            </span>
+                                                                        <% } %>
+                                                                    </div>
+                                                                <% }); %>
+                                                            <% } %>
+                                                        </div>
+                                                    <% } %>
+
+                                                </details>
+                                            <% }); %>
+
+
+
+
+                                            
+
+                                        </div>
+
+                                    </div>
+                                    
+
+                                    <!-- =====================================================
+                                        FOOTER
+                                    ====================================================== -->
+
+                                    <footer class="class-modal__footer">
+
+
+
+
+                                        <div class="class-modal__footer-ornament">
+                                            ◆ ─── ◇ ─── ◆
+                                        </div>
+
+
+
+
+                                    </footer>
+
+                                </article>    
+                            <% }); %>
+                        </section>
+                    <% } else { %>
+                        <p>Nu s-au primit date din Classes.json.</p>
+                    <% } %>
+
+
+                    <!-- =================================================
+                            BOTTOM NAVIGATION
+                    ================================================== -->
+
+                    <footer class="class-selection-footer">
+
+                        <div class="class-selection-footer__decoration">
+                            <span></span>
+
+                            <div class="class-selection-footer__dice">
+                                ◆
+                            </div>
+
+                            <span></span>
+                        </div>
+
+                    </footer>
+
+                </div>
+            </main>
+
+
+
+
+
+            <!-- =========================================================
+                CLASS DETAILS MODAL
+                Poate fi folosit pentru orice clasă D&D.
+                Datele Barbarian sunt doar exemplu.
+            ========================================================= -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <!-- font awesome -->
+  <script src="https://kit.fontawesome.com/19568ad9a4.js" crossorigin="anonymous"></script>
+
+
+
+
+
+    <script>
+
+        const updateClassFeatureChoiceStatus = featureElement => {
+            const requiredChoices = Array.from(
+                featureElement.querySelectorAll('select[required]')
+            ).filter(select => !select.closest('[hidden]'));
+
+            if (!requiredChoices.length) {
+                featureElement.querySelector('.class-feature__choice-status')?.remove();
+                return;
+            }
+
+            const hasUnselectedChoices = requiredChoices.some(select => !select.value);
+            let status = featureElement.querySelector('.class-feature__choice-status');
+
+            if (!status) {
+                status = document.createElement('span');
+                status.className = 'class-feature__choice-status';
+
+                const header = featureElement.querySelector('.class-feature__header');
+                if (header) {
+                    header.appendChild(status);
+                } else {
+                    featureElement.appendChild(status);
+                }
+            }
+
+            status.dataset.status = hasUnselectedChoices ? 'incomplete' : 'complete';
+            status.setAttribute(
+                'aria-label',
+                hasUnselectedChoices ? 'Există opțiuni nealese' : 'Toate opțiunile sunt alese'
+            );
+            status.title = hasUnselectedChoices
+                ? 'Există opțiuni nealese'
+                : 'Toate opțiunile sunt alese';
+
+            if (featureElement instanceof HTMLDetailsElement) {
+                featureElement.open = hasUnselectedChoices;
+            }
+        };
+
+        document.querySelectorAll('.class-feature').forEach(updateClassFeatureChoiceStatus);
+
+        document.addEventListener('change', event => {
+            const featureElement = event.target.closest('.class-feature');
+            if (featureElement) {
+                updateClassFeatureChoiceStatus(featureElement);
+            }
+        });
+
+
+        // converteste boldul si enterul /n din json in bold si br in html
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const characterSteps = document.querySelectorAll(
+                ".character-steps .character-step"
+            );
+
+            const currentPath = window.location.pathname.replace(/\/$/, "");
+
+            characterSteps.forEach((step) => {
+
+                const href = step.getAttribute("href");
+
+                // Ignoră linkurile care nu duc la o pagină reală
+                if (!href || href === "#") {
+                    return;
+                }
+
+                const linkPath = new URL(href, window.location.origin)
+                    .pathname
+                    .replace(/\/$/, "");
+
+                // Eliminăm active de pe toate
+                step.classList.remove("character-step--active");
+
+                // Dacă URL-ul curent corespunde linkului
+                if (currentPath === linkPath) {
+                    step.classList.add("character-step--active");
+                }
+
+            });
+
+        });
+    
+        
+        // descide descrierea pentru fiecare clasa
+        // =====================================================
+        // DESCHIDERE MODAL CLASĂ
+        // =====================================================
+
+        document.querySelectorAll('.class-card__button').forEach(button => {
+
+            button.addEventListener('click', function () {
+
+                const classIndex = this.dataset.classSelect;
+
+                const modalOverlay = document.querySelector(
+                    `.class-modal-overlay[data-class-modal="${classIndex}"]`
+                );
+
+                if (modalOverlay) {
+                    modalOverlay.classList.add('is-visible');
+                }
+
+            });
+
+        });
+
+
+        // =====================================================
+        // ÎNCHIDERE MODAL
+        // =====================================================
+
+        // X
+        document.querySelectorAll('.class-modal__close').forEach(button => {
+
+            button.addEventListener('click', function () {
+
+                const modalOverlay = this.closest('.class-modal-overlay');
+
+                if (modalOverlay) {
+                    modalOverlay.classList.remove('is-visible');
+                }
+
+            });
+
+        });
+
+
+        // ÎNAPOI
+        document.querySelectorAll('.class-modal__button--back').forEach(button => {
+
+            button.addEventListener('click', function () {
+
+                const modalOverlay = this.closest('.class-modal-overlay');
+
+                if (modalOverlay) {
+                    modalOverlay.classList.remove('is-visible');
+                }
+
+            });
+
+        });
+
+
+        // CLICK ÎN AFARA MODALULUI
+        document.querySelectorAll('.class-modal-overlay').forEach(overlay => {
+
+            overlay.addEventListener('click', function (event) {
+
+                // Dacă elementul pe care s-a dat click este chiar overlay-ul,
+                // înseamnă că NU s-a dat click în interiorul modalului.
+                if (event.target === overlay) {
+                    overlay.classList.remove('is-visible');
+                }
+
+            });
+
+        });
+
+
+        // =====================================================
+        // AUTO-SUBMIT LEVEL CHANGE
+        // =====================================================
+        // Când se schimbă valoarea din dropdown, formularul se submitează automat
+
+        document.querySelectorAll('.level-control__dropdown').forEach(select => {
+            select.addEventListener('change', function() {
+                // Gasim formularul parinte și îl submitez
+                const form = this.closest('form');
+                if (form) {
+                    form.submit();
+                }
+            });
+        });
+
+
+        // Alege mai întâi condiția din options_conditions, apoi trimite form-ul
+        document.querySelectorAll('.class-feature__choice-condition-control select[name="conditionId"]').forEach(select => {
+            select.addEventListener('change', function() {
+                const form = this.closest('form');
+                const optionIndex = form
+                    ? form.querySelector('input[name="optionIndex"]')
+                    : null;
+                const optionName = form
+                    ? form.querySelector('input[name="optionName"]')
+                    : null;
+                const conditionLabel = form
+                    ? form.querySelector('input[name="conditionLabel"]')
+                    : null;
+                const value = form
+                    ? form.querySelector('input[name="value"]')
+                    : null;
+                const selectedOption = this.options[this.selectedIndex];
+
+                if (!form || !selectedOption) {
+                    return;
+                }
+
+                const selectedLabel = selectedOption.dataset.optionName || selectedOption.textContent.trim();
+                const selectedValue = this.value;
+
+                if (optionIndex) {
+                    optionIndex.value = selectedValue;
+                }
+
+                if (optionName) {
+                    optionName.value = selectedLabel;
+                }
+
+                if (conditionLabel) {
+                    conditionLabel.value = selectedLabel;
+                }
+
+                if (value) {
+                    value.value = selectedOption.dataset.conditionValue || 0;
+                }
+
+                if (typeof form.requestSubmit === 'function') {
+                    form.requestSubmit();
+                } else {
+                    form.submit();
+                }
+            });
+        });
+
+
+        // Trimite alegerea feature-ului imediat după selectarea unei opțiuni
+        document.querySelectorAll('.class-feature__choice-control select[name="optionIndex"]').forEach(select => {
+            select.addEventListener('change', function() {
+                const form = this.closest('form');
+                const optionIndex = form
+                    ? form.querySelector('input[name="optionIndex"]')
+                    : null;
+                const optionName = form
+                    ? form.querySelector('input[name="optionName"]')
+                    : null;
+                const selectedOption = this.options[this.selectedIndex];
+
+                if (!form || !selectedOption) {
+                    return;
+                }
+
+                const selectedValue = selectedOption.dataset.optionValue || this.value;
+
+                if (optionIndex) {
+                    optionIndex.value = selectedValue;
+                }
+
+                if (optionName) {
+                    optionName.value = selectedOption.dataset.optionName || selectedOption.textContent.trim();
+                }
+
+                if (typeof form.requestSubmit === 'function') {
+                    form.requestSubmit();
+                } else {
+                    form.submit();
+                }
+            });
+        });
+
+        document.querySelectorAll('.class-feature__feat-improvement .feat-improvement-condition').forEach(select => {
+            select.addEventListener('change', function() {
+                const improvementControl = this.closest('.class-feature__feat-improvement');
+                if (!improvementControl) {
+                    return;
+                }
+
+                improvementControl.querySelectorAll('.feat-improvement-options').forEach(options => {
+                    options.hidden = options.dataset.conditionId !== this.value;
+                });
+            });
+        });
+
+        document.querySelectorAll('.feat-improvement-choice-control select[name="optionIndex"]').forEach(select => {
+            select.addEventListener('change', function() {
+                const form = this.closest('form');
+                const optionName = form ? form.querySelector('input[name="optionName"]') : null;
+                const selectedOption = this.options[this.selectedIndex];
+
+                if (!form || !optionName || !selectedOption) {
+                    return;
+                }
+
+                optionName.value = selectedOption.dataset.optionName || selectedOption.textContent.trim();
+
+                if (typeof form.requestSubmit === 'function') {
+                    form.requestSubmit();
+                } else {
+                    form.submit();
+                }
+            });
+        });
+
+
+        // Trimite automat proficiency choice la alegerea unei opțiuni
+        document.querySelectorAll('.class-proficiency-choice-control select[name="optionIndex"]').forEach(select => {
+            select.addEventListener('change', function() {
+                const form = this.closest('form');
+                const optionIndex = form
+                    ? form.querySelector('input[name="optionIndex"]')
+                    : null;
+                const optionName = form
+                    ? form.querySelector('input[name="optionName"]')
+                    : null;
+                const selectedOption = this.options[this.selectedIndex];
+
+                if (!form || !selectedOption) {
+                    return;
+                }
+
+                const selectedValue = selectedOption.dataset.optionValue || this.value;
+
+                if (optionIndex) {
+                    optionIndex.value = selectedValue;
+                }
+
+                if (optionName) {
+                    optionName.value = selectedOption.dataset.optionName || selectedOption.textContent.trim();
+                }
+
+                if (typeof form.requestSubmit === 'function') {
+                    form.requestSubmit();
+                } else {
+                    form.submit();
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>

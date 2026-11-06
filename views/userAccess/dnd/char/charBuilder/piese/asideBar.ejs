@@ -1,0 +1,241 @@
+<% if (userId) { %>
+    <aside class="character-sidebar" aria-label="Navigare creare personaj">
+    <button
+        class="character-sidebar__mobile-toggle"
+        type="button"
+        aria-label="Deschide meniul de navigare"
+        aria-expanded="false"
+        aria-controls="character-sidebar-panel"
+    >
+        <span class="character-sidebar__menu-icon" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+        </span>
+    </button>
+    <button
+        class="character-sidebar__mobile-backdrop"
+        type="button"
+        aria-label="Închide meniul"
+        hidden
+    ></button>
+    <div class="character-sidebar__panel" id="character-sidebar-panel">
+
+    <div class="character-sidebar__title">
+        CREARE PERSONAJ
+    </div>
+
+    <%
+        const hasSelectedRace = Boolean(character?.race?.index);
+        const hasSelectedClass = Array.isArray(character?.classes) &&
+            character.classes.some((entry) => Boolean(entry?.index));
+        const hasSelectedBackground = Boolean(character?.background?.index);
+        const requiredAbilityTypes = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
+        const savedAbilityTypes = new Set(
+            (Array.isArray(character?.abilityScores) ? character.abilityScores : [])
+                .map((ability) => ability?.type)
+        );
+        const hasSelectedAllStats = requiredAbilityTypes.every((type) => savedAbilityTypes.has(type));
+    %>
+
+    <nav class="character-steps" aria-label="Pașii creării personajului">
+
+        <a
+            href="#"
+            class="character-step character-step--completed"
+        >
+            <span class="character-step__icon">✓</span>
+            <span class="character-step__number">1.</span>
+            <span class="character-step__label">Concept</span>
+        </a>
+
+
+        <a
+            href="/<%= userId %>/dnd/builder/<%= characterId %>/species/choose"
+            class="character-step <%= hasSelectedRace ? 'character-step--complete' : 'character-step--incomplete' %>"
+        >
+            <span class="character-step__icon"><%= hasSelectedRace ? '✓' : '!' %></span>
+            <span class="character-step__number">2.</span>
+            <span class="character-step__label">Race</span>
+        </a>
+
+
+        <a
+            href="/<%= userId %>/dnd/builder/<%= characterId %>/class/choose"
+            class="character-step <%= hasSelectedClass ? 'character-step--complete' : 'character-step--incomplete' %>"
+        >
+            <span class="character-step__icon"><%= hasSelectedClass ? '✓' : '!' %></span>
+            <span class="character-step__number">3.</span>
+            <span class="character-step__label">Add New Class</span>
+        </a>
+
+        <a
+            href="/<%= userId %>/dnd/builder/<%= characterId %>/class/management"
+            class="character-step <%= hasSelectedClass ? 'character-step--complete' : 'character-step--incomplete' %>"
+        >
+            <span class="character-step__icon"><%= hasSelectedClass ? '✓' : '!' %></span>
+            <span class="character-step__number">3.</span>
+            <span class="character-step__label">Class Management</span>
+        </a>
+
+        <a
+            href="/<%= userId %>/dnd/builder/<%= characterId %>/background"
+            class="character-step <%= hasSelectedBackground ? 'character-step--complete' : 'character-step--incomplete' %>"
+        >
+            <span class="character-step__icon"><%= hasSelectedBackground ? '✓' : '!' %></span>
+            <span class="character-step__number">3.</span>
+            <span class="character-step__label">Description</span>
+        </a>
+
+
+        <a
+            href="/<%= userId %>/dnd/builder/<%= characterId %>/stats"
+            class="character-step <%= hasSelectedAllStats ? 'character-step--complete' : 'character-step--incomplete' %>"
+        >
+            <span class="character-step__icon"><%= hasSelectedAllStats ? '✓' : '!' %></span>
+            <span class="character-step__number">4.</span>
+            <span class="character-step__label">Stats</span>
+        </a>
+
+
+
+        <a
+            href="/<%= userId %>/dnd/builder/<%= characterId %>/review"
+            class="character-step"
+        >
+            <span class="character-step__icon">✓</span>
+            <span class="character-step__number">7.</span>
+            <span class="character-step__label">Review</span>
+        </a>
+
+    </nav>
+
+
+    <!-- =================================================
+            TIP BOX
+    ================================================== -->
+
+    <div class="character-sidebar__tip">
+
+        <div class="character-sidebar__tip-title">
+            SFAT
+        </div>
+
+        <div class="character-sidebar__tip-divider"></div>
+
+        <p class="character-sidebar__tip-text">
+            Fiecare clasă are puncte tari și abilități unice.
+            Explorează-le pentru a găsi stilul care ți se potrivește
+            cel mai bine!
+        </p>
+
+    </div>
+
+
+    <!-- Sidebar bottom -->
+    <div class="sidebar-footer">
+
+        <button
+            type="button"
+            class="theme-toggle"
+            aria-label="Toggle theme"
+        >
+            <span class="theme-icon theme-light">☼</span>
+            <span class="theme-switch"></span>
+            <span class="theme-icon theme-dark">☾</span>
+        </button>
+
+        <button
+            type="button"
+            class="sidebar-logout"
+            aria-label="Logout"
+        >
+            ↪
+        </button>
+
+    </div>
+
+
+    <!-- Decorative dice -->
+    <div class="character-sidebar__decor">
+        <span>◇</span>
+        <span>◇</span>
+        <span>◇</span>
+    </div>
+    </div>
+
+</aside>
+
+
+
+<script>
+
+    // converteste boldul si enterul /n din json in bold si br in html
+    document.addEventListener("DOMContentLoaded", () => {
+
+        document.querySelectorAll(".character-sidebar").forEach((sidebar) => {
+            const menuToggle = sidebar.querySelector(".character-sidebar__mobile-toggle");
+            const backdrop = sidebar.querySelector(".character-sidebar__mobile-backdrop");
+            const menuPanel = sidebar.querySelector(".character-sidebar__panel");
+            const menuLinks = sidebar.querySelectorAll(".character-steps .character-step");
+            const mobileBreakpoint = window.matchMedia("(max-width: 1070px)");
+            const currentPath = window.location.pathname.replace(/\/$/, "");
+
+            menuLinks.forEach((step) => {
+                const href = step.getAttribute("href");
+                if (!href || href === "#") {
+                    return;
+                }
+
+                const linkPath = new URL(href, window.location.origin)
+                    .pathname
+                    .replace(/\/$/, "");
+
+                step.classList.toggle("character-step--active", currentPath === linkPath);
+                if (currentPath === linkPath) {
+                    step.setAttribute("aria-current", "page");
+                } else {
+                    step.removeAttribute("aria-current");
+                }
+            });
+
+            const setMenuOpen = (isOpen) => {
+                const menuIsOpen = isOpen && mobileBreakpoint.matches;
+                sidebar.classList.toggle("character-sidebar--open", menuIsOpen);
+                menuPanel.hidden = mobileBreakpoint.matches && !menuIsOpen;
+                menuToggle.setAttribute("aria-expanded", String(menuIsOpen));
+                backdrop.hidden = !menuIsOpen;
+            };
+
+            setMenuOpen(false);
+            mobileBreakpoint.addEventListener("change", () => setMenuOpen(false));
+
+            menuToggle.addEventListener("click", () => {
+                setMenuOpen(menuToggle.getAttribute("aria-expanded") !== "true");
+            });
+            backdrop.addEventListener("click", () => setMenuOpen(false));
+            menuLinks.forEach((link) => {
+                link.addEventListener("click", () => setMenuOpen(false));
+            });
+            document.addEventListener("keydown", (event) => {
+                if (event.key === "Escape" && menuToggle.getAttribute("aria-expanded") === "true") {
+                    setMenuOpen(false);
+                    menuToggle.focus();
+                }
+            });
+        });
+    });
+</script>
+
+
+
+
+
+<% } else { %>
+    <aside class="character-sidebar">
+
+        Ups. We are working on it. No user ID has been found
+
+    </aside>
+
+<% } %>

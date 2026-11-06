@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .container {
+      max-width: 600px;
+      width: 100%;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    
+    .btn {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1></h1>
+    <h4>insert top 100 boardgames through the objectID</h4>
+    <form action="/admin/zmr/insert_100Games" method="post">
+      <label for="objectIDs">Enter numbers separated by spaces:</label><br>
+      <input type="text" id="objectIDs" name="objectIDs" placeholder="e.g., 213 324 35"><br>
+      <button type="submit" class="btn">Trigger the games insertion</button>
+    </form>
+
+    <!-- <hr>
+    <h4>Remove the reputation</h4>
+    <form action="/admin/zmr/refreshReputation" method="post">
+      <button type="submit" name="removeAllRep" value="removeAllRep" class="btn">Remove the current Reputation</button>
+    </form>
+    <hr> -->
+
+    <hr>
+    <h4>Refresh the reputation details</h4>
+    <form action="/admin/zmr/refreshReputation" method="post">
+      <button type="submit" name="addReputation" value="addReputation" class="btn">Add any Reputation that does not exist yet</button>
+    </form>
+    <hr>
+
+    <!-- <hr>
+    <h4>Force a change to all the players reputations</h4>
+    <form action="/admin/zmr/insert_fakePlayers" method="post">
+      <button type="submit" class="btn">NOT AVAILABLE NOW</button>
+    </form>
+    <hr> -->
+
+    <hr>
+    <h4>insert fake players to work with</h4>
+    <form action="/admin/zmr/insert_fakePlayers" method="post">
+      <button type="submit" class="btn">Trigger the fake players insertion</button>
+    </form>
+    <hr>
+  </div>
+</body>
+</html>

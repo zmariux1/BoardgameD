@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Document</title>
+    <link rel="icon" href="/img/title/titleIcon65.png">
+
+    <link rel="stylesheet" href="/css/ownerBdList.css">
+    <link rel="stylesheet" href="/css/profile-style.css">
+    <link rel="stylesheet" href="/css/elements/header.css">
+    <link rel="stylesheet" href="/css/elements/botNavBar.css">
+    <link rel="stylesheet" href="/css/elements/standardAll.css">
+
+    <script src="https://kit.fontawesome.com/19568ad9a4.js" crossorigin="anonymous"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    
+</head>
+<body>
+  <%- include('../../layouts/header') %>
+
+
+
+  <!-- Boardgames section  -->
+  <section id="boardgames" class="profile_sections activeScreen">
+
+    <div class="profil_reputatie">
+      <!-- user profile  -->
+      <div class="userID">
+        <div class="avatarImg">
+          <img class="profileGuest" src="/userImages/<%= user.images %>">
+        </div>
+        <div name="dosarRep">
+          <% let groupedData_honer = []; %>
+          <% let groupedData_stain = []; %>
+        
+          <% if (userPlusData) { %>
+            <p> <%= userPlusData.allReputation %> </p>
+                
+                <% userPlusData.allReputation.forEach(reputation => { %>
+                  <p> <%= reputation %> </p>
+                  <!-- match with honor  -->
+                  <% if (importHonorDetail && importHonorDetail.length > 0) { %>
+                    <% Object.entries(importHonorDetail).forEach(([nothing, nothing2]) => { %>
+        
+                      <% Object.entries(nothing2).forEach(([stillNothing, stillNothing2]) => { %>
+                        <% Object.entries(stillNothing2).forEach(([Category, value]) => { %>
+                          <% if (Category !== '_id' && Category !== '__v' && Category !== 'skipId' && Category !== 'activePaths') { %>
+                            <% Object.entries(value).forEach(([sdfg, subCategory]) => { %> 
+                              <% if (subCategory.permanentReputationNumber == reputation.get_permanentReputationNumber) { %>
+                                <% groupedData_honer.push(subCategory); %>
+                              <% }; %>
+                            <% }); %>
+                          <% } %>
+                        <% }); %>
+                      <% }); %>
+        
+                    <% }); %>
+                  <% } %>
+        
+                  <!-- match with stain  -->
+                  <% if (importStainDetail && importStainDetail.length > 0) { %>
+                    <% Object.entries(importStainDetail).forEach(([nothing, nothing2]) => { %>
+        
+                      <% Object.entries(nothing2).forEach(([stillNothing, stillNothing2]) => { %>
+                        <% Object.entries(stillNothing2).forEach(([Category, value]) => { %>
+                          <% if (Category !== '_id' && Category !== '__v' && Category !== 'skipId' && Category !== 'activePaths') { %>
+                            <% Object.entries(value).forEach(([sdfg, subCategory]) => { %> 
+                              <% if (subCategory.permanentReputationNumber == reputation.get_permanentReputationNumber) { %>
+                                <% groupedData_stain.push(subCategory); %>
+                              <% }; %>
+                            <% }); %>
+                          <% } %>
+                        <% }); %>
+                      <% }); %>
+        
+                    <% }); %>
+                  <% } %>
+        
+        
+                <% }); %>
+            
+          <% } %>
+        </div>
+        <div class="reputationBox">
+          <div class="honors">
+            <% if (groupedData_honer && groupedData_honer.length > 0) { %>
+              <!-- Shuffle the badReputation array -->
+              <% const owner_shuffled_honer = groupedData_honer.sort(() => Math.random() - 0.5); %>
+              <% owner_shuffled_honer.slice(0, 2).forEach(item => { %>
+                <div class="honor1" title="<%= item.description %>">
+                  <img src="/img/reputation/<%= item.type %>/<%= item.fileCateg %>/<%= item.name %>" class="repProfileIcon">
+                </div>
+              <% }) %>
+            <% } %>
+          </div>
+          <div class="redFlags">
+            <% if (groupedData_stain && groupedData_stain.length > 0) { %>
+              <!-- Shuffle the badReputation array -->
+              <% const owner_shuffled_stain = groupedData_stain.sort(() => Math.random() - 0.5); %>
+              <% owner_shuffled_stain.slice(0, 1).forEach(item => { %>
+                <div class="flag1" title="<%= item.description %>">
+                  <img src="/img/reputation/<%= item.type %>/<%= item.fileCateg %>/<%= item.name %>" class="repProfileIcon">
+                </div>
+              <% }) %>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Owned xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+    <div class="boardgame_boxes">
+      <div class="topRow">
+
+        <div class="search-form">
+          <form action="">
+            <label for="search-input" class="search-label label-active">Owned</label>
+            <input type="text" id="search-input" class="search-input" placeholder="Search your games">
+          </form>
+          <div class="boardgame_tools-searchbarDiv">
+            <i class="custom_icon fa-solid fa-magnifying-glass search-icon"></i>
+          </div>
+        </div>
+        
+
+        <% if (user._id.toString() === userSession._id.toString()) { %>
+          <div class="boardgame_tools-edit">
+            <a href="/addOwnedBG" class="cancelA"><i class="custom_icon fa-solid fa-plus open-add-popup" style="color: #151e2e;"></i></a>
+          </div>
+        <% } else { %>
+        <% } %>
+        <div class="boardgame_tools-organize">
+          <!-- <i class="custom_icon fa-solid fa-layer-group "></i>
+          <i class="custom_icon fa-solid fa-grip " style="color: #111b2c;"></i>
+          <i class="custom_icon fa-solid fa-grip-lines "></i> -->
+        </div>
+      </div>
+      <div class="games_container leftSideScroll_Design">
+        <% if (owned_bg && owned_bg.length > 0) { %>
+          <ul class="scrollable_area detailedLines smallLine oneByone" >
+            <!-- Generate games  -->
+            <% owned_bg.forEach((game) => { %>
+              <li class="item_div">
+                <form action="/userProfile-Bg/:<%= user._id %>" method="POST" class="raw_items">
+                  <div class="item_details">
+                    <div class="img_div">
+                      <img src="<%= game.thumbnail %>" alt="">
+                      <input type="hidden" name="owned_gameID" value="<%= game.objectid %>">
+                      <input type="hidden" name="userSessionID" value="<%= userSession._id %>">
+                    </div>
+                    <div class="hideTitle">
+                      <a href="https://boardgamegeek.com/boardgame/<%= game.objectid %>" target="_blank"><%= game.name %></a>
+                    </div>
+                  </div>
+                  <% if (user._id.toString() === userSession._id.toString()) { %>
+                    <button type="submit" class="btn" onclick="checkAllCheckboxes(this)"><i class="custom_icon fa-solid fa-trash-can fa-lg" style="color: #1f0f0f;"></i></button>
+                  <% } %>
+                </form>
+              </li>
+            <% }); %>
+          </ul>
+        <% } else { %>
+          <p>No board game found.</p>
+        <% } %>
+      
+      </div>
+    </div>
+
+    <!-- Want to play xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+    <div class="boardgame_boxes ">
+      <div class="topRow">
+        <div class="search-form">
+          <form action="">
+            <label for="search-input" class="search-label label-active">Want to play</label>
+            <input type="text" id="search-input" class="search-input" placeholder="Search any games">
+          </form>
+          <div class="boardgame_tools-searchbarDiv">
+            <i class="custom_icon fa-solid fa-magnifying-glass search-icon"></i>
+          </div>
+        </div>
+
+        <% if (user._id.toString() === userSession._id.toString()) { %>
+          <div class="boardgame_tools-edit">
+            <a href="/addPlayBG" class="cancelA"><i class="custom_icon fa-solid fa-plus open-add-popup" style="color: #151e2e;"></i></a>
+          </div>
+        <% } else { %>
+        <% } %>
+        <div class="boardgame_tools-organize">
+          <!-- <i class="custom_icon fa-solid fa-layer-group "></i>
+          <i class="custom_icon fa-solid fa-grip " style="color: #111b2c;"></i>
+          <i class="custom_icon fa-solid fa-grip-lines "></i> -->
+        </div>
+      </div>
+      <div class="games_container leftSideScroll_Design">
+        <% if (want2Play_bg && want2Play_bg.length > 0) { %>
+          <ul class="scrollable_area detailedLines smallLine oneByone" >
+            <!-- Generate games  -->
+            <% want2Play_bg.forEach((game) => { %>
+              <li class="item_div">
+                <form action="/userProfile-Bg/:<%= user._id %>" method="POST" class="raw_items">
+                  <div class="item_details">
+                    <div class="img_div">
+                      <img src="<%= game.thumbnail %>" alt="">
+                      <input type="hidden" name="want2Play_bg_gameID" value="<%= game.objectid %>">
+                      <input type="hidden" name="userSessionID" value="<%= userSession._id %>">
+                    </div>
+                    <div class="hideTitle">
+                      <a href="https://boardgamegeek.com/boardgame/<%= game.objectid %>" target="_blank"><%= game.name %></a>
+                      
+                    </div>
+                  </div>
+                  <button type="submit" class="btn" onclick="checkAllCheckboxes(this)"><i class="custom_icon fa-solid fa-trash-can fa-lg" style="color: #1f0f0f;"></i></button>
+                </form>
+              </li>
+            <% }); %>
+          </ul>
+        <% } else { %>
+          <p>No board game found.</p>
+        <% } %>
+      
+      </div>
+    </div>
+
+    <!-- Looking to buy xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+    <div class="boardgame_boxes">
+      <div class="topRow">
+        <div class="search-form">
+          <form action="">
+            <label for="search-input" class="search-label label-active">Looking to buy</label>
+            <input type="text" id="search-input" class="search-input" placeholder="Search a game">
+          </form>
+          <div class="boardgame_tools-searchbarDiv">
+            <i class="custom_icon fa-solid fa-magnifying-glass search-icon"></i>
+          </div>
+        </div>
+        <% if (user._id.toString() === userSession._id.toString()) { %>
+          <div class="boardgame_tools-edit">
+            <a href="/addBuyBG" class="cancelA"><i class="custom_icon fa-solid fa-plus open-add-popup" style="color: #151e2e;"></i></a>
+          </div>
+        <% } else { %>
+        <% } %>
+        <div class="boardgame_tools-organize">
+          <!-- <i class="custom_icon fa-solid fa-layer-group "></i>
+          <i class="custom_icon fa-solid fa-grip " style="color: #111b2c;"></i>
+          <i class="custom_icon fa-solid fa-grip-lines "></i> -->
+        </div>
+      </div>
+      <div class="games_container leftSideScroll_Design">
+        <% if (buy_bg && buy_bg.length > 0) { %>
+          <ul class="scrollable_area detailedLines smallLine oneByone" >
+            <!-- Generate games  -->
+            <% buy_bg.forEach((game) => { %>
+              <li class="item_div">
+                <form action="/userProfile-Bg/:<%= user._id %>" method="POST" class="raw_items">
+                  <div class="item_details">
+                    <div class="img_div">
+                      <img src="<%= game.thumbnail %>" alt="">
+                      <input type="hidden" name="buy_bg_gameID" value="<%= game.objectid %>">
+                      <input type="hidden" name="userSessionID" value="<%= userSession._id %>">
+                    </div>
+                    <div class="hideTitle">
+                      <a href="https://boardgamegeek.com/boardgame/<%= game.objectid %>" target="_blank"><%= game.name %></a>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn" onclick="checkAllCheckboxes(this)"><i class="custom_icon fa-solid fa-trash-can fa-lg" style="color: #1f0f0f;"></i></button>
+                </form>
+              </li>
+            <% }); %>
+          </ul>
+        <% } else { %>
+          <p>No board game found.</p>
+        <% } %>
+      
+      </div>
+    </div>
+
+    <!-- Looking to sell xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+    <div class="boardgame_boxes">
+      <div class="topRow">
+        <div class="search-form">
+          <form action="">
+            <label for="search-input" class="search-label label-active">Looking to sell</label>
+            <input type="text" id="search-input" class="search-input" placeholder="Type your search">
+          </form>
+          <div class="boardgame_tools-searchbarDiv">
+            <i class="custom_icon fa-solid fa-magnifying-glass search-icon"></i>
+          </div>
+        </div>
+        <% if (user._id.toString() === userSession._id.toString()) { %>
+          <div class="boardgame_tools-edit">
+            <a href="/addSellBG" class="cancelA"><i class="custom_icon fa-solid fa-plus open-add-popup" style="color: #151e2e;"></i></a>
+          </div>
+        <% } else { %>
+        <% } %>
+        <div class="boardgame_tools-organize">
+          <!-- <i class="custom_icon fa-solid fa-layer-group "></i>
+          <i class="custom_icon fa-solid fa-grip " style="color: #111b2c;"></i>
+          <i class="custom_icon fa-solid fa-grip-lines "></i> -->
+        </div>
+      </div>
+      <div class="games_container leftSideScroll_Design">
+        <% if (sell_bg && sell_bg.length > 0) { %>
+          <ul class="scrollable_area detailedLines smallLine oneByone" >
+            <!-- Generate games  -->
+            <% sell_bg.forEach((game) => { %>
+              <li class="item_div">
+                <form action="/userProfile-Bg/:<%= user._id %>" method="POST" class="raw_items">
+                  <div class="item_details">
+                    <div class="img_div">
+                      <img src="<%= game.thumbnail %>" alt="">
+                      <input type="hidden" name="sell_bg_gameID" value="<%= game.objectid %>">
+                      <input type="hidden" name="userSessionID" value="<%= userSession._id %>">
+                    </div>
+                    <div class="hideTitle">
+                      <a href="https://boardgamegeek.com/boardgame/<%= game.objectid %>" target="_blank"><%= game.name %></a>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn" onclick="checkAllCheckboxes(this)"><i class="custom_icon fa-solid fa-trash-can fa-lg" style="color: #1f0f0f;"></i></button>
+                </form>
+              </li>
+            <% }); %>
+          </ul>
+        <% } else { %>
+          <p>No board game found.</p>
+        <% } %>
+      
+      </div>
+    </div>
+    
+    
+  </section>
+
+
+
+  <!-- popup layer for searching games starts here xxxxxxxxxxxxxxxxxxx -->
+  <div class="overlaySearch ">
+    <div class="container fakeCssEffect">
+      <div class="secondFakeScreen">
+        <p></p>
+      </div>
+      <p class="pageTitle">Board games list</p>
+      <form action="/addOwnedBG" method="post" class="search-div">
+        <input type="search" name="searchBg" class="input-searchBg"> 
+        <button type="submit" name= "searchBg" class="btn-searchBg"><i class="custom_icon fa-solid fa-magnifying-glass search-icon"></i></button>
+      </form>
+      <div class="tab-content" >
+        <!-- de aici am scos si auth -->
+    
+        <section class="form_bgList_with_Submit">
+          <div class="bgList_with_Submit">
+            <ul class="bgList_without_Submit_subSelect">
+
+
+              
+              <div class="spinerPositioning">
+                <img class="sizeCap" src="/img/delayBG/spi nner (2).gif" alt="">
+              </div>
+    
+    
+              </ul>
+            
+          </section>
+
+
+        </form>
+      </div>
+    
+      
+      </ul>
+      <a href='/userProfile-Bg/<%= userSession._id %>'class="returnBtn">Return to your list</a>
+    </div>
+  </div>
+
+
+
+
+
+  <div id="loadingPopup" class="loading-popup">
+    <div id="countdown" class="countdown"></div>
+  </div>
+
+  <% if (user._id.toString() === userSession._id.toString()) { %>
+  <!-- additional bottom bar - profile   -->
+  <nav class="bottom-bar-profile">
+    <a href='/userProfile/<%= userSession._id %>' class="currentProfileLocation paddingBar-left " >Profile</a>
+    <a href='/userProfile-Reputation/<%= userSession._id %>' class="currentProfileLocation" >Reputation</a>
+    <a href='/userProfile-Bg/<%= userSession._id %>' class="currentProfileLocation bgbar activeProfileLocation-Tab" >Board Games</a>
+    <!-- <a href='/userProfile-History' class="currentProfileLocation" onclick="changeProfBar(this, 3)">History</a> -->
+  </nav>
+  <% } else { %>
+      <!-- additional bottom bar - profile   -->
+  <nav class="bottom-bar-profile">
+    <a href='/userProfile/<%= user._id %>' class="currentProfileLocation paddingBar-left ">Profile</a>
+    <a href='/userProfile-Reputation/<%= user._id %>' class="currentProfileLocation" >Reputation</a>
+    <a href='/userProfile-Bg/<%= user._id %>' class="currentProfileLocation bgbar activeProfileLocation-Tab" >Board Games</a>
+  </nav>
+  <% } %>
+
+
+
+
+  <!-- Bottom bar  -->
+  <div class="bottom-bar">
+    <% if (user._id.toString() === userSession._id.toString()) { %>
+      <ion-icon name="person-outline" class="icon activeBar" 
+      onclick="change(this); window.location.href='/userProfile/<%= userSession._id %>'">
+    </ion-icon>
+    <% } else { %>
+      <button class="customReturn activeBar" title="Return to your Profile"><i class="fa-solid fa-person-walking-arrow-loop-left" onclick="change(this); window.location.href='/userProfile/<%= userSession._id %>'"></i></button>
+    <% } %>
+    <ion-icon name="folder-outline" class="icon" 
+    onclick="change(this); window.location.href='/preRoom-index/<%= userSession._id %>'">
+    </ion-icon>
+    <ion-icon name="home-outline" class="icon " 
+    onclick="change(this); window.location.href='/index'">
+    </ion-icon>
+    <ion-icon name="add-circle-outline" class="icon longLoading" 
+    onclick="change(this); window.location.href='/createRoom-index'" >
+    </ion-icon>
+    <!-- <ion-icon name="image-outline" class="icon" 
+    onclick="change(this); window.location.href='/gallery'">
+    </ion-icon> -->
+  </div>
+
+
+
+
+  <script src="https://kit.fontawesome.com/19568ad9a4.js" crossorigin="anonymous"></script>
+  <script src="/js/profile-script.js"></script>
+  <script src="/js/header.js"></script>
+</body>
+</html>
