@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Alege-ți Clasa</title>
+
+    
+    <link rel="stylesheet" href="/css/dnd/char/builder/piese/root.css">
+    <link rel="stylesheet" href="/css/dnd/char/builder/piese/comunBuilder.css">
+    
+    <link rel="stylesheet" href="/css/dnd/char/builder/class_selection.css">
+    <link rel="stylesheet" href="/css/dnd/char/builder/piese/asideBar.css">
+    <link rel="stylesheet" href="/css/dnd/char/builder/piese/header.css">
+</head>
+
+<body>
+
+    <div class="character-page">
+
+        <!-- =========================================================
+             TOP BAR
+        ========================================================== -->
+        <%- include('piese/header') %>
+
+
+        <!-- =========================================================
+             MAIN LAYOUT
+        ========================================================== -->
+
+        <div class="character-layout">
+
+
+            <!-- =====================================================
+                 LEFT SIDEBAR
+            ====================================================== -->
+            <%- include('piese/asideBar') %>
+
+
+
+
+            <!-- =====================================================
+                 MAIN CONTENT
+            ====================================================== -->
+
+            <main class="character-content">
+                <div class="pozitionare_content">
+                    
+                    <!-- =================================================
+                            PAGE HEADER
+                    ================================================== -->
+    
+                    <section class="class-selection-header">
+    
+                        <h1 class="class-selection-header__title">
+                            Alege-ți Clasa
+                        </h1>
+    
+                        <p class="class-selection-header__description">
+                            Clasa ta definește abilitățile, stilul de joc și rolul
+                            tău în aventură.
+                        </p>
+    
+                        <p class="class-selection-header__subtitle">
+                            Alege cu înțelepciune, erou!
+                        </p>
+    
+                    </section>
+    
+    
+    
+                    <!-- =================================================
+                            CLASS LIST
+                    ================================================== -->
+                    <% if (Array.isArray(classes) && classes.length) { %>
+                        <section class="general_sub_container sub_container" aria-label="Clase disponibile">
+                            <% classes.forEach(function(item) { %>
+                                <article
+                                    class="class-card <%= item.index %>"
+                                    data-class-id="<%= item.index %>"
+                                    data-class-index="<%= item.index %>"
+                                >
+                                    <div class="class-card__image-wrapper">
+                                        <img
+                                            class="class-card__image"
+                                            src="/img/dnd/classes/<%= item.index %>.png"
+                                            alt="<%= item.name %>"
+                                            onerror="this.onerror=null;this.src='https://placehold.co/600x400/1f2937/ffffff?text=<%= encodeURIComponent(item.name) %>'"
+                                        >
+                                    </div>
+    
+                                    <div class="class-card__content">
+                                        <div class="class-card__title-row">
+                                            <span class="class-card__icon">
+                                                <% if (item.index === 'fighter') { %>⚔<% }
+                                                    else if (item.index === 'barbarian') { %>✦<% }
+                                                    else if (item.index === 'bard') { %>♫<% }
+                                                    else if (item.index === 'cleric') { %>✚<% }
+                                                    else if (item.index === 'druid') { %>❧<% }
+                                                    else if (item.index === 'sorcerer') { %>◉<% }
+                                                    else if (item.index === 'wizard') { %>✦<% }
+                                                    else if (item.index === 'paladin') { %>⛨<% }
+                                                    else if (item.index === 'rogue') { %>⚔<% }
+                                                    else { %>✦<% } %>
+                                            </span>
+    
+                                            <h2 class="class-card__title">
+                                                <%= item.name %>
+                                            </h2>
+                                        </div>
+    
+                                        <!-- PRIMARY ABILITY -->
+                                        <% if (
+                                            item.spellcasting &&
+                                            item.spellcasting.spellcasting_ability
+                                        ) { %>
+    
+                                            <div class="class-meta">
+                                                Spellcasting stat:
+                                                <%= item.spellcasting.spellcasting_ability.name %>
+                                                <br>
+                                            </div>
+    
+                                        <% } %>
+    
+                                        <!-- MULTICLASS REQUIREMENT -->
+                                        <%
+                                            let multiclassRequirements = [];
+    
+                                            if (
+                                                item.multi_classing &&
+                                                Array.isArray(item.multi_classing.prerequisites)
+                                            ) {
+                                                multiclassRequirements = item.multi_classing.prerequisites;
+                                            } else if (
+                                                item.multi_classing &&
+                                                item.multi_classing.prerequisite_options &&
+                                                item.multi_classing.prerequisite_options.from &&
+                                                Array.isArray(item.multi_classing.prerequisite_options.from.options)
+                                            ) {
+                                                multiclassRequirements =
+                                                    item.multi_classing.prerequisite_options.from.options;
+                                            }
+                                        %>
+    
+                                        <% if (multiclassRequirements.length) { %>
+    
+                                            <div class="class-meta">
+    
+                                                Multiclass:
+    
+                                                <% multiclassRequirements.forEach(function(requirement, index) { %>
+    
+                                                    <span>
+                                                        <%= requirement.ability_score.name %>
+                                                        +<%= requirement.minimum_score %>
+                                                    </span>
+    
+                                                    <% if (index < multiclassRequirements.length - 1) { %>
+                                                        <span> / </span>
+                                                    <% } %>
+    
+                                                <% }); %>
+    
+                                            </div>
+    
+                                        <% } %>
+    
+    
+                                        <!-- HIT DIE -->
+                                        <% if (item.hit_die) { %>
+    
+                                            <div class="class-meta">
+                                                Hit die: d<%= item.hit_die %>
+                                            </div>
+    
+                                        <% } %>
+    
+    
+    
+    
+                                        <div class="class-card__actions">
+                                            <button
+                                                type="button"
+                                                class="class-card__button"
+                                                data-class-select="<%= item.index %>"
+                                            >
+                                                Descoperă Clasa
+                                            </button>
+    
+    
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    
+                                </article>
+                                <!-- popup modal for class details _________________________________ -->
+                                <div class="class-modal-overlay" data-class-modal="<%= item.index %>">
+                                    <section class="class-modal" aria-labelledby="class-modal-title">
+                                        
+                                        <!-- =====================================================
+                                            HEADER
+                                        ====================================================== -->
+    
+                                        <header class="class-modal__header">
+    
+                                            <div class="class-modal__class-icon">
+                                                <span>⚔</span>
+                                            </div>
+    
+                                            <div class="class-modal__title-area">
+                                                <h1 id="class-modal-title"><%= item.name %></h1>
+    
+                                                <div class="class-modal__ornament">
+                                                    ◆ ───────── ◆
+                                                </div>
+                                            </div>
+    
+                                            <button
+                                                type="button"
+                                                class="class-modal__close"
+                                                aria-label="Închide"
+                                            >
+                                                ×
+                                            </button>
+    
+                                        </header>
+    
+    
+                                        <!-- =====================================================
+                                            BASIC CLASS INFORMATION
+                                        ====================================================== -->
+    
+                                        <div class="class-modal__meta">
+    
+                                            <div class="class-modal__meta-item">
+    
+                                                <div class="class-modal__meta-icon">
+                                                    ◈
+                                                </div>
+    
+                                                <div>
+                                                    <span class="class-modal__meta-label">
+                                                        Hit Point Die
+                                                    </span>
+    
+                                                    <strong class="class-modal__meta-value">
+                                                        <% if (item.hit_die) { %>
+                                                            <%= item.hit_die %>
+                                                        <% } %>
+                                                    </strong>
+                                                </div>
+    
+                                            </div>
+    
+    
+                                            <div class="class-modal__meta-divider"></div>
+    
+    
+                                            <div class="class-modal__meta-item">
+    
+                                                <div class="class-modal__meta-icon">
+                                                    ♜
+                                                </div>
+    
+                                                <div>
+                                                    <span class="class-modal__meta-label">
+                                                        Saves
+                                                    </span>
+    
+                                                    <strong class="class-modal__meta-value">
+    
+                                                        <% if (
+                                                            item.multi_classing &&
+                                                            item.multi_classing.prerequisite_options &&
+                                                            item.multi_classing.prerequisite_options.from &&
+                                                            Array.isArray(item.multi_classing.prerequisite_options.from.options) &&
+                                                            item.multi_classing.prerequisite_options.from.options.length
+                                                        ) { %>
+    
+                                                            <% item.multi_classing.prerequisite_options.from.options.forEach(function(option, index) { %>
+    
+                                                                <%= option.ability_score.name %>
+    
+                                                                <% if (
+                                                                    index <
+                                                                    item.multi_classing.prerequisite_options.from.options.length - 1
+                                                                ) { %>
+                                                                    /
+                                                                <% } %>
+    
+                                                            <% }); %>
+    
+                                                        <% } else { %>
+    
+                                                            -
+    
+                                                        <% } %>
+    
+                                                    </strong>
+                                                </div>
+    
+                                            </div>
+    
+    
+                                            <div class="class-modal__meta-divider"></div>
+    
+    
+                                            <div class="class-modal__meta-item class-modal__meta-item--link">
+    
+                                                <div>
+                                                    <span class="class-modal__meta-label">
+                                                        Details Page
+                                                    </span>
+    
+                                                    <a
+                                                        href="/api/2024/classes/<%= item.index %>"
+                                                        class="class-modal__details-link"
+                                                    >
+                                                        <%= item.name %> Details Page
+                                                        <span>↗</span>
+                                                    </a>
+                                                </div>
+    
+                                            </div>
+    
+                                        </div>
+    
+    
+                                        <!-- =====================================================
+                                            SCROLLABLE FEATURES AREA
+                                        ====================================================== -->
+                                        
+                                        <div class="class-modal__content">
+    
+                                            <div class="class-modal__features">
+                                                <%
+                                                    const classFeatures = Array.isArray(features)
+                                                        ? features
+                                                            .filter(function(feature) {
+                                                                return feature &&
+                                                                    feature.class &&
+                                                                    feature.class.index === item.index;
+                                                            })
+                                                            .sort(function(a, b) {
+                                                                return (a.level || 0) - (b.level || 0);
+                                                            })
+                                                        : [];
+                                                %>
+    
+    
+                                                <% classFeatures.forEach(function(feature) { %>
+                                                    <!-- =================================================
+                                                        FEATURE 
+                                                    ================================================== -->
+                                                    <details class="class-feature">
+    
+                                                        <summary class="class-feature__header">
+    
+                                                            <div class="class-feature__icon">
+                                                                ⚔
+                                                            </div>
+    
+                                                            <div class="class-feature__title">
+    
+                                                                <strong>
+                                                                        <%= feature.name %>
+                                                                </strong>
+    
+                                                                <span>
+                                                                    <%= feature.level || '' %> level
+                                                                </span>
+    
+                                                            </div>
+    
+                                                            <span class="class-feature__arrow">
+                                                                ◆
+                                                            </span>
+    
+                                                        </summary>
+    
+    
+    
+                                                        <div class="class-feature__body">
+    
+                                                            <% if (Array.isArray(feature.desc)) { %>
+    
+                                                                <%- feature.desc
+                                                                    .map(function(paragraph) {
+                                                                        return paragraph
+                                                                            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                                                                            .replace(/\n/g, '<br>');
+                                                                    })
+                                                                    .join('<br>') %>
+    
+                                                            <% } else if (feature.desc) { %>
+    
+                                                                <%- String(feature.desc)
+                                                                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                                                                    .replace(/\n/g, '<br>') %>
+    
+                                                            <% } %>
+    
+                                                        </div>
+    
+                                                    </details>
+                                                <% }); %>
+    
+    
+    
+    
+                                                <!--
+                                                    Restul feature-urilor pot continua aici.
+                                                    În EJS acest bloc va deveni un loop.
+                                                -->
+    
+    
+                                            </div>
+    
+                                        </div>
+                                        
+    
+                                        <!-- =====================================================
+                                            FOOTER
+                                        ====================================================== -->
+    
+                                        <form  
+                                        action="/<%= userId %>/dnd/builder/<%= characterId %>/class/choose"
+                                        method="POST"
+                                        class="class-modal__footer">
+    
+                                            <button
+                                                type="button"
+                                                class="class-modal__button class-modal__button--back"
+                                            >
+                                                <span>←</span>
+                                                ÎNAPOI
+                                            </button>
+    
+    
+                                            <div class="class-modal__footer-ornament">
+                                                ◆ ─── ◇ ─── ◆
+                                            </div>
+
+                                            <input type="hidden" name="classIndex" value="<%= item.index %>">
+                                            <input type="hidden" name="level" value=1>
+    
+                                            <button
+                                                type="submit"
+                                                class="class-modal__button class-modal__button--choose"
+                                            >
+                                                ALEGE CLASA
+                                            </button>
+    
+                                        </form>
+    
+                                    </section>                
+                                </div>
+                            <% }); %>
+                        </section>
+                    <% } else { %>
+                        <p>Nu s-au primit date din Classes.json.</p>
+                    <% } %>
+    
+    
+                    <!-- =================================================
+                            BOTTOM NAVIGATION
+                    ================================================== -->
+    
+                    <footer class="class-selection-footer">
+    
+                        <div class="class-selection-footer__decoration">
+                            <span></span>
+    
+                            <div class="class-selection-footer__dice">
+                                ◆
+                            </div>
+    
+                            <span></span>
+                        </div>
+    
+    
+                        <button
+                            type="button"
+                            class="class-selection-footer__back"
+                        >
+                            Înapoi
+                        </button>
+    
+                    </footer>
+
+                </div>
+            </main>
+
+
+
+
+
+            <!-- =========================================================
+                CLASS DETAILS MODAL
+                Poate fi folosit pentru orice clasă D&D.
+                Datele Barbarian sunt doar exemplu.
+            ========================================================= -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+  <script src="https://kit.fontawesome.com/19568ad9a4.js" crossorigin="anonymous"></script>
+
+
+    <script>
+
+    
+        
+        // descide descrierea pentru fiecare clasa
+        // =====================================================
+        // DESCHIDERE MODAL CLASĂ
+        // =====================================================
+
+        document.querySelectorAll('.class-card__button').forEach(button => {
+
+            button.addEventListener('click', function () {
+
+                const classIndex = this.dataset.classSelect;
+
+                const modalOverlay = document.querySelector(
+                    `.class-modal-overlay[data-class-modal="${classIndex}"]`
+                );
+
+                if (modalOverlay) {
+                    modalOverlay.classList.add('is-visible');
+                }
+
+            });
+
+        });
+
+
+        // =====================================================
+        // ÎNCHIDERE MODAL
+        // =====================================================
+
+        // X
+        document.querySelectorAll('.class-modal__close').forEach(button => {
+
+            button.addEventListener('click', function () {
+
+                const modalOverlay = this.closest('.class-modal-overlay');
+
+                if (modalOverlay) {
+                    modalOverlay.classList.remove('is-visible');
+                }
+
+            });
+
+        });
+
+
+        // ÎNAPOI
+        document.querySelectorAll('.class-modal__button--back').forEach(button => {
+
+            button.addEventListener('click', function () {
+
+                const modalOverlay = this.closest('.class-modal-overlay');
+
+                if (modalOverlay) {
+                    modalOverlay.classList.remove('is-visible');
+                }
+
+            });
+
+        });
+
+
+        // CLICK ÎN AFARA MODALULUI
+        document.querySelectorAll('.class-modal-overlay').forEach(overlay => {
+
+            overlay.addEventListener('click', function (event) {
+
+                // Dacă elementul pe care s-a dat click este chiar overlay-ul,
+                // înseamnă că NU s-a dat click în interiorul modalului.
+                if (event.target === overlay) {
+                    overlay.classList.remove('is-visible');
+                }
+
+            });
+
+        });
+    </script>
+</body>
+</html>
