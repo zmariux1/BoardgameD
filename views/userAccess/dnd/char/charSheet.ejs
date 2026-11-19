@@ -1,0 +1,1090 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0f12" />
+  <title>Character Sheet — D&D UI Base</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/css/dnd/char/charSheet/piese/root.css" />
+  <link rel="stylesheet" href="/css/dnd/char/charSheet/piese/hpModal.css" />
+  <link rel="stylesheet" href="/css/dnd/char/charSheet/stats_section.css" />
+  <link rel="stylesheet" href="/css/dnd/char/charSheet/actions_skills.css" />
+  <link rel="stylesheet" href="/css/dnd/dnd-dice-system-3.css">
+  <link rel="stylesheet" href="/css/dnd/dnd-dice-system-3-demo.css">
+  <script src="/js/dnd/char/dnd-dice-system-3.js" defer></script>
+</head>
+<body>
+  <div class="app-root">
+    <!-- Desktop / tablet sidebar -->
+    <aside class="sidebar" aria-label="Primary navigation">
+      <div class="sidebar__brand" aria-label="D&D Character">
+        <button
+          type="button"
+          class="brand-mark"
+          aria-label="Deschide sau închide meniul"
+          aria-controls="sidebarNav"
+          aria-expanded="false"
+        >✥</button>
+      </div>
+
+      <nav class="sidebar__nav" id="sidebarNav">
+        <a class="sidebar__item " href="#">
+          <span class="sidebar__icon">◈</span>
+          <span class="sidebar__label">Refresh</span>
+        </a>
+        <a class="sidebar__item " href="/<%= userId %>/dnd">
+          <span class="sidebar__icon">⌂</span>
+          <span class="sidebar__label">D&D Home</span>
+        </a>
+        <!-- <a class="sidebar__item" href="#inventory">
+          <span class="sidebar__icon">▣</span>
+          <span class="sidebar__label">Inventory</span>
+        </a> -->
+        <a class="sidebar__item" href="/<%= userId %>/dnd/myCampaigns">
+          <span class="sidebar__icon">⌘</span>
+          <span class="sidebar__label">My Campaigns</span>
+        </a>
+
+        <a class="sidebar__item" href="/<%= userId %>/dnd/myCampaigns">
+          <span class="sidebar__icon">⌘</span>
+          <span class="sidebar__label">Global Campaigns</span>
+        </a>
+
+        <a class="sidebar__item" href="/<%= userId %>/dnd/myChars">
+          <span class="sidebar__icon">✣</span>
+          <span class="sidebar__label">My Chars</span>
+        </a>
+        <% if (campaigns.length > 0) { %>
+          <% campaigns.forEach(campaign => { %>
+            <a class="sidebar__item is-active" href="/dnd/dmOverview/<%= campaign._id %>/sessions">
+              <span class="sidebar__icon">⚔</span>
+              <span class="sidebar__label">Current Campaign</span>
+            </a>
+          <% }); %>
+        <% } else { %>
+
+            <a class="sidebar__item is-active" href="/<%= userId %>/dnd/myCampaigns">
+              <span class="sidebar__icon">⌘</span>
+              <span class="sidebar__label">Join Campaigns</span>
+            </a>
+
+        <% } %>
+        <a class="sidebar__item" href="/<%= userId %>/dnd/builder/<%= characterId %>/class/management">
+          <span class="sidebar__icon">⚙</span>
+          <span class="sidebar__label">Edit Char</span>
+        </a>
+        <!-- <a class="sidebar__item" href="#background">
+          <span class="sidebar__icon">◈</span>
+          <span class="sidebar__label">Background</span>
+        </a>
+        <a class="sidebar__item" href="#feats">
+          <span class="sidebar__icon">✦</span>
+          <span class="sidebar__label">Feats</span>
+        </a>
+        <a class="sidebar__item" href="#notes">
+          <span class="sidebar__icon">▤</span>
+          <span class="sidebar__label">Notes</span>
+        </a> -->
+      </nav>
+    </aside>
+
+
+
+
+    <div class="page-frame">
+      <header class="character-header">
+        <div class="hero-media" role="img" aria-label="Character hero artwork">
+          <% if (selectedBackground) { %>
+            <img
+              src="/img/dnd/backgrounds/<%= selectedBackground.index %>.png"
+              alt="<%= selectedBackground.name %>"
+            >
+          <% } %>
+
+        </div>
+        <div class="hero-overlay"></div>
+        <a class="hero-edit" href="/<%= userId %>/dnd/builder/<%= characterId %>/class/management" aria-label="Edit character">✎ <span>Edit</span></a>
+
+        <div class="character-identity">
+          <div class="character-emblem" aria-hidden="true">⚔</div>
+          <div>
+            <h1><%= character.charName %></h1>
+            <p>
+              <span><%= race?.name || character.race?.index || 'Race not selected' %></span>
+              <b>•</b>
+              <% const headerClasses = Array.isArray(classes) && classes.length ? classes : (classData ? [classData] : []); %>
+              <% headerClasses.forEach((selectedClass, index) => { %>
+                <% if (index > 0) { %>
+                  <span class="character-header__class-separator">/</span>
+                <% } %>
+                <span><%= selectedClass?.name || selectedClass?.index || 'Class not selected' %></span>
+              <% }); %>
+              <span><%= totalCharLevel %></span>
+            </p>
+              <p
+                class="character-hit-points hp-adjustment-trigger"
+                data-character-id="<%= characterId %>"
+                aria-label="Modifică punctele de viață"
+                title="Click pentru Heal sau Damage"
+              >
+                HP: <span class="character-current-hp"><%= Number.isFinite(character.hp?.currentHP_left) ? character.hp.currentHP_left : Char_total_HP_with_bonuses %></span>
+                / <span class="character-maximum-hp"><%= Char_total_HP_with_bonuses %></span>
+              </p>
+
+          </div>
+        </div>
+      </header>
+
+      <nav class="section-tabs" aria-label="Character sections">
+        <a class="section-tab is-active" href="#overview"><span class="tab-icon">◉</span><span>Overview</span></a>
+        <a class="section-tab" href="#stats"><span class="tab-icon">▥</span><span>Stats</span></a>
+        <a class="section-tab" href="#skills"><span class="tab-icon">♟</span><span>Skills</span></a>
+        <a class="section-tab" href="#actions"><span class="tab-icon">⚔</span><span>Actions</span></a>
+        <a class="section-tab" href="#spells"><span class="tab-icon">✣</span><span>Spells</span></a>
+        <a class="section-tab" href="#background"><span class="tab-icon">◈</span><span>Background</span></a>
+        <a class="section-tab" href="#feats"><span class="tab-icon">✦</span><span>Feats</span></a>
+        <a class="section-tab" href="#inventory"><span class="tab-icon">▣</span><span>Inventory</span></a>
+        <a class="section-tab" href="#more"><span class="tab-icon">•••</span><span>More</span></a>
+      </nav>
+
+      <!--
+        MAIN SECTION CONTRACT
+        ---------------------
+        Future prompts should replace ONLY the contents of each .section-slot.
+        Keep the slot id / data-section / grid classes unchanged so the page
+        structure stays stable while each section is generated independently.
+      -->
+      <main id="character-main" class="character-main">
+        <section class="main-grid main-grid--top" aria-label="Top sections">
+          <div id="stats" class="section-slot slot--large" data-section="stats">
+            <article class="stats-card" aria-labelledby="stats-title">
+              <header class="stats-card__header">
+                <div class="stats-card__title">
+                  <span class="stats-card__icon" aria-hidden="true">♟</span>
+                  <h2 id="stats-title">Stats</h2>
+                </div>
+                <div class="stats-summary" aria-label="Defensive summary">
+                  <span class="stats-summary__item">
+                    <span class="stats-summary__icon" aria-hidden="true">⬟</span>
+                    <span class="stats-summary__label">AC</span>
+                    <strong class="stats-AC__value"><%= Char_total_AC_with_items %></strong>
+                  </span>
+                  <span class="stats-summary__item">
+                    <span class="stats-summary__icon" aria-hidden="true">↟</span>
+                    <span class="stats-summary__label">Init</span>
+                    <strong class="stats-init__value_JS"><%= initiative.total >= 0 ? '+' : '' %><%= initiative.total %></strong>
+                  </span>
+                  <span class="stats-summary__item">
+                    <span class="stats-summary__icon" aria-hidden="true">♜</span>
+                    <span class="stats-summary__label">Speed</span>
+                    <strong class=""><%= race.speed %> ft.</strong>
+                  </span>
+                </div>
+                <span class="stats-card__expand" aria-hidden="true">›</span>
+              </header>
+
+              <div class="stats-card__body">
+                <%
+                  const statLabels = {
+                    STR: 'STRENGTH',
+                    DEX: 'DEXTERITY',
+                    CON: 'CONSTITUTION',
+                    INT: 'INTELLIGENCE',
+                    WIS: 'WISDOM',
+                    CHA: 'CHARISMA'
+                  };
+                %>
+
+                <%
+                  const orderedStats = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
+                  const totalModifier = (scoreValue) => {
+                    const normalizedValue = Number(scoreValue ?? 0);
+                    const modifier = Math.floor((normalizedValue - 10) / 2);
+                    return modifier >= 0 ? '+' + modifier : String(modifier);
+                  };
+                %>
+                <% orderedStats.forEach((type) => {
+                  const statValue = sheetAbilityStats && sheetAbilityStats.AllStats
+                    ? sheetAbilityStats.AllStats[type] ?? 0
+                    : sheetAbilityStats && sheetAbilityStats[type] !== undefined
+                      ? sheetAbilityStats[type]
+                      : 0;
+                  const modifierDisplay = totalModifier(statValue);
+                %>
+                  <div class="stats-score">
+                    <span class="stats-score__label"><%= statLabels[type] || type %></span>
+                    <span class="stats-score__value"><%= statValue %></span>
+                    <span class="stats-score__modifier">(<%= modifierDisplay %>)</span>
+                  </div>
+                <% }); %>
+              </div>
+            </article>
+          </div>
+          <div id="side_stats" class="section-slot slot--large" data-section="side_stats">
+            <article class="saving-throws-card" id="saving-throws" aria-labelledby="saving-throws-title">
+              <header class="saving-throws-card__header">
+                <div class="saving-throws-card__title">
+                  <span class="saving-throws-card__icon" aria-hidden="true">⬟</span>
+                  <h2 id="saving-throws-title">Saving Throws</h2>
+                </div>
+                <span class="saving-throws-card__expand" aria-hidden="true">›</span>
+              </header>
+              <div class="saving-throws-card__body">
+                <div class="saving-throws-list" aria-label="Saving throws">
+                  <div class="saving-throw-row" data-saving-throw-proficient="<%= savingThrowProficiencies.includes('STR') %>"><span class="saving-throw-row__icon" aria-hidden="true">♟</span><span class="saving-throw-row__stat">STR</span><strong class="saving-throw-row__value">—</strong></div>
+                  <div class="saving-throw-row" data-saving-throw-proficient="<%= savingThrowProficiencies.includes('INT') %>"><span class="saving-throw-row__icon" aria-hidden="true">▤</span><span class="saving-throw-row__stat">INT</span><strong class="saving-throw-row__value">—</strong></div>
+                  <div class="saving-throw-row" data-saving-throw-proficient="<%= savingThrowProficiencies.includes('DEX') %>"><span class="saving-throw-row__icon" aria-hidden="true">♞</span><span class="saving-throw-row__stat">DEX</span><strong class="saving-throw-row__value">—</strong></div>
+                  <div class="saving-throw-row" data-saving-throw-proficient="<%= savingThrowProficiencies.includes('WIS') %>"><span class="saving-throw-row__icon" aria-hidden="true">◉</span><span class="saving-throw-row__stat">WIS</span><strong class="saving-throw-row__value">—</strong></div>
+                  <div class="saving-throw-row" data-saving-throw-proficient="<%= savingThrowProficiencies.includes('CON') %>"><span class="saving-throw-row__icon" aria-hidden="true">♥</span><span class="saving-throw-row__stat">CON</span><strong class="saving-throw-row__value">—</strong></div>
+                  <div class="saving-throw-row" data-saving-throw-proficient="<%= savingThrowProficiencies.includes('CHA') %>"><span class="saving-throw-row__icon" aria-hidden="true">✥</span><span class="saving-throw-row__stat">CHA</span><strong class="saving-throw-row__value">—</strong></div>
+                </div>
+                <div class="passive-stats" aria-label="Passive checks">
+                  <% (Array.isArray(passiveStats) ? passiveStats : []).forEach((passive) => { %>
+                    <div class="passive-stat" data-passive-proficient="<%= passive.proficient %>">
+                      <span class="passive-stat__name" data-ability-score="<%= passive.ability %>">Passive<br /><%= passive.name %></span>
+                      <div class="passive-stat__value">
+                        <span class="passive-stat__icon" aria-hidden="true">◉</span>
+                        <strong><%= passive.value %></strong>
+                      </div>
+                    </div>
+                  <% }); %>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+
+        <section class="main-grid main-grid--middle" aria-label="Core sections">
+          <div id="skills" class="section-slot slot--tall" data-section="skills">
+            <article class="skills-card" aria-labelledby="skills-title">
+              <header class="skills-card__header">
+                <div class="skills-card__title">
+                  <span class="skills-card__icon" aria-hidden="true">◉</span>
+                  <h2 id="skills-title">Skills</h2>
+                </div>
+                <span class="skills-card__expand" aria-hidden="true">›</span>
+              </header>
+
+              <div class="skills-card__body">
+                <ul class="skills-list" aria-label="Character skills" data-proficiency-level="<%= proficiencyLevel || 0 %>">
+                  <% const startingProficiencyNames = (Array.isArray(backgrounds) ? backgrounds : [])
+                    .flatMap((background) => Array.isArray(background.starting_proficiencies)
+                      ? background.starting_proficiencies.map((proficiency) => proficiency.name)
+                      : [])
+                    .filter(Boolean);
+                  const proficiencyChoiceNames = (Array.isArray(character?.classes) ? character.classes : [])
+                    .flatMap((characterClass) => Array.isArray(characterClass.abilities) ? characterClass.abilities : [])
+                    .filter((ability) => String(ability.index || '').includes('proficiency-choice'))
+                    .map((ability) => ability.decision)
+                    .filter(Boolean);
+                  const proficientSkillNames = new Set([...startingProficiencyNames, ...proficiencyChoiceNames]); %>
+                  <% (Array.isArray(skills) ? skills : []).forEach((skill) => { %>
+                    <% if (skill.name) { %>
+                      <li class="skill-row<%= proficientSkillNames.has(skill.name) ? ' skill-row--proficient' : '' %>" data-ability-score="<%= skill.ability_score?.name || '' %>"><span class="skill-row__marker" aria-hidden="true"></span><span class="skill-row__name"><%= skill.name %></span><button class="skill-row__value diceRoller_JS" type="button" value="1d20+0;+0">—</button></li>
+                    <% } %>
+                  <% }); %>
+                </ul>
+              </div>
+            </article>
+          </div>
+          <div id="inventory" class="section-slot slot--compact" data-section="inventory">
+            <article class="inventory-card" aria-labelledby="inventory-title">
+              <header class="inventory-card__header">
+                <div class="inventory-card__title">
+                  <span class="inventory-card__icon" aria-hidden="true">♜</span>
+                  <h2 id="inventory-title">Inventory</h2>
+                </div>
+                <span class="inventory-card__expand" aria-hidden="true">›</span>
+              </header>
+
+              <div class="inventory-card__body">
+                <div class="inventory-tabs" role="tablist" aria-label="Inventory sections">
+                  <input class="inventory-tab-input" type="radio" name="inventory-tab" id="inventory-tab-equipped" aria-controls="inventory-panel-equipped" checked />
+                  <label class="inventory-tab" for="inventory-tab-equipped" role="tab" aria-controls="inventory-panel-equipped">Equipped</label>
+
+                  <input class="inventory-tab-input" type="radio" name="inventory-tab" id="inventory-tab-bag" aria-controls="inventory-panel-bag" />
+                  <label class="inventory-tab" for="inventory-tab-bag" role="tab" aria-controls="inventory-panel-bag">Bag</label>
+
+                  <input class="inventory-tab-input" type="radio" name="inventory-tab" id="inventory-tab-magic" aria-controls="inventory-panel-magic" />
+                  <label class="inventory-tab" for="inventory-tab-magic" role="tab" aria-controls="inventory-panel-magic">Magic Items</label>
+                </div>
+
+                <div class="inventory-panels">
+                  <section class="inventory-panel is-active" id="inventory-panel-equipped" role="tabpanel" aria-labelledby="inventory-tab-equipped">
+                    <div class="inventory-category-grid">
+                      <%
+                        const getEquippedItems = location => [
+                          ...equipment
+                            .filter(item => {
+                              const isShield = String(item.armor_category || '').trim().toLowerCase() === 'shield' ||
+                                String(item.equipment_category?.index || '').trim().toLowerCase() === 'shields';
+                              const matchesLocation = item.inventory.whereEquiped === location ||
+                                (location === 'Shield' && item.inventory.whereEquiped === 'Armor' && isShield);
+                              return item.inventory.equiped === true &&
+                                matchesLocation &&
+                                (location !== 'Armor' || !isShield);
+                            })
+                            .map(item => ({ name: item.name, quantity: item.inventory.quantity, icon: '⚔' })),
+                          ...customItems
+                            .filter(item => item.inventory.equiped === true && item.inventory.whereEquiped === location)
+                            .map(item => ({ name: item.magic_item.name, quantity: item.inventory.quantity, icon: '♢' }))
+                        ];
+                        const renderEquippedSlot = slot => {
+                          const items = getEquippedItems(slot.location);
+                      %>
+                        <div class="inventory-item-row">
+                          <span class="inventory-item-icon" aria-hidden="true"><%= slot.icon %></span>
+                          <span><%= slot.label %></span>
+                          <span class="inventory-equipped-items">
+                            <% if (items.length) { %>
+                              <% items.forEach(item => { %>
+                                <form class="inventory-equipped-item">
+                                  <strong><%= item.name %><% if (item.quantity != null) { %> (<%= item.quantity %>)<% } %></strong>
+                                </form>
+                              <% }); %>
+                            <% } else { %>
+                              <strong class="inventory-equipped-item__empty">—</strong>
+                            <% } %>
+                          </span>
+                          <span class="inventory-row-arrow" aria-hidden="true">›</span>
+                        </div>
+                      <% }; %>
+
+                      <section class="inventory-category">
+                        <h3><span aria-hidden="true">⚔</span> Weapons &amp; Armor</h3>
+                        <% [
+                          { location: 'Main Hand', label: 'Main Hand', icon: '⚔' },
+                          { location: 'Secondary Hand', label: 'Secondary Hand', icon: '⚔' },
+                          { location: 'Both Hands', label: 'Both Hands', icon: '⚔' },
+                          { location: 'Armor', label: 'Armor', icon: '♜' },
+                          <!-- { location: 'Shield', label: 'Shield', icon: '🛡' } -->
+                        ].forEach(slot => renderEquippedSlot(slot)); %>
+                      </section>
+
+                      <!-- <div class="inventory-category-stack">
+                        <section class="inventory-category">
+                          <h3><span aria-hidden="true">♢</span> Jewelry</h3>
+                          <% [
+                            { location: 'finger', label: 'Ring', icon: '○' },
+                            { location: 'neck', label: 'Necklace', icon: '♢' }
+                          ].forEach(slot => renderEquippedSlot(slot)); %>
+                        </section>
+                        <section class="inventory-category inventory-category--other">
+                          <h3><span aria-hidden="true">♟</span> Other</h3>
+                          <div class="inventory-category-items inventory-category-items--scrollable">
+                            <% [
+                              { location: 'back', label: 'Cloak', icon: '♟' },
+                              { location: 'head', label: 'Hat', icon: '♟' },
+                              { location: 'body', label: 'Body', icon: '♟' },
+                              { location: 'legs', label: 'Legs', icon: '♟' },
+                              { location: 'feet', label: 'Feet', icon: '♟' },
+                              { location: 'hands', label: 'Hands', icon: '♟' },
+                              { location: 'waist', label: 'Waist', icon: '♟' },
+                              { location: 'wrist', label: 'Wrist', icon: '♟' },
+                              { location: '', label: 'Other', icon: '♟' }
+                            ].forEach(slot => renderEquippedSlot(slot)); %>
+                          </div>
+                        </section>
+                      </div> -->
+                    </div>
+                  </section>
+
+                  <section class="inventory-panel" id="inventory-panel-bag" role="tabpanel" aria-labelledby="inventory-tab-bag">
+                    <div class="inventory-bag-grid">
+                      <div class="inventory-bag-column">
+                        <% equipment.filter(item => item.inventory.equiped !== true).forEach(equipment => { %>
+                          <form class="inventory-bag-row inventory-equipment-equip-form" method="post" action="/<%= userId %>/dnd/char/<%= characterId %>/inventory/equip">
+                            <input type="hidden" name="equipmentIndex" value="<%= equipment.index %>">
+                            <input type="hidden" name="whereEquiped" value="">
+                            <span aria-hidden="true">⚔</span>
+                            <div class="inventory-bag-item-details">
+                              <div class="inventory-bag-item-name">
+                                <span>
+                                  <%= equipment.name %>
+                                  <strong><%= equipment.inventory.quantity != null ? '(' + equipment.inventory.quantity + ')' : '' %></strong>
+                                </span>
+                                <div class="inventory-bag-equip-options" hidden>
+                                  <% equipment.equipOptions.forEach(slot => { %>
+                                    <button class="inventory-bag-equip-option" type="button" data-slot="<%= slot %>"><%= slot === 'bag' ? 'Keep in Bag' : slot %></button>
+                                  <% }); %>
+                                </div>
+                              </div>
+                            </div>
+
+                            <button class="inventory-bag-equip-toggle" type="button" aria-label="Choose slot for <%= equipment.name %>" aria-expanded="false">›</button>
+                          </form>
+                        <% }); %>
+                        <% customItems.filter(item => item.inventory.equiped !== true).forEach(customItem => { %>
+                          <div class="inventory-bag-row">
+                            <span aria-hidden="true">♢</span>
+                            <span><%= customItem.magic_item.name %></span>
+                            <strong><%= customItem.inventory.quantity != null ? '(' + customItem.inventory.quantity + ')' : '' %></strong>
+                            <span aria-hidden="true">›</span>
+                          </div>
+                        <% }); %>
+                      </div>
+
+                    </div>
+                  </section>
+
+                  <section class="inventory-panel" id="inventory-panel-magic" role="tabpanel" aria-labelledby="inventory-tab-magic">
+                    <div id="inventory-magic-group-attuned" class="inventory-magic-group">
+                      <h3>Attuned</h3>
+                      <% customItems.filter(item => item.inventory.attuned === true).forEach(customItem => { %>
+                        <form class="inventory-magic-row">
+                          <span class="inventory-magic-symbol" aria-hidden="true">♢</span>
+                          <span>
+                            <strong><%= customItem.magic_item.name %></strong>
+                            <small>Attuned</small>
+                          </span>
+                          <span aria-hidden="true">›</span>
+                        </form>
+                      <% }); %>
+                    </div>
+                    <div id="inventory-magic-group-not-attuned" class="inventory-magic-group">
+                      <h3>Not Attuned</h3>
+                      <% customItems.filter(item => item.inventory.attuned !== true).forEach(customItem => { %>
+                        <form class="inventory-magic-row">
+                          <span class="inventory-magic-symbol" aria-hidden="true">♢</span>
+                          <span><strong><%= customItem.magic_item.name %></strong></span>
+                          <span aria-hidden="true">›</span>
+                        </form>
+                      <% }); %>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </article>
+          </div>
+
+        </section>
+
+        <section class="main-grid main-grid--middle" aria-label="Character details">
+          <div id="spells" class="section-slot slot--tall" data-section="spells">
+            <article class="spells-card" aria-labelledby="spells-title">
+              <header class="spells-card__header">
+                <div class="spells-card__title">
+                  <span class="spells-card__icon" aria-hidden="true">♧</span>
+                  <h2 id="spells-title">Spells</h2>
+                </div>
+                <span class="spells-card__expand" aria-hidden="true">›</span>
+              </header>
+
+              <div class="spells-card__body">
+                <div class="spells-tools">
+                  <label class="spells-search">
+                    <span class="spells-search__icon" aria-hidden="true">⌕</span>
+                    <input type="search" placeholder="Search spells" aria-label="Search spells" />
+                  </label>
+                  <button class="spells-manage" type="button">Manage Spells</button>
+                </div>
+
+                <% const spellsByLevel = (Array.isArray(spells) ? spells : []).reduce((groups, spell) => {
+                  const level = Number(spell && (spell.displayLevel ?? spell.level));
+                  if (Number.isFinite(level) && level >= 0) {
+                    (groups[level] ||= []).push(spell);
+                  }
+                  return groups;
+                }, {});
+                const spellLevels = Object.keys(spellsByLevel).map(Number).sort((first, second) => first - second);
+                const getSpellLevelLabel = (level) => {
+                  if (level === 0) return 'Cantrips';
+                  const lastTwoDigits = level % 100;
+                  const suffix = lastTwoDigits >= 11 && lastTwoDigits <= 13
+                    ? 'th'
+                    : ({ 1: 'st', 2: 'nd', 3: 'rd' }[level % 10] || 'th');
+                  return `${level}${suffix} Level`;
+                }; %>
+                <nav class="spell-level-tabs" aria-label="Spell level filter">
+                  <button type="button" class="spell-level-tab is-active" data-level="all" aria-pressed="true">All</button>
+                  <% spellLevels.forEach((level) => { %>
+                    <button type="button" class="spell-level-tab" data-level="<%= level %>" aria-pressed="false"><%= level %></button>
+                  <% }); %>
+                </nav>
+
+                <form class="spell-table" role="table" aria-label="Known spells" method="post" action="/<%= userId %>/dnd/char/<%= characterId %>/spells">
+                  <div class="spell-table__head" role="row">
+                    <span role="columnheader">Spell</span>
+                    <span role="columnheader">Time</span>
+                    <span role="columnheader">Range</span>
+                    <span role="columnheader">Hit / DC</span>
+                    <span role="columnheader">Damage / Healing</span>
+                  </div>
+                  <% spellLevels.forEach((level) => {
+                    const spellsAtLevel = spellsByLevel[level];
+                    const spellSlots = spellSlotsByLevel?.[level] || { available: 0, consumed: 0 };
+                    const consumedSpellSlots = Math.max(0, Math.floor(Number(spellSlots.consumed) || 0));
+                  %>
+                    <section class="spell-level-group" data-spell-level="<%= level %>" aria-labelledby="spell-level-<%= level %>-label">
+                      <div class="spell-level-group__heading">
+                        <h3 id="spell-level-<%= level %>-label"><%= getSpellLevelLabel(level) %> (<%= spellsAtLevel.length %>)</h3>
+                        <% if (level === 0) { %>
+                          <div class="resource-boxes" aria-label="Cantrips: unlimited uses">
+                            <span class="resource-box resource-box--unlimited" aria-hidden="true">&infin;</span>
+                          </div>
+                        <% } else if (spellSlots.available > 0) { %>
+                          <div class="resource-boxes" role="group" aria-label="<%= consumedSpellSlots %> of <%= spellSlots.available %> level <%= level %> spell slots consumed">
+                            <% for (let resourceIndex = 0; resourceIndex < spellSlots.available; resourceIndex += 1) { %>
+                              <% const isConsumedSlot = resourceIndex < consumedSpellSlots; %>
+                              <button
+                                type="submit"
+                                class="resource-box<%= isConsumedSlot ? ' is-filled' : '' %>"
+                                formaction="/<%= userId %>/dnd/char/<%= characterId %>/spell-slots"
+                                name="slotChange"
+                                value="<%= level %>:<%= isConsumedSlot ? -1 : 1 %>"
+                                formmethod="post"
+                                aria-label="<%= isConsumedSlot ? 'Restore' : 'Use' %> level <%= level %> spell slot"
+                                <%= (!isConsumedSlot && consumedSpellSlots >= spellSlots.available) || (isConsumedSlot && consumedSpellSlots === 0) ? 'disabled' : '' %>
+                              ></button>
+                            <% } %>
+                          </div>
+                        <% } %>
+                      </div>
+                      <% spellsAtLevel.forEach((spell) => {
+                        const spellAvailability = spellAvailabilityByIndex?.[spell.index] || '';
+                        const isSpellAvailable = ['always', 'prepared', 'limited'].includes(spellAvailability);
+                      %>
+                        <div class="spell-row<%= isSpellAvailable ? ' isPrepared' : '' %>" data-spell-level="<%= level %>" data-spell-name="<%= spell.name || '' %>" role="row">
+                          <span class="spell-name" role="cell"><input class="spell-select" type="checkbox" name="spellIndexes" value="<%= spell.index %>" aria-label="Prepare <%= spell.name || 'Unnamed spell' %>" <%= spellAvailability === 'prepared' ? 'checked' : '' %> /><span><%= spell.name || 'Unnamed spell' %></span></span>
+                          <span class="castingTime_JS" role="cell"><%= spell.casting_time || '—' %></span>
+                          <span class="range_JS" role="cell"><%= spell.range || '—' %></span>
+                          <span class="spell-check" role="cell">—</span>
+                          <button class="damage_JS diceRollerTotal_JS" type="button" value="<%= spell.damageAmount || '' %>" role="cell" aria-label="Roll <%= spell.name || 'spell' %> damage or healing"><%= spell.damageLabel || '—' %></button>
+                        </div>
+                      <% }); %>                    </section>
+                  <% }); %>
+                  <button class="spell-submit" type="submit" name="availability" value="prepared">Prepare</button>
+                </form>
+              </div>
+            </article>
+          </div>
+          <div id="actions" class="section-slot slot--tall" data-section="actions">
+            <article class="actions-card" aria-labelledby="actions-title">
+              <header class="actions-card__header">
+                <div class="actions-card__title">
+                  <span class="actions-card__icon" aria-hidden="true">⚔</span>
+                  <h2 id="actions-title">Actions</h2>
+                </div>
+                <span class="actions-card__expand" aria-hidden="true">›</span>
+              </header>
+
+              <div class="actions-card__body">
+                <% (Array.isArray(actionGroups) ? actionGroups : []).forEach(function(group, groupIndex) { %>
+                  <section class="action-group action-group--compact action-group--reaction-template" aria-labelledby="action-group-title-<%= groupIndex %>">
+                    <h3 id="action-group-title-<%= groupIndex %>"><%= group.title %></h3>
+                    <% group.features.forEach(function(feature) { %>
+                      <article class="action-row action-row--reaction-template">
+                        <div class="action-row__main action-row__main--reaction">
+                          <div class="compact-action">
+                            <strong><%= feature.name || feature.index %></strong>
+                            <p class="feature-description is-collapsed">
+                              <%= feature.description %>
+                            </p>
+
+                            <button
+                              type="button"
+                              class="feature-description__toggle"
+                              aria-expanded="false"
+                            >
+                              Vezi mai mult
+                            </button>
+                            <% if (feature.resourceUnlimited) { %>
+                              <div class="resource-boxes" aria-label="<%= feature.name || feature.index %>: unlimited uses">
+                                <span class="resource-box resource-box--unlimited" aria-hidden="true">&infin;</span>
+                              </div>
+                            <% } else if (feature.resourceCount !== null) { %>
+                              <div class="resource-boxes" aria-label="<%= feature.name || feature.index %> uses">
+                                <% for (let resourceIndex = 0; resourceIndex < feature.resourceCount; resourceIndex += 1) { %>
+                                  <span class="resource-box <%= resourceIndex === 0 ? 'is-filled' : '' %>"></span>
+                                <% } %>
+                              </div>
+                            <% } %>
+                          </div>
+                        </div>
+                        <div class="action-row__details" aria-label="Range, Hit/DC, Damage">
+                          <span class="action-row__meta">Touch</span>
+                          <span class="action-row__check">—</span>
+                          <span class="action-row__damage">—</span>
+                        </div>
+                      </article>
+                    <% }); %>
+                  </section>
+                <% }); %>
+
+              </div>
+            </article>
+          </div>
+
+        </section>
+
+        <section class="main-grid main-grid--bottom" aria-label="Secondary sections">
+
+
+          <div id="feats" class="section-slot slot--compact" data-section="feats">
+            <article class="feats-card" aria-labelledby="feats-title">
+              <header class="feats-card__header">
+                <div class="feats-card__title">
+                  <span class="feats-card__icon" aria-hidden="true">✥</span>
+                  <h2 id="feats-title">Feats</h2>
+                </div>
+                <span class="feats-card__expand" aria-hidden="true">›</span>
+              </header>
+
+              <div class="feats-card__body">
+                <div class="feats-tabs" role="tablist" aria-label="Feats">
+                  <% (Array.isArray(feats) ? feats : []).forEach(function(feat, index) { %>
+                    <input class="feats-tab-input" type="radio" name="feat-tab" id="feat-tab-<%= index %>" aria-controls="feat-panel-<%= index %>" <%= index === 0 ? 'checked' : '' %> />
+                    <label class="feats-tab" for="feat-tab-<%= index %>" role="tab" aria-controls="feat-panel-<%= index %>"><%= feat.name || feat.index || 'Feat' %></label>
+                  <% }); %>
+                </div>
+
+                <div class="feats-panels">
+                  <% (Array.isArray(feats) ? feats : []).forEach(function(feat, index) { %>
+                    <section class="feat-panel" id="feat-panel-<%= index %>" role="tabpanel" aria-labelledby="feat-tab-<%= index %>" aria-hidden="<%= index === 0 ? 'false' : 'true' %>" <%= index === 0 ? '' : 'hidden' %>>
+                      <div class="feat-panel__emblem" aria-hidden="true">✦</div>
+                      <div class="feat-panel__copy">
+                        <h3><%= feat.name || feat.index || 'Feat' %></h3>
+                        <% (Array.isArray(feat.desc) ? feat.desc : [feat.desc]).filter(Boolean).forEach(function(description) { %>
+                          <p><%= description %></p>
+                        <% }); %>
+                      </div>
+                    </section>
+                  <% }); %>
+                  <% if (!Array.isArray(feats) || feats.length === 0) { %>
+                    <p class="feats-empty">No feats selected.</p>
+                  <% } %>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div id="background" class="section-slot slot--tall" data-section="background">
+            <% if (selectedBackground) { %>
+
+                <%
+                    const background = selectedBackground;
+                    const backgroundIndex = 0;
+                    const features = Array.isArray(background.feature)
+                        ? background.feature
+                        : (background.feature ? [background.feature] : []);
+                %>
+
+                <!-- Un singur articol pentru fiecare background -->
+                <article
+                    class="background-card"
+                    aria-labelledby="background-title-<%= backgroundIndex %>"
+                >
+                    <header class="background-card__header">
+                        <div class="background-card__title">
+                            <span class="background-card__icon" aria-hidden="true">◈</span>
+
+                            <h2 id="background-title-<%= backgroundIndex %>">
+                                <%= background.name %> BACKGROUND
+                            </h2>
+                        </div>
+
+                        <span class="background-card__expand" aria-hidden="true">›</span>
+                    </header>
+
+                    <div class="background-card__body">
+
+                        <!-- Features sunt afișate în interiorul aceluiași articol -->
+                        <% features.forEach((feature, featureIndex) => { %>
+
+                            <%
+                                const descriptions = Array.isArray(feature.desc)
+                                    ? feature.desc
+                                    : (feature.desc ? [feature.desc] : []);
+                            %>
+
+                            <section
+                                class="background-feature"
+                                aria-labelledby="background-feature-heading-<%= backgroundIndex %>-<%= featureIndex %>"
+                            >
+                                <div class="background-feature__topline">
+
+                                    <div class="background-feature__copy">
+
+                                        <% if (feature.category) { %>
+                                            <span class="background-feature__eyebrow">
+                                                <%= feature.category %>
+                                            </span>
+                                        <% } %>
+
+                                        <% if (feature.name) { %>
+                                            <h3 id="background-feature-heading-<%= backgroundIndex %>-<%= featureIndex %>">
+                                                <%= feature.name %>
+                                            </h3>
+                                        <% } %>
+
+                                    </div>
+
+                                    <!-- <div
+                                        class="background-feature__art"
+                                        role="img"
+                                        aria-label="Fantasy character artwork"
+                                    >
+                                        <img
+                                            src="/img/dnd/backgrounds/<%= background.index %>.png"
+                                            alt="<%= background.name %>"
+                                        >
+                                    </div> -->
+
+                                </div>
+
+                                <% descriptions.forEach((description) => { %>
+                                    <p class="background-feature__description">
+                                        <%= description %>
+                                    </p>
+                                <% }); %>
+
+                            </section>
+
+                        <% }); %>
+
+
+                        <!-- Proficiency și Languages apar o singură dată per background -->
+                        <section
+                            class="background-languages"
+                            aria-labelledby="background-languages-title-<%= backgroundIndex %>"
+                        >
+
+                            <div class="background-languages__heading">
+                                <span class="background-languages__icon" aria-hidden="true">◇</span>
+
+                                <h3 id="background-proficiency-title-<%= backgroundIndex %>">
+                                    Proficiency:
+                                </h3>
+
+                                <span>+<%= proficiencyLevel %></span>
+                            </div>
+
+                            <div class="background-languages__values">
+
+                                <span class="background-languages__icon" aria-hidden="true">◇</span>
+
+                                <h3 id="background-languages-title-<%= backgroundIndex %>">
+                                    Languages:
+                                </h3>
+
+                                <%
+                                    const languageEntries = [
+                                        ...(Array.isArray(race?.languages) ? race.languages : []),
+
+                                        ...(Array.isArray(backgroundLanguages)
+                                            ? backgroundLanguages.map(choice => ({
+                                                index: choice.language?.index || choice.index,
+                                                name: choice.language?.name || choice.index
+                                            }))
+                                            : [])
+                                    ];
+
+                                    const distinctLanguages = Array.from(
+                                        new Map(
+                                            languageEntries
+                                                .filter(language => language.name)
+                                                .map(language => [
+                                                    language.index || language.name,
+                                                    language.name
+                                                ])
+                                        ).values()
+                                    );
+                                %>
+
+                                <% distinctLanguages.forEach((languageName, index) => { %>
+
+                                    <% if (index > 0) { %>
+                                        <span
+                                            class="background-languages__separator"
+                                            aria-hidden="true"
+                                        >•</span>
+                                    <% } %>
+
+                                    <span><%= languageName %></span>
+
+                                <% }); %>
+
+                            </div>
+
+                        </section>
+
+                    </div>
+                </article>
+
+            <% } %>
+          </div>
+
+          <div id="other-details" class="section-slot slot--compact" data-section="other-details">
+            <article class="other-details-card" aria-labelledby="other-details-title">
+              <input class="other-details-card__state" type="radio" name="other-details-tab" id="other-details-notes" checked>
+              <input class="other-details-card__state" type="radio" name="other-details-tab" id="other-details-dm">
+              <input class="other-details-card__state" type="radio" name="other-details-tab" id="other-details-campaign">
+
+              <header class="other-details-card__header">
+                <div class="other-details-card__title">
+                  <span class="other-details-card__icon" aria-hidden="true">✥</span>
+                  <h2 id="other-details-title">Other Details</h2>
+                </div>
+                <span class="other-details-card__expand" aria-hidden="true">›</span>
+              </header>
+
+              <div class="other-details-card__tabs" role="tablist" aria-label="Other details tabs">
+                <label class="other-details-card__tab" for="other-details-notes" role="tab">Notes</label>
+                <label class="other-details-card__tab" for="other-details-dm" role="tab">DM PM</label>
+                <label class="other-details-card__tab" for="other-details-campaign" role="tab">Campaign Details</label>
+              </div>
+
+              <div class="other-details-card__panels">
+                <section class="other-details-panel other-details-panel--notes" aria-labelledby="other-details-notes-heading">
+                  <h3 id="other-details-notes-heading" class="other-details-sr-only">Notes</h3>
+
+                  <details class="other-note" open>
+                    <summary>Character Details <span aria-hidden="true">⌄</span></summary>
+                    <p>Born in a small coastal town. Trained as a scout and now travels the realm in search of something greater.</p>
+                    <div class="other-note__actions">
+                      <button type="button">✎ <span>Edit</span></button>
+                      <button type="button">▣ <span>Delete</span></button>
+                    </div>
+                  </details>
+
+                  <details class="other-note">
+                    <summary>Backstory <span aria-hidden="true">›</span></summary>
+                    <p>Former field scout with a talent for reading trails, people, and trouble before it arrives.</p>
+                  </details>
+
+                  <details class="other-note">
+                    <summary>Important NPC <span aria-hidden="true">›</span></summary>
+                    <p>People, contacts, and unresolved promises worth remembering.</p>
+                  </details>
+                </section>
+
+                <section class="other-details-panel other-details-panel--dm" aria-labelledby="other-details-dm-heading">
+                  <h3 id="other-details-dm-heading" class="other-details-sr-only">DM PM</h3>
+                  <article class="other-dm-message">
+                    <div class="other-dm-message__heading">
+                      <strong>DM Message</strong>
+                      <small>Yesterday</small>
+                    </div>
+                    <div class="other-dm-message__content">
+                      <div class="other-dm-message__image" role="img" aria-label="Fantasy scene"></div>
+                      <p>The road ahead is quiet, but someone has been watching your party from the tree line.</p>
+                    </div>
+                  </article>
+                  <article class="other-dm-message">
+                    <div class="other-dm-message__heading">
+                      <strong>Whisper from the DM</strong>
+                      <small>2 days ago</small>
+                    </div>
+                    <div class="other-dm-message__content">
+                      <div class="other-dm-message__image other-dm-message__image--secondary" role="img" aria-label="Dark fantasy ruins"></div>
+                      <p>You notice an unfamiliar crest carved into the stone near the old path.</p>
+                    </div>
+                  </article>
+                </section>
+
+                <section class="other-details-panel other-details-panel--campaign" aria-labelledby="other-details-campaign-heading">
+                  <h3 id="other-details-campaign-heading" class="other-details-sr-only">Campaign Details</h3>
+
+                  <div class="other-campaign-row">
+                    <span class="other-campaign-row__icon" aria-hidden="true">✥</span>
+                    <div>
+                      <strong>Personal Quest</strong>
+                      <p>Find the lost relic of my family.</p>
+                    </div>
+                  </div>
+
+                  <div class="other-campaign-row">
+                    <span class="other-campaign-row__icon" aria-hidden="true">◒</span>
+                    <div>
+                      <strong>Negative Characters</strong>
+                      <p>Lord Varnis (rival)<br>The Black Hand (enemy)</p>
+                    </div>
+                  </div>
+
+                  <div class="other-campaign-row">
+                    <span class="other-campaign-row__icon" aria-hidden="true">▥</span>
+                    <div>
+                      <strong>Current City</strong>
+                      <p>Baldur’s Gate</p>
+                    </div>
+                  </div>
+
+                  <div class="other-campaign-row">
+                    <span class="other-campaign-row__icon" aria-hidden="true">●</span>
+                    <div>
+                      <strong>Allies</strong>
+                      <p>Seraphine (Waterdeep)<br>Thalor (Baldur’s Gate)</p>
+
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </article>
+          </div>
+        </section>
+        
+        <%- include('../dnd-dice-system-3') %>
+      </main>
+
+      <footer class="page-footer">
+        <span class="footer-rule"></span>
+        <span class="footer-mark">✥</span>
+        <span>Some paths are not chosen, they are taken.</span>
+        <span class="footer-mark">✥</span>
+        <span class="footer-rule"></span>
+      </footer>
+    </div>
+
+    
+
+  </div>
+
+  <%
+    const hpModalCurrentValue = Number.isFinite(character.hp?.currentHP_left)
+      ? character.hp.currentHP_left
+      : Char_total_HP_with_bonuses;
+    const hpModalMaximumValue = Char_total_HP_with_bonuses;
+    const hpModalPercentage = hpModalMaximumValue > 0
+      ? Math.min(100, Math.max(0, (hpModalCurrentValue / hpModalMaximumValue) * 100))
+      : 0;
+    const hpModalFailedDeathSaves = Math.min(3, Math.max(0, Math.floor(Number(character.hp?.failedDeathSaves) || 0)));
+    const hpModalSuccessDeathSaves = Math.min(3, Math.max(0, Math.floor(Number(character.hp?.successDeathSaves) || 0)));
+  %>
+  <div
+    id="hpAdjustmentModal"
+    class="hpAdjustmentModal"
+    data-endpoint="/<%= userId %>/dnd/char/<%= characterId %>/hp"
+    aria-hidden="true"
+  >
+    <form class="hpAdjustmentDialog" aria-labelledby="hpAdjustmentTitle">
+      <div class="hp-modal" role="dialog" aria-modal="true" aria-labelledby="hpAdjustmentTitle">
+        <div class="hp-modal__frame">
+          <header class="hp-modal__header">
+            <div class="hp-modal__heading">
+              <span class="hp-modal__heart" aria-hidden="true">♥</span>
+              <h2 id="hpAdjustmentTitle">Hit Points</h2>
+            </div>
+            <button class="hp-modal__close" type="button" aria-label="Close" data-hp-close>×</button>
+          </header>
+
+          <section class="hp-panel hp-panel--current" aria-label="Current hit points">
+            <div class="hp-current">
+              <span class="hp-eyebrow">CURRENT HP</span>
+              <div class="hp-current__value">
+                <strong class="hp-modal__current-value"><%= hpModalCurrentValue %></strong>
+                <span>/</span>
+                <span class="hp-modal__maximum-value"><%= hpModalMaximumValue %></span>
+              </div>
+            </div>
+
+            <div
+              class="hp-bar"
+              role="progressbar"
+              aria-label="Hit points"
+              aria-valuenow="<%= hpModalCurrentValue %>"
+              aria-valuemin="0"
+              aria-valuemax="<%= hpModalMaximumValue %>"
+            >
+              <div class="hp-bar__fill" style="width: <%= hpModalPercentage %>%"></div>
+            </div>
+
+            <div class="hp-actions">
+              <label class="hp-number">
+                <span class="hp-sr-only">Amount</span>
+                <input
+                  id="hpAdjustmentAmount"
+                  name="amount"
+                  type="number"
+                  min="1"
+                  step="1"
+                  required
+                >
+              </label>
+              <button class="hp-button hp-button--heal" type="submit" name="action" value="heal">
+                <span aria-hidden="true">＋</span> Heal
+              </button>
+              <button class="hp-button hp-button--damage" type="submit" name="action" value="damage">
+                <span aria-hidden="true">−</span> Damage
+              </button>
+            </div>
+          </section>
+
+          <section class="hp-panel hp-panel--death" aria-labelledby="death-title" <%= hpModalCurrentValue > 0 ? 'hidden' : '' %>>
+            <h3 class="hp-section-title" id="death-title">
+              <span aria-hidden="true">☠</span> Death Saving Throws
+            </h3>
+
+            <div class="hp-save-row">
+              <span class="hp-save-label">Failures</span>
+              <div class="hp-save-icons" aria-label="<%= hpModalFailedDeathSaves %> of 3 failures">
+                <% for (let saveIndex = 0; saveIndex < 3; saveIndex += 1) { %>
+                  <span class="hp-skull <%= saveIndex < hpModalFailedDeathSaves ? 'is-active' : 'is-inactive' %>" aria-hidden="true">☠</span>
+                <% } %>
+              </div>
+            </div>
+
+            <div class="hp-save-row hp-save-row--success">
+              <span class="hp-save-label">Successes</span>
+              <div class="hp-save-icons" aria-label="<%= hpModalSuccessDeathSaves %> of 3 successes">
+                <% for (let saveIndex = 0; saveIndex < 3; saveIndex += 1) { %>
+                  <span class="hp-success <%= saveIndex < hpModalSuccessDeathSaves ? 'is-active' : 'is-inactive' %>" aria-hidden="true">✦</span>
+                <% } %>
+              </div>
+            </div>
+
+            <button class="hp-button hp-button--roll" type="button">
+              <span aria-hidden="true">✥</span>
+              Roll Saving Throws
+            </button>
+          </section>
+
+          <section class="hp-panel hp-panel--settings" aria-label="HP settings">
+            <label class="hp-field">
+              <span class="hp-field__icon" aria-hidden="true">♥</span>
+              <span class="hp-field__label">Max HP</span>
+              <input type="number" value="<%= hpModalMaximumValue %>" min="1" readonly>
+            </label>
+
+            <label class="hp-field">
+              <span class="hp-field__icon" aria-hidden="true">♥</span>
+              <span class="hp-field__label">Current HP</span>
+              <input class="hp-modal__current-setting" type="number" value="<%= hpModalCurrentValue %>" min="0" readonly>
+            </label>
+
+            <label class="hp-field">
+              <span class="hp-field__icon" aria-hidden="true">✥</span>
+              <span class="hp-field__label">Modifier</span>
+              <input type="number" value="0" readonly>
+            </label>
+
+            <label class="hp-overwrite">
+              <span class="hp-overwrite__check">
+                <input type="checkbox" disabled>
+                <span>Overwrite</span>
+              </span>
+              <span class="hp-overwrite__description">
+                Replace current HP with the value above.
+              </span>
+            </label>
+          </section>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script id="sheet-ability-stats-data" type="application/json"><%- JSON.stringify(sheetAbilityStats || {}) %></script>
+  <script src="/js/dnd/char/charSheet/statsModifierBooster.js"></script>
+  <script src="/js/dnd/char/charSheet/spellManager.js"></script>
+  <script src="/js/dnd/char/charSheet/sectionTabs.js"></script>
+  <script src="/js/dnd/char/charSheet/inventoryEquip.js"></script>
+  <script src="/js/dnd/char/charSheet/hitPoints.js"></script>
+  <script src="/js/dnd/char/charSheet/abilitiesToggle.js"></script>
+  <script src="/js/dnd/char/charSheet/sidebar.js"  defer></script>
+
+</body>
+</html>

@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Character Builder - Background</title>
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css"
+    >
+
+    
+    <link rel="stylesheet" href="/css/dnd/char/builder/piese/root.css">
+    <link rel="stylesheet" href="/css/dnd/char/builder/piese/comunBuilder.css">
+    
+    <link rel="stylesheet" href="/css/dnd/char/builder/background.css">
+    <link rel="stylesheet" href="/css/dnd/char/builder/piese/asideBar.css">    
+    <link rel="stylesheet" href="/css/dnd/char/builder/piese/header.css">
+
+
+</head>
+
+<body>
+<div class="character-page">
+    <!-- =========================================================
+            TOP BAR
+    ========================================================== -->
+    <%- include('piese/header') %>
+    
+    
+    
+    <div class="background-layout">
+    
+        <!-- =========================================================
+             SIDEBAR
+        ========================================================== -->
+        <%- include('piese/asideBar') %>
+    
+    
+        <!-- =========================================================
+             MAIN BACKGROUND PAGE
+        ========================================================== -->
+        <main class="character-content ">
+            <div class="pozitionare_content">
+                
+                <!-- =====================================================
+                        HEADER
+                ====================================================== -->
+                <header class="background-header">
+        
+                    <div class="background-title">
+        
+                        <div class="background-title-icon">
+                            ✒
+                        </div>
+        
+                        <div>
+                            <h1>Background</h1>
+        
+                            <p>
+                                Who you are when the adventure began.
+                            </p>
+                                <!-- BACKGROUND -->
+        
+                                <form
+                                    id="backgroundForm"
+                                    class="background-form"
+                                    action="/<%= userId %>/dnd/builder/<%= characterId %>/background"
+                                    method="POST"
+                                >
+                                    <input type="hidden" name="userId" value="<%= userId %>">
+                                    <input type="hidden" name="characterId" value="<%= characterId %>">
+
+                                    <div class="background-form__field">
+                                        <select
+                                            id="backgroundSelect"
+                                            name="backgroundIndex"
+                                            class="selection-select background-form__select"
+                                            aria-label="Select background"
+                                        >
+                                        <%
+                                            const selectedBackgroundIndex = character?.background?.index || '';
+                                            const hasSavedBackground = backgrounds.some(
+                                                background => background.index === selectedBackgroundIndex
+                                            );
+                                        %>
+                                        <% if (!hasSavedBackground) { %>
+                                            <option value="" selected disabled>Alege o opțiune</option>
+                                        <% } %>
+                                        <% backgrounds.forEach(background => { %>
+                                            <option
+                                                value="<%= background.index %>"
+                                                <%= hasSavedBackground && background.index === selectedBackgroundIndex ? 'selected' : '' %>
+                                            >
+                                                <%= background.name %>
+                                            </option>
+                                        <% }) %>
+                                    </select>
+                                    </div>
+
+                                    <button type="submit" class="background-form__submit">
+                                        Save Background
+                                    </button>
+                                </form>
+                        </div>
+        
+                    </div>
+        
+        
+                    <div class="background-quote">
+                        <!-- Avatar -->
+                        <div class="character-avatar">
+                            <div class="avatar-placeholder">
+                                <span>♙</span>
+                            </div>
+                        </div>
+
+                        <!-- Character Name -->
+                        <div class="character-name-section">
+
+                            <form 
+                            class="character-name-row"
+                            action="/<%= userId %>/dnd/builder/<%= characterId %>/character-name"
+                            method="POST"
+                            >
+                                <input
+                                    type="hidden"
+                                    name="userId"
+                                    value="<%= userId %>"
+                                >
+                                <input
+                                    type="hidden"
+                                    name="characterId"
+                                    value="<%= characterId %>"
+                                >
+
+                                <input
+                                    type="text"
+                                    class="character-name character-name-input"
+                                    id="characterName"
+                                    name="charName"
+                                    value="<%= character?.charName || '' %>"
+                                    placeholder="<%= character?.charName || 'Character Name' %>"
+                                    maxlength="50"
+                                    aria-label="Character name"
+                                >
+
+                                <button
+                                    type="submit"
+                                    class="edit-name-btn"
+                                    id="editNameBtn"
+                                    aria-label="Save character name"
+                                    title="Save name"
+                                >
+                                    ✓
+                                </button>
+                            </form>
+                            
+                            <div class="character-label">
+                                Character Name
+                            </div>
+
+
+                        </div>
+        
+        
+                    </div>
+        
+                </header>
+        
+                
+                <% if (backgrounds && backgrounds.length > 0) { %>
+    
+                    <%
+                        const selectedBackgroundIndex = character?.background?.index || backgrounds[0]?.index || '';
+                        const background = backgrounds.find(item => item.index === selectedBackgroundIndex) || backgrounds[0];
+                    %>
+                        <!-- =====================================================
+                                MAIN CONTENT
+                        ====================================================== -->
+                        <div class="background-content">
+        
+                            <!-- =================================================
+                                LEFT COLUMN
+                            ================================================== -->
+                            <section class="background-overview">
+        
+                                <!-- =================================================
+                                    BACKGROUND
+                                ================================================== -->
+                                <article class="overwrite_display1 overview-block ">
+                                    <div></div>
+                                    
+                                    <div class="overview-content">
+                                        
+                                        <!-- <h2>Background</h2> -->
+                                        
+                                        <h2 class="centerText">
+                                            <%= background.name %>
+                                        </h2>
+                                        
+                                        <div class="overview-img">
+                                            <img
+                                                src="/img/dnd/backgrounds/<%= background.index %>.png"
+                                                alt="<%= background.name %>"
+                                            >
+                                        </div>
+
+                                    </div>
+        
+                                </article>
+        
+        
+                                <!-- =================================================
+                                    STARTING EQUIPMENT
+                                ================================================== -->
+                                <article class="overview-block">
+        
+                                    <div class="overview-icon">
+                                        🎒
+                                    </div>
+        
+                                    <div class="overview-content">
+        
+                                        <h2>Starting Equipment</h2>
+        
+                                        <% if (background.starting_equipment?.length) { %>
+        
+                                            <ul class="simple-list">
+        
+                                                <% background.starting_equipment.forEach(item => { %>
+        
+                                                    <li>
+                                                        <%= item.equipment.name %>
+        
+                                                        <% if (item.quantity > 1) { %>
+                                                            × <%= item.quantity %>
+                                                        <% } %>
+                                                    </li>
+        
+                                                <% }) %>
+        
+                                            </ul>
+        
+                                        <% } else { %>
+        
+                                            <p>No starting equipment.</p>
+        
+                                        <% } %>
+        
+                                    </div>
+        
+                                </article>
+        
+        
+                                <!-- =================================================
+                                    STARTING GOLD
+                                ================================================== -->
+                                <article class="overview-block">
+        
+                                    <div class="overview-icon">
+                                        🪙
+                                    </div>
+        
+                                    <div class="overview-content">
+        
+                                        <h2>Starting Gold</h2>
+        
+                                        <% if (background.starting_gold) { %>
+        
+                                            <h3>
+                                                <%= background.starting_gold.quantity %>
+                                                <%= background.starting_gold.unit %>
+                                            </h3>
+        
+                                        <% } else { %>
+        
+                                            <p>None</p>
+        
+                                        <% } %>
+        
+                                    </div>
+        
+                                </article>
+        
+        
+                                <!-- =================================================
+                                    STARTING EQUIPMENT OPTIONS
+                                    requires external data
+                                ================================================== -->
+                                <% if (background.starting_equipment_options?.length) { %>
+        
+                                    <article class="overview-block">
+        
+                                        <div class="overview-icon">
+                                            ⚒
+                                        </div>
+        
+                                    <div class="overview-content">
+        
+                                        <h2>Choose Equipment</h2>
+        
+                                        <% background.starting_equipment_options.forEach((option, optionIndex) => { %>
+
+                                            <% const equipmentChoiceType = 'equipment' + (optionIndex + 1); %>
+                                            <% const selectedEquipment = character?.background?.choices?.find(choice => choice.type === equipmentChoiceType); %>
+        
+                                            <div class="selection-group">
+
+                                                <form
+                                                    class="selection-field"
+                                                    action="/<%= userId %>/dnd/builder/<%= characterId %>/background"
+                                                    method="POST"
+                                                >
+
+                                                    <label
+                                                        for="equipment-option-<%= optionIndex %>"
+                                                        class="selection-label"
+                                                    >
+                                                        Choose <%= option.choose %>
+                                                        from
+                                                        <%= option.from.equipment_category.name %>
+                                                    </label>
+
+                                                    <input class="hidden-input" type="hidden" name="type" value="equipment<%= optionIndex + 1 %>">
+                                                    
+                                                    <select
+                                                        id="equipment-option-<%= optionIndex %>"
+                                                        name="equipment_option_<%= optionIndex %>"
+                                                        class="selection-select"
+                                                        onchange="this.form.requestSubmit()"
+                                                        required
+                                                    >
+
+                                                        <option value="">
+                                                            Select equipment
+                                                        </option>
+
+                                                        <% if (equipment?.length) { %>
+
+                                                            <% equipment
+                                                                .filter(item =>
+                                                                    item.gear_category?.index ===
+                                                                    option.from.equipment_category.index
+                                                                )
+                                                                .forEach(item => { %>
+
+                                                                <option value="<%= item.index %>" <%= selectedEquipment?.index === item.index ? 'selected' : '' %>>
+                                                                    <%= item.name %>
+                                                                </option>
+
+                                                            <% }) %>
+
+                                                        <% } %>
+
+                                                    </select>
+
+                                                </form>
+
+                                            </div>
+        
+                                        <% }) %>
+        
+                                    </div>
+        
+                                    </article>
+        
+                                <% } %>
+        
+        
+                                <!-- =================================================
+                                    PROFICIENCY SKILLS
+                                ================================================== -->
+                                <article class="overview-block">
+        
+                                    <div class="overview-icon">
+                                        ⚔
+                                    </div>
+        
+                                    <div class="overview-content">
+        
+                                        <h2>Proficiency Skills</h2>
+        
+                                        <% if (background.starting_proficiencies?.length) { %>
+        
+                                            <div class="skill-list">
+        
+                                                <% background.starting_proficiencies.forEach(skill => { %>
+        
+                                                    <div class="skill-row">
+        
+                                                        <span class="skill-name">
+                                                            <%= skill.name %>
+                                                        </span>
+        
+                                                    </div>
+        
+                                                <% }) %>
+        
+                                            </div>
+        
+                                        <% } else { %>
+        
+                                            <p>No skill proficiencies.</p>
+        
+                                        <% } %>
+        
+                                    </div>
+        
+                                </article>
+        
+        
+                                <!-- =================================================
+                                    LANGUAGES
+                                    requires external data
+                                ================================================== -->
+                                <% if (background.language_options) { %>
+        
+                                    <article class="overview-block">
+        
+                                        <div class="overview-icon">
+                                            🗣
+                                        </div>
+        
+                                        <div class="overview-content">
+        
+                                            <h2>Languages</h2>
+        
+                                            <p>
+                                                Choose
+                                                <%= background.language_options.choose %>
+                                                languages.
+                                            </p>
+        
+                                            <div class="selection-group language-selection-group">
+
+                                                <% for (
+                                                    let i = 0;
+                                                    i < background.language_options.choose;
+                                                    i++
+                                                ) { %>
+
+                                                    <% const languageChoiceType = 'language' + (i + 1); %>
+                                                    <% const selectedLanguage = character?.background?.choices?.find(choice => choice.type === languageChoiceType); %>
+
+                                                    <form
+                                                        class="selection-field"
+                                                        action="/<%= userId %>/dnd/builder/<%= characterId %>/background"
+                                                        method="POST"
+                                                    >
+
+                                                        <label
+                                                            for="language-<%= i %>"
+                                                            class="selection-label"
+                                                        >
+                                                            Language <%= i + 1 %>
+                                                        </label>
+
+                                                        <input class="hidden-input" type="hidden" name="type" value="language<%= i + 1 %>">
+                                                        <!-- name la select trebuie sa fie cum e acum sau index? --> 
+                                                        <select
+                                                            id="language-<%= i %>"
+
+                                                            name="language_<%= i %>" 
+                                                            class="selection-select"
+                                                            onchange="this.form.requestSubmit()"
+                                                            required
+                                                        >
+
+                                                            <option value="">
+                                                                Select language
+                                                            </option>
+
+                                                            <% if (languages?.length) { %>
+
+                                                                <% languages.forEach(language => { %>
+
+                                                                    <option value="<%= language.index %>" <%= selectedLanguage?.index === language.index ? 'selected' : '' %>>
+                                                                        <%= language.name %>
+                                                                    </option>
+
+                                                                <% }) %>
+
+                                                            <% } %>
+
+                                                        </select>
+
+                                                    </form>
+
+                                                <% } %>
+
+                                            </div>
+        
+        
+                                        </div>
+        
+                                    </article>
+        
+                                <% } %>
+        
+        
+        
+                            </section>
+        
+        
+                            <!-- =================================================
+                                RIGHT COLUMN
+                            ================================================== -->
+                            <section class="background-traits">
+        
+        
+                                <!-- =================================================
+                                    PERSONALITY TRAITS
+                                ================================================== -->
+                                <article class="trait-card">
+
+                                    <header class="trait-card-header">
+
+                                        <span class="trait-icon">
+                                            ♧
+                                        </span>
+
+                                        <h2>
+                                            Personality Traits
+                                        </h2>
+
+                                    </header>
+
+
+                                    <% if (background.personality_traits) { %>
+
+                                        <p>
+                                            Choose
+                                            <%= background.personality_traits.choose %>
+                                        </p>
+
+
+                                        <details class="trait-accordion">
+
+                                            <summary class="trait-accordion-header">
+                                                <span>
+                                                    Select personality traits
+                                                </span>
+
+                                                <span class="trait-accordion-icon">
+                                                    ▼
+                                                </span>
+                                            </summary>
+
+
+                                            <div class="trait-checkbox-list">
+
+                                                <% background.personality_traits.from.options.forEach(trait => { %>
+
+                                                    <label class="trait-checkbox">
+
+                                                        <input
+                                                            type="checkbox"
+                                                            name="personality_traits[]"
+                                                            value="<%= trait.string %>"
+                                                        >
+
+                                                        <span class="trait-checkbox-text">
+                                                            <%= trait.string %>
+                                                        </span>
+
+                                                    </label>
+
+                                                <% }) %>
+
+                                            </div>
+
+                                        </details>
+
+                                    <% } %>
+
+                                </article>
+        
+        
+                                <!-- =================================================
+                                    IDEALS
+                                ================================================== -->
+                                <article class="trait-card">
+
+                                    <header class="trait-card-header">
+
+                                        <span class="trait-icon">
+                                            ♧
+                                        </span>
+
+                                        <h2>
+                                            Ideals
+                                        </h2>
+
+                                    </header>
+
+
+                                    <% if (background.ideals) { %>
+
+                                        <p>
+                                            Choose
+                                            <%= background.ideals.choose %>
+                                        </p>
+
+
+                                        <details class="trait-accordion">
+
+                                            <summary class="trait-accordion-header">
+                                                <span>
+                                                    Select an ideal
+                                                </span>
+
+                                                <span class="trait-accordion-icon">
+                                                    ▼
+                                                </span>
+                                            </summary>
+
+
+                                            <div class="trait-checkbox-list">
+
+                                                <% background.ideals.from.options.forEach(ideal => { %>
+
+                                                    <label class="trait-checkbox">
+
+                                                        <input
+                                                            type="checkbox"
+                                                            name="personality_ideals[]"
+                                                            value="<%= ideal.desc %>"
+                                                        >
+
+                                                        <span class="trait-checkbox-text">
+                                                            <%= ideal.desc %>
+                                                        </span>
+
+                                                    </label>
+
+                                                <% }) %>
+
+                                            </div>
+
+                                        </details>
+
+                                    <% } %>
+
+                                </article>
+        
+        
+                                <!-- =================================================
+                                    BONDS
+                                ================================================== -->
+                                <article class="trait-card">
+
+                                    <header class="trait-card-header">
+
+                                        <span class="trait-icon">
+                                            ♧
+                                        </span>
+
+                                        <h2>
+                                            Bonds
+                                        </h2>
+
+                                    </header>
+
+
+                                     <% if (background.bonds) { %>
+
+                                        <p>
+                                            Choose
+                                            <%= background.bonds.choose %>
+                                        </p>
+
+
+                                        <details class="trait-accordion">
+
+                                            <summary class="trait-accordion-header">
+                                                <span>
+                                                    Select a bond
+                                                </span>
+
+                                                <span class="trait-accordion-icon">
+                                                    ▼
+                                                </span>
+                                            </summary>
+
+
+                                            <div class="trait-checkbox-list">
+
+                                                <% background.bonds.from.options.forEach(bond => { %>
+
+                                                    <label class="trait-checkbox">
+
+                                                        <input
+                                                            type="checkbox"
+                                                            name="personality_ideals[]"
+                                                            value="<%= bond.string %>"
+                                                        >
+
+                                                        <span class="trait-checkbox-text">
+                                                            <%= bond.string %>
+                                                        </span>
+
+                                                    </label>
+
+                                                <% }) %>
+
+                                            </div>
+
+                                        </details>
+
+                                    <% } %>
+
+                                </article>
+        
+
+        
+        
+        
+                                <!-- =================================================
+                                    FLAWS
+                                ================================================== -->
+                                <article class="trait-card">
+
+                                    <header class="trait-card-header">
+
+                                        <span class="trait-icon">
+                                            ♧
+                                        </span>
+
+                                        <h2>
+                                            Flaws
+                                        </h2>
+
+                                    </header>
+
+
+                                     <% if (background.flaws) { %>
+
+                                        <p>
+                                            Choose
+                                            <%= background.flaws.choose %>
+                                        </p>
+
+
+                                        <details class="trait-accordion">
+
+                                            <summary class="trait-accordion-header">
+                                                <span>
+                                                    Select a flaw
+                                                </span>
+
+                                                <span class="trait-accordion-icon">
+                                                    ▼
+                                                </span>
+                                            </summary>
+
+
+                                            <div class="trait-checkbox-list">
+
+                                                <% background.flaws.from.options.forEach(flaw => { %>
+
+                                                    <label class="trait-checkbox">
+
+                                                        <input
+                                                            type="checkbox"
+                                                            name="personality_ideals[]"
+                                                            value="<%= flaw.string %>"
+                                                        >
+
+                                                        <span class="trait-checkbox-text">
+                                                            <%= flaw.string %>
+                                                        </span>
+
+                                                    </label>
+
+                                                <% }) %>
+
+                                            </div>
+
+                                        </details>
+
+                                    <% } %>
+
+                                </article>
+        
+
+
+
+        
+                            </section>
+
+                        </div>
+
+
+        
+
+                    <!-- =================================================
+                        FEATURE
+                    ================================================== -->
+                    <section class="background-story">
+
+                        <h2>Description</h2>
+                        <header class="story-header">
+            
+                            <span class="story-decoration">
+                                ❧
+                            </span>
+            
+                            <h2>
+                                <%= background.name %>
+                            </h2>
+            
+                            <span class="story-decoration story-decoration-right">
+                                ❧
+                            </span>
+            
+                        </header>
+            
+            
+                        <div class="story-lines">
+            
+                            
+                            <div class="story-line"></div>
+                            <% if (background.description?.length) { %>
+
+                                <% background.description.forEach(description => { %>
+
+                                    <p>
+                                        <%= description %> 
+                                    </p>
+
+
+                                <% }) %>
+
+                            <% } %>
+                            
+            
+                        </div>
+                        <%
+                            const features = Array.isArray(background.feature)
+                                ? background.feature
+                                : (background.feature ? [background.feature] : []);
+                        %>
+
+                        <% if (features.length) { %>
+
+                            <% features.forEach(featureItem => { %>
+                                <% const featureEntries = Array.isArray(featureItem.desc)
+                                    ? featureItem.desc
+                                    : (featureItem.desc ? [featureItem.desc] : []);
+                                %>
+
+                                <% if (featureItem.category) { %>
+                                    <br>
+                                    <h2><%= featureItem.category %></h2>
+                                <% } %>
+
+                                <header class="story-header">
+                    
+                                    <span class="story-decoration">
+                                        ❧
+                                    </span>
+                    
+                                    <h2>
+                                        <%= featureItem.name %>
+                                    </h2>
+                    
+                                    <span class="story-decoration story-decoration-right">
+                                        ❧
+                                    </span>
+                    
+                                </header>
+                    
+                    
+                                <div class="story-lines">
+                                    <div class="story-line"></div>
+
+                                    <% featureEntries.forEach(description => { %>
+                                        <p>
+                                            <%= description %>
+                                        </p>
+                                    <% }) %>
+                                </div>
+                            <% }) %>
+
+                        <% } %>
+            
+                    </section>
+
+
+                <% } else { %>
+    
+                    <section class="background-overview">
+    
+                        <article class="overview-block">
+    
+                            <div class="overview-content">
+    
+                                <h2>Background</h2>
+    
+                                <p>No background selected.</p>
+    
+                            </div>
+    
+                        </article>
+    
+                    </section>
+    
+                <% } %>
+                
+            </div>
+        </main>
+    
+    </div>
+
+</div>
+
+
+
+
+
+
+
+  <script src="https://kit.fontawesome.com/19568ad9a4.js" crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
