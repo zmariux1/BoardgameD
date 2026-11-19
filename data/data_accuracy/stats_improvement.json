@@ -1,0 +1,71 @@
+[
+  {
+    "reference": "feats",
+    "givenBy": [
+      {
+        "index": "skill-expert",
+        "name": "Skill Expert"
+      }
+    ],
+    "choice": {
+      "type": "ability_score_improvement",
+      "from": {
+        "option_set_type": "options_array",
+        "options": [
+          {
+            "option_type": "reference",
+            "item": {
+              "index": "strength",
+              "name": "Strength"
+            }
+          },
+          {
+            "option_type": "reference",
+            "item": {
+              "index": "dexterity",
+              "name": "Dexterity"
+            }
+          },
+          {
+            "option_type": "reference",
+            "item": {
+              "index": "constitution",
+              "name": "Constitution"
+            }
+          },
+          {
+            "option_type": "reference",
+            "item": {
+              "index": "intelligence",
+              "name": "Intelligence"
+            }
+          },
+          {
+            "option_type": "reference",
+            "item": {
+              "index": "wisdom",
+              "name": "Wisdom"
+            }
+          },
+          {
+            "option_type": "reference",
+            "item": {
+              "index": "charisma",
+              "name": "Charisma"
+            }
+          }
+        ]
+      },
+      "options_conditions": [
+        {
+          "id": "1-1",
+          "label": "Increase one ability score by 1",
+          "choose": 1,
+          "value": 1,
+          "different": true
+        }
+      ]
+    },
+    "max_stat": 20
+  }
+]

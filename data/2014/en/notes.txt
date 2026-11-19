@@ -1,0 +1,17 @@
+
+**5e-SRD-Levels.json**
+- exista in 5e-SRD-Levels.json anumite levele la cateva subclase sau clase, care nu contin valori de tipul a ce se afla in "subclass_specific" sau "class_specific". Acest lucru se intampla spre final
+
+
+
+
+
+Neterminat:
+Variants - races - nu calculeaza stats si nici feats.
+Psychic Blades - rogue, Nu ia in considerare un al doilea atack.
+trebuie sa iau speed-ul de la subrase (trebuie sa inlocuiesc orice ce ofera Subrasa, vs rasa)
+Traits - "index": "high-elf-cantrip", nu se potriveaste stilul de alegere ales de mince (choice) cu cel existent "trait_specific".
+Trebuie sa pun limita de spell-uri pe care le poate pregatii userul.
+Level.json - nu are adaugata subclasa totem-warrior (pt barbarian)
+Features: Diferenta dintre totem-warrior si Paladin este ca la "parent" unul contine cu clasa in fata in index, altul nu
+Subclasses: contin spells si nu sunt iterate by default in lista cu spellurile deja pregatite (nu uita ca singura diferenta este faptul ca acelea contin o clasa in plus care le fac vizibile)
