@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101514">
+  <title>DM Shop</title>
+    
+
+  <link rel="icon" href="img/title/">
+
+
+  <link rel="stylesheet" href="/css/dnd/char/playerShop.css">
+
+
+  <script
+    type="module"
+    src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+  ></script>
+  <!-- Include jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    
+  <div class="app-shell">
+    <div class="app-frame">
+      <div class="status-bar" aria-hidden="true">
+        <span>9:41</span>
+        <div class="status-indicators">
+          <span class="signal"></span>
+          <span class="wifi"></span>
+          <span class="battery"><span></span></span>
+        </div>
+      </div>
+
+      <header class="app-header" data-screen="welcome">
+        <button class="header-action" id="header-left" type="button" aria-label="Open menu">
+          <svg class="header-icon icon-menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <svg class="header-icon icon-back is-hidden" viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 5 8.5 12l7 7"/></svg>
+        </button>
+
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <circle cx="24" cy="24" r="9"/>
+              <path d="M24 3v42M3 24h42M9.2 9.2l29.6 29.6M38.8 9.2 9.2 38.8"/>
+              <path d="m24 3 2.6 5.2L24 12l-2.6-3.8L24 3Zm21 21-5.2 2.6L36 24l3.8-2.6L45 24ZM24 45l-2.6-5.2L24 36l2.6 3.8L24 45ZM3 24l5.2-2.6L12 24l-3.8 2.6L3 24Z"/>
+            </svg>
+          </span>
+          <span class="brand-text">DM Shop</span>
+        </div>
+
+        <button class="header-action" type="button" aria-label="Notifications">
+          <svg class="header-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 17h9l-1.2-1.7V10a3.3 3.3 0 1 0-6.6 0v5.3L7.5 17Z"/><path d="M10.2 19.3a2.1 2.1 0 0 0 3.6 0"/></svg>
+        </button>
+      </header>
+
+      <main id="main-content" class="app-main">
+        <!-- ==================== WELCOME ==================== -->
+        <section class="screen screen--welcome" data-screen-content="welcome">
+          <div class="welcome-hero">
+            <img src="/img/dnd/shop/hero.png" alt="Fantasy medieval shop interior" class="welcome-hero__image">
+            <div class="welcome-hero__shade"></div>
+            <div class="welcome-hero__copy">
+              <h1>Welcome, DM</h1>
+              <p>Manage items, set prices and control<br>what your players can access.</p>
+            </div>
+          </div>
+
+          <div class="welcome-menu">
+            <button class="menu-card" type="button" data-go="item-list">
+              <span class="menu-card__icon icon-bag" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><path d="M8 11h16l2 14H6l2-14Z"/><path d="M11 11a5 5 0 0 1 10 0"/><path d="M11 17h10"/></svg>
+              </span>
+              <span class="menu-card__copy">
+                <strong>Item List</strong>
+                <small>View a limited selection of unique items<br>available to your players.</small>
+              </span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </button>
+
+            <button class="menu-card" type="button" data-go="create-item">
+              <span class="menu-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><path d="m7 25 16-16"/><path d="m8 29 4-1 14-14-4-4L8 24l-2 5Z"/><path d="m21 7 4 4M24 4l4 3-3 3-4-3 3-3Z"/></svg>
+              </span>
+              <span class="menu-card__copy">
+                <strong>Create Item</strong>
+                <small>Build a new magic item with custom<br>properties.</small>
+              </span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </button>
+
+            <button class="menu-card" type="button">
+              <span class="menu-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><path d="M7 11h18l-2 14H9L7 11Z"/><path d="M11 11a5 5 0 0 1 10 0"/><path d="m16 15 1.4 2.9 3.1.4-2.3 2.1.6 3.1-2.8-1.6-2.8 1.6.6-3.1-2.3-2.1 3.1-.4L16 15Z"/></svg>
+              </span>
+              <span class="menu-card__copy">
+                <strong>Magic Items</strong>
+                <small>Manage existing magic items in your world.</small>
+              </span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </button>
+
+            <button class="menu-card" type="button" data-go="price-manipulation">
+              <span class="menu-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><path d="M8 11h16l2 14H6l2-14Z"/><path d="M11 11a5 5 0 0 1 10 0"/><path d="M12 18h8"/><path d="M12 22h5"/></svg>
+              </span>
+              <span class="menu-card__copy">
+                <strong>Price Manipulation</strong>
+                <small>Adjust buy and sell prices for all items.</small>
+              </span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- ==================== ITEM LIST ==================== -->
+        <section class="screen screen--item-list is-hidden" data-screen-content="item-list">
+          <div class="paper-panel item-list-panel">
+            <div class="section-heading">
+              <span class="section-heading__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="9"/><path d="M16 3v6M16 23v6M3 16h6M23 16h6M8 8l4 4M20 20l4 4M24 8l-4 4M12 20l-4 4"/></svg>
+              </span>
+              <h1>Item List</h1>
+            </div>
+
+            <div class="limit-card">
+              <p>You can access a limited number<br>of unique items. Currently available:<br><strong>5 / 20</strong></p>
+            </div>
+
+            <div class="filter-row">
+              <div class="filter-tabs" role="tablist" aria-label="Item category">
+                <button class="filter-tab is-active" data-filter="all" data-list="item-list" type="button">All</button>
+                <button class="filter-tab" data-filter="weapon" data-list="item-list" type="button">Weapons</button>
+                <button class="filter-tab" data-filter="armor" data-list="item-list" type="button">Armor</button>
+              </div>
+              <button class="filter-button" type="button" aria-label="More filters">
+                <svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+              </button>
+            </div>
+
+            <div class="item-list" id="item-list">
+              <button class="item-row" type="button" data-type="armor">
+                <span class="item-thumb"><img src="/img/dnd/shop/crown.png" alt=""></span>
+                <span class="item-meta"><strong>Crown of the Dawn</strong><small>Headwear</small></span>
+                <span class="visibility-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 12s3.2-5 8.5-5 8.5 5 8.5 5-3.2 5-8.5 5-8.5-5-8.5-5Z"/><circle cx="12" cy="12" r="2.1"/></svg></span>
+              </button>
+              <button class="item-row" type="button" data-type="weapon">
+                <span class="item-thumb"><img src="/img/dnd/shop/sword.png" alt=""></span>
+                <span class="item-meta"><strong>Shadowfang</strong><small>Sword</small></span>
+                <span class="visibility-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 12s3.2-5 8.5-5 8.5 5 8.5 5-3.2 5-8.5 5-8.5-5-8.5-5Z"/><circle cx="12" cy="12" r="2.1"/></svg></span>
+              </button>
+              <button class="item-row" type="button" data-type="armor">
+                <span class="item-thumb"><img src="/img/dnd/shop/cloak.png" alt=""></span>
+                <span class="item-meta"><strong>The Wanderer's Cloak</strong><small>Cloak</small></span>
+                <span class="visibility-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 12s3.2-5 8.5-5 8.5 5 8.5 5-3.2 5-8.5 5-8.5-5-8.5-5Z"/><circle cx="12" cy="12" r="2.1"/></svg></span>
+              </button>
+              <button class="item-row" type="button" data-type="armor">
+                <span class="item-thumb"><img src="/img/dnd/shop/ring.png" alt=""></span>
+                <span class="item-meta"><strong>Ring of Storms</strong><small>Ring</small></span>
+                <span class="visibility-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 12s3.2-5 8.5-5 8.5 5 8.5 5-3.2 5-8.5 5-8.5-5-8.5-5Z"/><circle cx="12" cy="12" r="2.1"/></svg></span>
+              </button>
+              <button class="item-row" type="button" data-type="armor">
+                <span class="item-thumb"><img src="/img/dnd/shop/boots.png" alt=""></span>
+                <span class="item-meta"><strong>Boots of Swiftness</strong><small>Boots</small></span>
+                <span class="visibility-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 12s3.2-5 8.5-5 8.5 5 8.5 5-3.2 5-8.5 5-8.5-5-8.5-5Z"/><circle cx="12" cy="12" r="2.1"/></svg></span>
+              </button>
+              <button class="item-row is-locked" type="button" data-type="weapon">
+                <span class="item-thumb"><img src="/img/dnd/shop/flameheart.png" alt=""></span>
+                <span class="item-meta"><strong>Flameheart</strong><small>Staff</small></span>
+                <span class="lock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="10" width="12" height="10" rx="1.5"/><path d="M8.5 10V7.5A3.5 3.5 0 0 1 12 4a3.5 3.5 0 0 1 3.5 3.5V10"/></svg></span>
+              </button>
+              <button class="item-row is-locked" type="button" data-type="armor">
+                <span class="item-thumb"><img src="/img/dnd/shop/dragon.png" alt=""></span>
+                <span class="item-meta"><strong>Dragon's Breath</strong><small>Amulet</small></span>
+                <span class="lock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="10" width="12" height="10" rx="1.5"/><path d="M8.5 10V7.5A3.5 3.5 0 0 1 12 4a3.5 3.5 0 0 1 3.5 3.5V10"/></svg></span>
+              </button>
+              <button class="item-row is-locked" type="button" data-type="armor">
+                <span class="item-thumb"><img src="/img/dnd/shop/helm.png" alt=""></span>
+                <span class="item-meta"><strong>Helm of the Ancients</strong><small>Helmet</small></span>
+                <span class="lock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="10" width="12" height="10" rx="1.5"/><path d="M8.5 10V7.5A3.5 3.5 0 0 1 12 4a3.5 3.5 0 0 1 3.5 3.5V10"/></svg></span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==================== PRICE MANIPULATION ==================== -->
+        <section class="screen screen--price-manipulation is-hidden" data-screen-content="price-manipulation">
+          <div class="paper-panel price-panel">
+            <div class="price-heading">
+              <span class="price-heading__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><path d="M6 11h18l2 14H4l2-14Z"/><path d="M10 11a6 6 0 0 1 12 0"/><path d="M11 18h10"/><path d="M11 22h6"/></svg>
+              </span>
+              <div>
+                <h1>Price Manipulation</h1>
+                <p>Adjust buy and sell prices for all items<br>in the shop.</p>
+              </div>
+            </div>
+
+            <div class="form-divider"></div>
+
+            <section class="modifier-card" aria-labelledby="sell-price-title">
+              <div class="modifier-card__title">
+                <span class="modifier-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M4 6h13l2 12H2L4 6Z"/><path d="M7 6a4 4 0 0 1 8 0"/><path d="M7 12h7"/></svg>
+                </span>
+                <h2 id="sell-price-title">Sell Price Modifier</h2>
+              </div>
+              <div class="modifier-value" id="sell-price-value">+ 15%</div>
+              <div class="modifier-slider" data-slider-wrap="sell">
+                <span class="modifier-end">−</span>
+                <input id="sell-price-slider" type="range" min="-50" max="50" step="1" value="15" aria-label="Sell price modifier">
+                <span class="modifier-end">+</span>
+              </div>
+              <p class="modifier-help">Increases the price at which players can sell<br>items to the shop.</p>
+            </section>
+
+            <section class="modifier-card" aria-labelledby="buy-price-title">
+              <div class="modifier-card__title">
+                <span class="modifier-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M4 6h13l2 12H2L4 6Z"/><path d="M7 6a4 4 0 0 1 8 0"/><path d="m9 12 2 2 4-4"/></svg>
+                </span>
+                <h2 id="buy-price-title">Buy Price Modifier</h2>
+              </div>
+              <div class="modifier-value" id="buy-price-value">- 10%</div>
+              <div class="modifier-slider" data-slider-wrap="buy">
+                <span class="modifier-end">−</span>
+                <input id="buy-price-slider" type="range" min="-50" max="50" step="1" value="-10" aria-label="Buy price modifier">
+                <span class="modifier-end">+</span>
+              </div>
+              <p class="modifier-help">Decreases the price at which players can buy<br>items from the shop.</p>
+            </section>
+
+            <div class="price-info-box">
+              <span class="price-info-box__icon" aria-hidden="true">i</span>
+              <p>The modifiers are applied globally to all items<br>in the shop, unless overridden for specific<br>items.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== SHOP ==================== -->
+        <section class="screen screen--shop is-hidden" data-screen-content="shop">
+          <div class="shop-screen">
+            <div class="shop-hero">
+              <img src="/img/dnd/shop/shop-hero.png" alt="Fantasy medieval marketplace" class="shop-hero__image">
+              <div class="shop-hero__shade"></div>
+              <div class="shop-hero__copy">
+                <h1>Shop</h1>
+                <p>Discover, buy and sell magical items<br>in the world of your campaign.</p>
+              </div>
+            </div>
+
+            <div class="shop-actions">
+              <button class="menu-card" type="button" data-go="buy-items">
+                <span class="menu-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 32 32"><path d="M8 11h16l2 14H6l2-14Z"/><path d="M11 11a5 5 0 0 1 10 0"/><circle cx="12" cy="18" r="1.5"/><circle cx="20" cy="18" r="1.5"/></svg>
+                </span>
+                <span class="menu-card__copy"><strong>Buy</strong><small>Purchase items<br>from the shop</small></span>
+                <span class="chevron" aria-hidden="true">›</span>
+              </button>
+
+              <button class="menu-card shop-action-placeholder" type="button" data-go="sell-items">
+                <span class="menu-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 32 32"><ellipse cx="16" cy="11" rx="9" ry="4"/><path d="M7 11v5c0 2.2 4 4 9 4s9-1.8 9-4v-5"/><path d="M7 16v5c0 2.2 4 4 9 4s9-1.8 9-4v-5"/></svg>
+                </span>
+                <span class="menu-card__copy"><strong>Sell</strong><small>Sell your items<br>to the shop</small></span>
+                <span class="chevron" aria-hidden="true">›</span>
+              </button>
+
+              <button class="menu-card shop-action-placeholder" type="button" data-go="magic-items">
+                <span class="menu-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 32 32"><path d="M9 5h14v22H9z"/><path d="M12 9h8M12 14h8M12 19h6"/><path d="M22 5 25 8"/></svg>
+                </span>
+                <span class="menu-card__copy"><strong>Browse Magic Items</strong><small>View special and unique<br>items</small></span>
+                <span class="chevron" aria-hidden="true">›</span>
+              </button>
+            </div>
+
+            <section class="quick-stats" aria-labelledby="quick-stats-title">
+              <h2 id="quick-stats-title">Quick Stats</h2>
+              <div class="quick-stats__grid">
+                <div class="quick-stat">
+                  <span class="quick-stat__label">Total Items</span>
+                  <strong>128</strong>
+                </div>
+                <div class="quick-stat">
+                  <span class="quick-stat__label">Your Gold</span>
+                  <div class="quick-stat__value"><span class="coin-icon" aria-hidden="true">◎</span><strong>4,250</strong></div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <!-- ==================== BUY ITEMS ==================== -->
+        <section class="screen screen--buy-items is-hidden" data-screen-content="buy-items">
+          <div class="paper-panel buy-panel">
+            <div class="section-heading">
+              <span class="section-heading__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="9"/><path d="M16 3v6M16 23v6M3 16h6M23 16h6M8 8l4 4M20 20l4 4M24 8l-4 4M12 20l-4 4"/></svg>
+              </span>
+              <h1>Buy Items</h1>
+            </div>
+
+            <div class="buy-filter-row">
+              <input
+                class="buy-search"
+                id="buy-search"
+                type="search"
+                placeholder="Search items..."
+                aria-label="Search shop items"
+                autocomplete="off">
+              <select class="buy-category" id="buy-category" aria-label="Filter shop items by category">
+                <option value="all">All categories</option>
+                <option value="weapon">Weapons</option>
+                <option value="armor">Armor</option>
+                <option value="shields">Shields</option>
+                <option value="gear">Gear</option>
+              </select>
+            </div>
+
+            <div class="item-list buy-list" id="buy-list">
+              <% shopBuy.forEach(item => { %>
+                <form class="item-row buy-item-row" method="post" action="/<%= userId %>/dnd/char/<%= characterId %>/playerShopBuy" data-type="<%= item.shopCategory %>">
+                  <input type="hidden" name="equipmentIndex" value="<%= item.index %>">
+                  <input type="hidden" name="quantity" value="1">
+                  <span class="item-thumb"><img src="<%= item.imagePath %>" alt=""></span>
+                  <span class="item-meta">
+                    <strong><%= item.name %></strong>
+                    <small>Common · <%= item.itemType %></small>
+                  </span>
+                  <span class="buy-price"><span class="coin-icon" aria-hidden="true">◎</span><strong><%= item.displayPrice %></strong></span>
+                  <button class="chevron chevron--row" type="submit" aria-label="Buy <%= item.name %>">›</button>
+                </form>
+              <% }); %>
+            </div>
+            <p class="buy-empty-state" id="buy-empty-state" hidden>No items match these filters.</p>
+          </div>
+        </section>
+
+        <!-- ==================== CREATE ITEM ==================== -->
+        <section class="screen screen--create-item is-hidden" data-screen-content="create-item">
+          <div class="paper-panel create-panel">
+            <div class="create-heading">
+              <span class="create-heading__icon section-heading__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="9"/><path d="M16 3v6M16 23v6M3 16h6M23 16h6M8 8l4 4M20 20l4 4M24 8l-4 4M12 20l-4 4"/></svg>
+              </span>
+              <div>
+                <h1>Create Item</h1>
+                <p>Build a new magic item with custom<br>properties and effects.</p>
+              </div>
+            </div>
+
+            <div class="form-divider"></div>
+
+            <form id="create-item-form" class="create-form">
+              <label class="field-label" for="item-type">Item Type</label>
+              <select class="field-control" id="item-type"><option>Sword</option><option>Axe</option><option>Staff</option><option>Armor</option></select>
+
+              <label class="field-label" for="rarity">Rarity</label>
+              <select class="field-control" id="rarity"><option>Rare</option><option>Uncommon</option><option>Very Rare</option><option>Legendary</option></select>
+
+              <fieldset class="form-section" id="spells-section">
+                <legend>Spells (optional)</legend>
+                <div class="tag-list" id="spell-list">
+                  <div class="tag-row"><span class="tag-dot">◉</span><span>Fireball</span><button type="button" class="remove-row" aria-label="Remove Fireball">×</button></div>
+                  <div class="tag-row"><span class="tag-dot">◉</span><span>Levitate</span><button type="button" class="remove-row" aria-label="Remove Levitate">×</button></div>
+                </div>
+                <button type="button" class="add-row" data-add="spell">+ <span>Add Spell</span></button>
+              </fieldset>
+
+              <fieldset class="form-section">
+                <legend>Stats Bonus (optional)</legend>
+                <div id="bonus-list"></div>
+                <button type="button" class="add-row" data-add="bonus">+ <span>Add Bonus</span></button>
+              </fieldset>
+
+              <fieldset class="form-section">
+                <legend>Curses (optional)</legend>
+                <div id="curse-list"></div>
+                <button type="button" class="add-row" data-add="curse">+ <span>Add Curse</span></button>
+              </fieldset>
+
+              <fieldset class="form-section image-upload-section">
+                <legend>Item Image</legend>
+                <input type="file" id="item-image-input" accept="image/*" hidden>
+                <label class="upload-box" for="item-image-input" id="upload-box">
+                  <span class="upload-box__icon">⇧</span>
+                  <span>Click to upload image<br>or drag and drop</span>
+                </label>
+              </fieldset>
+
+              <button class="primary-button" type="submit">Create Item</button>
+            </form>
+          </div>
+        </section>
+      </main>
+
+      <nav class="bottom-nav" aria-label="Main navigation">
+        <button class="bottom-nav__item is-active" type="button" data-go="shop" data-nav="shop">
+          <span class="bottom-nav__icon"><svg viewBox="0 0 24 24"><path d="M6 8.5h12l1 11H5l1-11Z"/><path d="M8.5 8.5a3.5 3.5 0 0 1 7 0M9 19.5v-3M15 19.5v-3"/></svg></span>
+          <span>Shop</span>
+        </button>
+        <button class="bottom-nav__item" type="button" data-go="item-list" data-nav="items">
+          <span class="bottom-nav__icon"><svg viewBox="0 0 24 24"><path d="m12 3 2.2 4.4L19 9.6l-4.8 2.2L12 16l-2.2-4.2L5 9.6l4.8-2.2L12 3Z"/><path d="m18 15 .9 1.8L21 18l-2.1 1.2L18 21l-.9-1.8L15 18l2.1-1.2L18 15Z"/></svg></span>
+          <span>Items</span>
+        </button>
+        <button class="bottom-nav__item" type="button" data-go="create-item" data-nav="create">
+          <span class="bottom-nav__icon"><svg viewBox="0 0 24 24"><path d="m6 18 8.8-8.8M4 20l2.7-.5L8 16.2 5.3 13.5 2 14.8 4 20Z"/><path d="m14 4 6 6M18 2l2 2-8.7 8.7-2-2L18 2Z"/></svg></span>
+          <span>Create</span>
+        </button>
+        <button class="bottom-nav__item" type="button" data-nav="settings">
+          <span class="bottom-nav__icon"><svg viewBox="0 0 24 24"><path d="m9.7 3.7.7-1.2h3.2l.7 1.2 1.4.6 1.4-.3 2.2 2.2-.3 1.4.6 1.4 1.2.7v3.2l-1.2.7-.6 1.4.3 1.4-2.2 2.2-1.4-.3-1.4.6-.7 1.2h-3.2l-.7-1.2-1.4-.6-1.4.3-2.2-2.2.3-1.4-.6-1.4-1.2-.7V9.7l1.2-.7.6-1.4-.3-1.4 2.2-2.2 1.4.3 1.4-.6Z"/><circle cx="12" cy="11.3" r="3"/></svg></span>
+          <span>Settings</span>
+        </button>
+      </nav>
+    </div>
+  </div>
+
+  <script src="/js/dnd/char/playerShop.js"></script>
+  <script src="https://kit.fontawesome.com/19568ad9a4.js" crossorigin="anonymous"></script>
+  
+</body>
+</html>

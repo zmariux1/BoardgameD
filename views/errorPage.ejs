@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#070d12">
+    <title>Page Not Found | D&amp;D</title>
+
+    <link rel="stylesheet" href="/css/errorPage.css">
+</head>
+<body>
+
+<%
+    // Keep the same URL conventions used by the existing character pages.
+    var pageUserId = (typeof userId !== 'undefined' && userId)
+        ? encodeURIComponent(String(userId))
+        : '';
+
+    var dndHomeUrl = pageUserId
+        ? '/' + pageUserId + '/dnd'
+        : '/index';
+
+    var charactersUrl = pageUserId
+        ? '/' + pageUserId + '/dnd/myChars'
+        : '/index';
+
+    var campaignsUrl = pageUserId
+        ? '/' + pageUserId + '/dnd/myCampaigns'
+        : '/index';
+%>
+
+<div class="error-page">
+
+    <!-- =====================================================
+         NAVIGATION — follows the existing characters navbar
+    ====================================================== -->
+    <header class="characters-navbar">
+        <div class="characters-navbar__inner">
+
+            <a href="<%= dndHomeUrl %>"
+               class="characters-navbar__logo"
+               aria-label="D&D Home">
+                <span class="characters-navbar__logo-symbol" aria-hidden="true">◈</span>
+            </a>
+
+            <!-- Desktop navigation -->
+            <nav class="characters-navbar__nav" aria-label="Main navigation">
+
+                <a href="/index" class="characters-navbar__link">
+                    <span class="characters-navbar__link-icon" aria-hidden="true">⌂</span>
+                    <span>Exit D&amp;D</span>
+                </a>
+
+                <a href="<%= dndHomeUrl %>" class="characters-navbar__link">
+                    <span class="characters-navbar__link-icon" aria-hidden="true">⌂</span>
+                    <span>D&amp;D Home</span>
+                </a>
+
+                <a href="/editProfile" class="characters-navbar__link">
+                    <span class="characters-navbar__link-icon" aria-hidden="true">♙</span>
+                    <span>User Profile</span>
+                </a>
+
+                <a href="<%= charactersUrl %>" class="characters-navbar__link">
+                    <span class="characters-navbar__link-icon" aria-hidden="true">◈</span>
+                    <span>My Chars</span>
+                </a>
+
+                <a href="<%= campaignsUrl %>" class="characters-navbar__link">
+                    <span class="characters-navbar__link-icon" aria-hidden="true">⚑</span>
+                    <span>My Campaigns</span>
+                </a>
+
+                <a href="/feedback" class="characters-navbar__link">
+                    <span class="characters-navbar__link-icon" aria-hidden="true">◌</span>
+                    <span>Feedback</span>
+                </a>
+
+            </nav>
+
+            <!-- User profile -->
+            <a href="/editProfile"
+               class="characters-navbar__user"
+               aria-label="Open user profile">
+                <div class="characters-navbar__avatar">
+                    <img src="/images/user-avatar.jpg" alt="User profile">
+                </div>
+                <span class="characters-navbar__user-arrow" aria-hidden="true">⌄</span>
+            </a>
+
+            <!-- Mobile menu button -->
+            <button type="button"
+                    class="characters-navbar__mobile-toggle"
+                    id="errorMobileToggle"
+                    aria-label="Open navigation"
+                    aria-controls="errorMobileNav"
+                    aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+        </div>
+
+        <!-- Mobile navigation -->
+        <nav class="characters-navbar__mobile"
+             id="errorMobileNav"
+             aria-label="Mobile navigation">
+            <a href="/index">Exit D&amp;D</a>
+            <a href="<%= dndHomeUrl %>">D&amp;D Home</a>
+            <a href="/editProfile">User Profile</a>
+            <a href="<%= charactersUrl %>">My Chars</a>
+            <a href="<%= campaignsUrl %>">My Campaigns</a>
+            <a href="/feedback">Feedback</a>
+        </nav>
+    </header>
+
+
+    <!-- =====================================================
+         ERROR CONTENT
+    ====================================================== -->
+    <main class="error-main">
+
+        <div class="error-artwork-wrap">
+            <img
+                class="error-artwork"
+                src="/img/error-doorway-art.webp"
+                alt="An old stone doorway, slightly open and glowing with warm golden light"
+                width="886"
+                height="471"
+                fetchpriority="high">
+        </div>
+
+        <div class="error-divider" aria-hidden="true">
+            <span class="error-divider__line"></span>
+            <span class="error-divider__diamond">◆</span>
+            <span class="error-divider__line"></span>
+        </div>
+
+        <section class="error-message" aria-labelledby="errorTitle">
+            <h1 class="error-message__title" id="errorTitle">
+                This path doesn’t exist
+            </h1>
+
+            <p class="error-message__description">
+                The link you followed is invalid or is missing some information.
+                <span>The adventure you’re looking for might have been moved, removed, or never existed.</span>
+            </p>
+
+            <button
+                type="button"
+                class="error-back-button"
+                id="errorGoBack"
+                data-fallback-url="<%= dndHomeUrl %>">
+                <span class="error-back-button__arrow" aria-hidden="true">←</span>
+                <span>Go Back</span>
+            </button>
+        </section>
+
+    </main>
+
+</div>
+
+<script>
+(function () {
+    'use strict';
+
+    // Mobile navigation
+    var toggle = document.getElementById('errorMobileToggle');
+    var mobileNav = document.getElementById('errorMobileNav');
+
+    if (toggle && mobileNav) {
+        var closeMobileNav = function () {
+            mobileNav.classList.remove('is-open');
+            toggle.setAttribute('aria-expanded', 'false');
+            toggle.setAttribute('aria-label', 'Open navigation');
+        };
+
+        toggle.addEventListener('click', function () {
+            var isOpen = mobileNav.classList.toggle('is-open');
+            toggle.setAttribute('aria-expanded', String(isOpen));
+            toggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+        });
+
+        mobileNav.addEventListener('click', function (event) {
+            if (event.target.closest('a')) closeMobileNav();
+        });
+
+        document.addEventListener('click', function (event) {
+            if (!mobileNav.contains(event.target) && !toggle.contains(event.target)) {
+                closeMobileNav();
+            }
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') closeMobileNav();
+        });
+    }
+
+    // Return to the previous page on this site. If the page was opened
+    // directly (or from another domain), use the D&D home page as fallback.
+    var backButton = document.getElementById('errorGoBack');
+
+    if (backButton) {
+        backButton.addEventListener('click', function () {
+            var fallbackUrl = backButton.getAttribute('data-fallback-url') || '/index';
+            var hasInternalReferrer = false;
+
+            if (document.referrer) {
+                try {
+                    hasInternalReferrer = new URL(document.referrer).origin === window.location.origin;
+                } catch (error) {
+                    hasInternalReferrer = false;
+                }
+            }
+
+            if (window.history.length > 1 && hasInternalReferrer) {
+                window.history.back();
+            } else {
+                window.location.assign(fallbackUrl);
+            }
+        });
+    }
+})();
+</script>
+
+</body>
+</html>
