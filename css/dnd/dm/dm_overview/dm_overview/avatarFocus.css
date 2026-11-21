@@ -1,0 +1,454 @@
+
+
+
+
+/* aside {
+    display: none;
+} */
+/* .combatOverview_section {
+    display: none !important;
+} */
+
+.charFocus_section{
+    width: 100%;
+    gap: 10px;
+    background-image: url("https://images.unsplash.com/photo-1607499699372-7bb722dff7e2?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@media (max-width: 1199.98px) {
+    .charFocus_section {
+        display: none;
+    }
+
+    main.is-char-focus-open .combatOverview_section {
+        display: none;
+    }
+
+    main.is-char-focus-open .charFocus_section {
+        display: block;
+        flex: 1 1 auto;
+        width: 100%;
+        max-width: none;
+    }
+}
+
+/* Mobile First - Fixed width on larger screens */
+@media (min-width: 960px) {
+    .charFocus_section {
+        width: 365px;
+        max-width: 365px;
+        flex: 0 0 365px;
+    }
+}
+.charFocus_identity {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+}
+
+
+.avatarHalfSpace {
+    width: 100%;
+}
+.avatarHalfSpace img {
+    width: 100%;
+    object-fit: cover;
+
+    -webkit-mask-image: linear-gradient(
+        to right,
+        black calc(100% - 90px),
+        transparent 100%
+    );
+
+    mask-image: linear-gradient(
+        to right,
+        black calc(100% - 90px),
+        transparent 100%
+    );
+}
+
+.charDetails {
+    margin-top: 10px;
+
+    position: relative;
+    left: -20px;
+    width: calc(100% + 20px);
+
+    z-index: 2;
+}
+
+.charDetails_raceClass {
+    color: green;
+}
+.charDetails_raceClass span{
+    color: red;
+}
+
+.charFocus_mass_categories {
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 5px;
+
+    background: rgba(18, 30, 52, 0.35);
+    border: 1px solid rgba(130, 170, 255, 0.12);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.charFocus_mass_titles {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.charFocus_mass_titles p {
+    margin: 0;
+    white-space: nowrap;
+}
+
+.charFocus_mass_titles hr {
+    flex: 1;
+    margin: 0;
+    border: none;
+    height: 3px;
+    background: #666;
+}
+
+
+.charFocus_mass_box_style {
+
+    
+}
+
+
+.charDetails_HP{
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.charDetails_HP p{
+    font-weight: 400;
+    color: rgba(223, 223, 224,0.7);
+}
+.charDetails_HP h3{
+    color: rgb(253, 253, 253);
+    font-weight: 600;
+}
+
+
+
+.health-bar {
+    position: relative;
+    width: 100%;
+    height: 10px;
+    margin-left: 10px ;
+}
+
+.health-bar hr {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    height: 10px;
+    border: none;
+    border-radius: 999px;
+}
+
+.health-bar-bg {
+    background: #555;
+}
+
+.health-bar-fill {
+    width: 100%;
+    background: linear-gradient(
+        to right,
+        #d32f2f 0%,
+        #fbc02d 20%,
+        #2e7d32 85%
+    );
+
+    clip-path: inset(0 40% 0 0);
+}
+
+.health-bar hr{
+    opacity: 0.9;
+}
+
+
+.condition_item {
+    background: var(--bg_dark_glass);
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    font-size: var(--font-size-sm);
+}
+
+.condition_item img {
+    width: 20px;
+    height: 20px;
+}
+
+#specializare {
+    margin-top: -40px;
+}
+
+
+.SpellSlots_lvl {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg_dark_glass);
+    padding: 5px;
+    margin: 2px;
+    border-radius: 5px;
+}
+.magicGems img{
+    width: 20px;
+    height: 20px;
+    background-image: url("https://images.vexels.com/media/users/3/151689/isolated/preview/5b8e0c62c2823b758b419c381fd9b0e5-diamond-gemstone-flat-icon.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.inactiveStone {
+    filter:
+        grayscale(100%)
+        brightness(70%)
+        opacity(55%);
+}
+
+
+.depleted {
+    filter:
+        brightness(60%)
+        saturate(70%);
+
+    box-shadow:
+        inset 0 0 12px rgba(110, 70, 150, .65),
+        0 0 8px rgba(110, 70, 150, .25);
+}
+
+
+
+.strewtch100 {
+    width: 100%;
+}
+
+.spellCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg_dark_glass);
+
+    backdrop-filter: blur(12px);
+    padding: 5px;
+    margin: 2px;
+    border-radius: 5px;
+}
+.spellCard img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+.itemContainer {
+}
+
+
+.itemCard {
+    display: grid;
+    grid-template-columns: auto 1fr 120px;
+    align-items: center;
+
+    margin: 2px;
+    border-radius: 5px;
+    background: var(--bg_dark_glass);
+    border-radius: 9999px 5px 5px 9999px;
+}
+
+.itemCard img{
+
+}
+.itemCard--empty {
+    border: 1px dashed rgba(214, 171, 88, 0.45);
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.itemCard--empty img {
+    object-fit: contain;
+    opacity: 0.75;
+}
+
+.roundItem img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 100%;
+    border: solid 1px var(--gold_accent);
+    margin-right: 4px;
+    padding: 1px;
+}
+
+.itemcharges {
+    border-left: 1px solid rgba(255, 255, 255, 1);
+    height: 70%;
+    padding-left: 5px;
+    
+
+}
+.itemcharge_dots {
+
+}
+
+
+
+
+.questCard {
+    display: none;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+
+    margin: 2px;
+    border-radius: 5px;
+    background: var(--bg_dark_glass);
+    border-radius: 9999px 5px 5px 9999px;
+}
+.questCard.isVisible {
+    display: grid;
+}
+
+.focus_questsList .questCard > div {
+    min-width: 0;
+}
+
+.focus_questsList .questCard:first-child .massTextDescription,
+.questListActive .globalQuest:first-child .questContent > p {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+}
+
+.focus_questsList .questCard:not(:first-child) .massTextDescription,
+.questListActive .globalQuest:not(:first-child) .questContent > p {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+}
+
+.questCard img{
+
+}
+
+
+#pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+}
+
+#pagination button {
+    width: 28px;
+    height: 28px;
+
+    padding: 0;
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 4px;
+
+    background: rgba(255,255,255,.06);
+    color: rgba(255,255,255,.85);
+
+    font-size: .85rem;
+    cursor: pointer;
+
+    transition: .15s ease;
+}
+
+#pagination button:hover {
+    background: rgba(255,255,255,.12);
+    border-color: rgba(255,255,255,.35);
+}
+
+#pagination button:active {
+    transform: scale(.95);
+}
+
+#pagination button.active {
+    background: rgba(110,160,255,.25);
+    border-color: rgba(110,160,255,.7);
+    color: #fff;
+}
+
+
+
+.sensesContainer {
+    display: grid;
+    grid-template-columns: 0.33fr 0.33fr 0.33fr;
+    align-items: center;
+    
+}
+.sensesCard {
+    display: flex;
+    flex-direction: row;
+    background: var(--bg_dark_glass);
+    margin: 0 2.5px;
+    width: 100%;
+}
+.sensesCard img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+
+
+.statsContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+.statsCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: var(--bg_dark_glass);
+    margin: 0 2px;
+    width: 100%;
+
+}
+.statsCard img{
+    width: 25px;
+    height: 25px;
+    object-fit: cover;
+}
+
+.senseStats_texts{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+@media (min-width: 560px) {
+    .statsCard img{
+        width: 30px;
+        height: 30px;
+        object-fit: cover;
+    }
+}

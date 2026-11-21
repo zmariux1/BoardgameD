@@ -1,0 +1,1260 @@
+/* =============================================================
+   VARIABLES
+============================================================= */
+
+:root {
+
+    --sidebar-width: 220px;
+
+    --sidebar-bg: #07111c;
+    --sidebar-border: rgba(255, 255, 255, 0.08);
+
+    --sidebar-text: #d7d0c3;
+    --sidebar-muted: #8d897f;
+
+    --accent: #c99543;
+
+    --paper: #ead8b5;
+    --paper-light: #f1e2c3;
+    --paper-dark: #d7bd91;
+
+    --ink: #342a1f;
+    --ink-light: #625442;
+
+    --line: rgba(87, 66, 40, 0.28);
+
+    --shadow:
+        0 20px 50px rgba(0, 0, 0, 0.35);
+
+}
+
+
+/* =============================================================
+   RESET
+============================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            #182533 0%,
+            #09121c 70%
+        );
+
+    color: var(--ink);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+}
+
+
+/* =============================================================
+   MAIN LAYOUT
+============================================================= */
+
+.background-layout {
+
+    display: flex;
+
+    width: 100%;
+    min-height: 100vh;
+
+}
+
+
+
+
+
+
+
+
+
+
+/*
+   Paper texture.
+*/
+
+
+
+
+.background-form {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    margin-top: 14px;
+
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+}
+
+
+
+.background-form__select {
+    min-width: 260px;
+    max-width: 420px;
+}
+
+.background-form__submit {
+    align-self: flex-end;
+
+    min-height: 38px;
+    padding: 10px 18px;
+
+    border: 1px solid #8f744d;
+    border-radius: 6px;
+
+    background: linear-gradient(180deg, #d3a55c 0%, #b8893d 100%);
+    color: #fffaf1;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+    box-shadow: 0 4px 10px rgba(76, 55, 26, 0.18);
+}
+
+.background-form__submit:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.02);
+}
+
+.background-form__submit:focus {
+    outline: 2px solid rgba(201, 149, 67, 0.5);
+    outline-offset: 2px;
+}
+
+/* =============================================================
+   HEADER
+============================================================= */
+
+.background-header {
+
+    position: relative;
+    z-index: 1;
+
+    display: grid;
+
+
+    grid-template-columns:
+        minmax(420px , 1.2fr)
+        minmax(330px, 0.8fr);
+
+    gap: 18px;
+
+
+    align-items: center;
+
+    padding-bottom: 25px;
+
+    border-bottom: 1px solid var(--line);
+}
+
+
+/* -------------------------------------------------------------
+   Title
+------------------------------------------------------------- */
+
+.background-title {
+
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+}
+
+.background-title-icon {
+
+    font-size: 43px;
+
+    color: #66513a;
+}
+
+.background-title h1 {
+
+    margin: 0;
+
+    font-size: clamp(30px, 3vw, 42px);
+
+    font-weight: 500;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+}
+
+.background-title p {
+
+    margin: 5px 0 0;
+
+    color: var(--ink-light);
+
+    font-size: 15px;
+}
+
+
+/* -------------------------------------------------------------
+   Quote
+------------------------------------------------------------- */
+
+.background-quote {
+
+    position: relative;
+
+    min-height: 92px;
+
+    display: flex;
+    align-items: center;
+    justify-content: baseline;
+    gap: 20px;
+
+    padding: 20px;
+
+    background:
+        rgba(209, 183, 139, 0.25);
+
+    border: 1px solid rgba(99, 70, 37, 0.2);
+
+    border-radius: 3px;
+
+    font-size: 17px;
+
+    font-style: italic;
+}
+
+.background-quote p {
+    margin: 0;
+}
+
+
+
+
+
+.character-card_av {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 18px 18px 20px;
+
+    background: #ead4a9;
+    border: 1px solid #c7aa79;
+    border-radius: 4px;
+
+    color: #302719;
+    font-family: Georgia, "Times New Roman", serif;
+
+    box-shadow:
+        0 1px 2px rgba(70, 45, 15, 0.08),
+        inset 0 0 18px rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================
+   AVATAR
+========================= */
+
+.character-avatar {
+    width: 103px;
+    height: 103px;
+    display: flex;
+    justify-content: center;
+    /* margin-bottom: 16px; */
+}
+
+.avatar-placeholder {
+    width: 105px;
+    height: 105px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #b79663;
+    border-radius: 3px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.12),
+            rgba(110,80,35,0.08)
+        ),
+        #dfc795;
+
+    box-shadow:
+        inset 0 0 12px rgba(75, 50, 20, 0.08);
+
+    color: #8d7550;
+}
+
+.avatar-placeholder span {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 52px;
+    line-height: 1;
+    opacity: 0.65;
+}
+
+
+/* =========================
+   CHARACTER NAME
+========================= */
+
+.character-name-section {
+    
+    padding-top: 13px;
+}
+
+.character-label {
+    margin-bottom: 7px;
+    border-top: 1px solid rgba(126, 98, 57, 0.35);
+    padding-top: 2px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+
+    color: #352b1e;
+}
+
+.character-name-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    min-height: 27px;
+}
+
+.character-name {
+    flex: 1;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    color: #211a12;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.character-name-input {
+    width: 100%;
+    min-height: 36px;
+
+    padding: 6px 10px;
+
+    border: 1px solid #bda980;
+    border-radius: 4px;
+
+    background: #f3e7c8;
+    color: #211a12;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 18px;
+    font-weight: bold;
+
+    outline: none;
+}
+
+.character-name-input:focus {
+    border-color: #8f744d;
+    box-shadow: 0 0 0 2px rgba(143, 116, 77, 0.12);
+}
+
+
+/* =========================
+   EDIT BUTTON
+========================= */
+
+.edit-name-btn {
+    flex: 0 0 auto;
+
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 1px solid #b79b6c;
+    border-radius: 6px;
+
+    background: linear-gradient(180deg, #d9b776 0%, #b98c40 100%);
+    color: #fffaf1;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 18px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.edit-name-btn:hover {
+    transform: translateY(-1px);
+}
+
+.edit-name-btn:hover {
+    background: rgba(126, 98, 57, 0.10);
+    border-color: #b79b6c;
+    color: #4b3923;
+}
+
+.edit-name-btn:active {
+    background: rgba(126, 98, 57, 0.18);
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+
+    .character-card {
+        padding: 15px;
+    }
+
+    .avatar-placeholder {
+        width: 90px;
+        height: 90px;
+    }
+
+    .character-name {
+        font-size: 17px;
+    }
+}
+
+
+
+
+/* =============================================================
+   CONTENT
+============================================================= */
+
+.background-content {
+
+    position: relative;
+    z-index: 1;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(420px , 1.2fr)
+        minmax(330px, 0.8fr);
+
+    gap: 18px;
+
+    padding: 24px 14px 14px 14px;
+    border: 1px solid #ac8d60;
+        background:
+        linear-gradient(
+            180deg,
+            rgba(245, 230, 199, 0.35),
+            rgba(216, 188, 145, 0.18)
+        );
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+
+
+/* =============================================================
+   OVERVIEW
+============================================================= */
+
+.background-overview {
+
+    min-width: 0;
+    border: 1px solid #bda980;
+    padding: 20px;
+
+}
+
+.overview-block {
+
+    display: grid;
+
+    grid-template-columns: 72px 1fr;
+
+    gap: 18px;
+
+    padding: 16px 0;
+
+    border-bottom: 1px solid var(--line);
+}
+
+.overwrite_display1 {
+    display: flex;
+    justify-content: space-around;
+    gap: 0px;
+}
+.centerText {
+    text-align: center;
+}
+
+.overview-block:last-child {
+    border-bottom: 0;
+}
+
+.overview-icon {
+
+    width: 62px;
+    height: 62px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #756047;
+
+    font-size: 34px;
+
+    opacity: 0.85;
+}
+
+.overview-img {
+    width: 100%;
+}
+.overview-img img{
+    width: 100%;
+    height: auto;
+    opacity: 0.8;
+}
+
+.overview-content {
+    width: 100%;
+}
+
+.overview-content h2 {
+
+    margin: 0 0 6px;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.6px;
+}
+
+.overview-content h3 {
+
+    margin: 0 0 6px;
+
+    font-size: 17px;
+
+    font-weight: 600;
+}
+
+.overview-content p {
+
+    margin: 0;
+
+    color: var(--ink-light);
+
+    font-size: 14px;
+
+    line-height: 1.55;
+}
+
+
+/* =============================================================
+   SKILLS
+============================================================= */
+
+.skill-list {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.skill-row {
+
+    display: grid;
+
+    grid-template-columns: 1fr auto;
+
+    gap: 20px;
+
+    font-size: 14px;
+}
+
+.skill-status {
+
+    color: #52663b;
+
+    font-size: 13px;
+}
+
+
+/* =============================================================
+   SIMPLE LIST
+============================================================= */
+
+.simple-list {
+
+    margin: 0;
+    padding-left: 18px;
+
+    color: var(--ink-light);
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+
+
+
+
+
+
+/* =========================================================
+   SELECTION GROUP
+   ========================================================= */
+
+.selection-group {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   INDIVIDUAL SELECTION FIELD
+   ========================================================= */
+
+.selection-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    width: 100%;
+}
+
+
+/* =========================================================
+   SELECTION LABEL
+   ========================================================= */
+
+.selection-label {
+    display: block;
+
+    margin: 0;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.4;
+
+    color: #211b16;
+}
+
+
+/* =========================================================
+   SELECTION SELECT
+   ========================================================= */
+
+.selection-select {
+    width: 100%;
+    height: 35px;
+
+    padding: 0 38px 0 11px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #bda980;
+    border-radius: 4px;
+
+    background-color: #ead5ad;
+
+    color: #30271e;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 14px;
+    font-weight: 400;
+
+    cursor: pointer;
+
+    outline: none;
+
+    appearance: auto;
+}
+
+
+/* =========================================================
+   EMPTY / NOT SELECTED
+   ========================================================= */
+
+.selection-select:invalid {
+    background-color: #f5ead2;
+}
+
+
+/* =========================================================
+   SELECTED
+   ========================================================= */
+
+.selection-select:valid {
+    background-color: #ead5ad;
+}
+
+
+
+/* =========================================================
+   HOVER
+   ========================================================= */
+
+.selection-select:hover {
+    border-color: #a88e63;
+}
+
+
+/* =========================================================
+   FOCUS
+   ========================================================= */
+
+.selection-select:focus {
+    border-color: #8f744d;
+
+    box-shadow: 0 0 0 2px rgba(143, 116, 77, 0.12);
+}
+
+
+/* =========================================================
+   PLACEHOLDER OPTION
+   ========================================================= */
+
+.selection-select option:first-child {
+    color: #62584c;
+}
+
+
+/* =========================================================
+   MULTIPLE SELECTIONS
+   ========================================================= */
+
+.selection-field + .selection-field {
+    margin-top: 2px;
+}
+
+
+
+
+
+
+
+/* =============================================================
+   TRAIT CARDS
+============================================================= */
+
+.background-traits {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
+}
+
+.trait-card {
+
+    padding: 18px 20px;
+
+    border: 1px solid rgba(99, 70, 37, 0.25);
+
+    border-radius: 4px;
+
+    background:
+        rgba(242, 225, 191, 0.22);
+}
+
+
+.trait-card-header {
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 13px;
+}
+
+
+.trait-icon {
+
+    width: 26px;
+
+    color: #67513a;
+
+    font-size: 23px;
+
+    text-align: center;
+}
+
+
+.trait-card-header h2 {
+
+    margin: 0;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.6px;
+}
+
+
+/* ================================
+   TRAIT ACCORDION
+================================ */
+
+.trait-accordion {
+
+    width: 100%;
+
+    margin-top: 8px;
+
+    border: 1px solid rgba(99, 70, 37, 0.35);
+
+    border-radius: 4px;
+
+    background: rgba(242, 225, 191, 0.30);
+}
+
+
+/* Butonul / header-ul acordeonului */
+
+.trait-accordion-header {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+
+    padding: 8px 10px;
+
+    box-sizing: border-box;
+
+    color: var(--ink-light);
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    list-style: none;
+}
+
+
+/* Elimină triunghiul nativ al <summary> */
+
+.trait-accordion-header::-webkit-details-marker {
+    display: none;
+}
+
+.trait-accordion-header::marker {
+    display: none;
+}
+
+
+/* Săgeata din dreapta */
+
+.trait-accordion-icon {
+
+    font-size: 10px;
+
+    color: #67513a;
+
+    transition: transform 0.2s ease;
+}
+
+
+/* Rotim săgeata când acordeonul este deschis */
+
+.trait-accordion[open] .trait-accordion-icon {
+
+    transform: rotate(180deg);
+}
+
+
+/* ================================
+   CHECKBOX LIST
+================================ */
+
+.trait-checkbox-list {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    padding: 10px;
+
+    border-top: 1px solid rgba(99, 70, 37, 0.25);
+
+    max-height: 260px;
+
+    overflow-y: auto;
+}
+
+
+.trait-checkbox {
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 8px;
+
+    color: var(--ink-light);
+
+    font-size: 14px;
+
+    line-height: 1.4;
+
+    cursor: pointer;
+}
+
+
+.trait-checkbox input {
+
+    flex: 0 0 auto;
+
+    width: 16px;
+    height: 16px;
+
+    margin: 2px 0 0 0;
+
+    cursor: pointer;
+}
+
+
+.trait-checkbox-text {
+
+    flex: 1;
+}
+
+
+
+
+
+
+.trait-card-header {
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 13px;
+}
+
+.trait-icon {
+
+    width: 26px;
+
+    color: #67513a;
+
+    font-size: 23px;
+
+    text-align: center;
+}
+
+.trait-card-header h2 {
+
+    margin: 0;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.6px;
+}
+
+.trait-list {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.trait-list li {
+
+    display: grid;
+
+    grid-template-columns: 18px 1fr;
+
+    gap: 5px;
+
+    color: var(--ink-light);
+
+    font-size: 14px;
+
+    line-height: 1.45;
+}
+
+.trait-bullet {
+
+    color: #806b4e;
+}
+
+
+/* =============================================================
+   STORY
+============================================================= */
+
+.background-story {
+
+    position: relative;
+    z-index: 1;
+
+    margin-top: 25px;
+
+    padding: 20px 32px 25px;
+
+    border: 1px solid rgba(99, 70, 37, 0.35);
+
+    background:
+        rgba(242, 225, 191, 0.18);
+}
+
+.background-story h2 {
+    text-align: center;
+}
+
+.story-header {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 15px;
+}
+
+.story-header h2 {
+
+    margin: 0;
+
+    font-size: 17px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.8px;
+
+    font-weight: 600;
+}
+
+.story-decoration {
+
+    color: #766047;
+
+    font-size: 23px;
+}
+
+.story-description {
+
+    margin: 6px 0 14px;
+
+    text-align: center;
+
+    color: var(--ink-light);
+
+    font-size: 13px;
+}
+
+.story-lines {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 13px;
+}
+
+.story-line {
+
+    width: 100%;
+    height: 1px;
+
+    background: var(--line);
+}
+
+
+/* =============================================================
+   RESPONSIVE
+============================================================= */
+
+@media (max-width: 1100px) {
+
+    :root {
+        --sidebar-width: 190px;
+    }
+
+
+
+    .background-header {
+
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+    }
+
+    .background-content {
+
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+    }
+
+    .background-traits {
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+
+
+@media (max-width: 800px) {
+
+    .background-layout {
+        display: block;
+    }
+
+    .background-sidebar {
+
+        position: relative;
+
+        width: 100%;
+        min-width: 0;
+
+        height: auto;
+
+        padding: 12px 15px;
+
+        flex-direction: row;
+
+        align-items: center;
+    }
+
+    .sidebar-brand,
+    .sidebar-character,
+    .sidebar-footer {
+        display: none;
+    }
+
+    .sidebar-navigation {
+
+        width: 100%;
+
+        flex-direction: row;
+
+        overflow-x: auto;
+
+        padding: 0;
+
+        gap: 4px;
+    }
+
+    .sidebar-nav-item {
+
+        min-width: max-content;
+
+        grid-template-columns: 25px auto;
+
+        padding: 0 10px;
+    }
+
+
+
+    .background-content {
+
+        grid-template-columns: 1fr;
+    }
+
+    .background-traits {
+
+        grid-template-columns: 1fr;
+    }
+
+    .background-story {
+
+        padding: 18px;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .background-title h1 {
+        font-size: 28px;
+    }
+
+    .background-title-icon {
+        font-size: 30px;
+    }
+
+    .background-quote {
+        padding: 15px 35px;
+        font-size: 14px;
+    }
+
+    .overview-block {
+
+        grid-template-columns: 48px 1fr;
+
+        gap: 10px;
+    }
+
+    .overview-icon {
+
+        width: 45px;
+        height: 45px;
+
+        font-size: 25px;
+    }
+
+}

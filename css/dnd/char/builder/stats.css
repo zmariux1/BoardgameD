@@ -1,0 +1,811 @@
+/* ============================================================
+   STATS EDITOR
+   ============================================================ */
+
+.stats-editor {
+    --stats-text: #171717;
+    --stats-text-soft: #4f4a43;
+
+    --stats-border: #c9ad83;
+    --stats-border-soft: rgba(155, 126, 85, 0.35);
+
+    --stats-paper: #f4e8cd;
+    --stats-paper-light: #fbf3df;
+    --stats-paper-dark: #ead8b5;
+
+    --stats-blue: #2b91d9;
+    --stats-blue-dark: #5d8fc5;
+
+    --stats-green: #88b64f;
+    --stats-green-dark: #6e9c38;
+
+    --stats-red: #d84b43;
+
+    --stats-panel-shadow:
+        0 2px 4px rgba(68, 47, 20, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 32px 0 70px;
+
+    color: var(--stats-text);
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+}
+
+
+
+
+/* ============================================================
+   ABILITY SUMMARY
+   ============================================================ */
+
+.stats-editor__header {
+margin-bottom: 28px;
+}
+
+.ability-summary {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 28px;
+
+    margin-bottom: 28px;
+}
+
+.ability-summary__item {
+    min-width: 0;
+    text-align: center;
+}
+
+.ability-summary__label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    margin-bottom: 7px;
+
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.ability-summary__ornament {
+    width: 24px;
+    height: 1px;
+
+    background: var(--stats-border);
+
+    position: relative;
+}
+
+.ability-summary__ornament::before,
+.ability-summary__ornament::after {
+    content: "";
+
+    position: absolute;
+    top: 50%;
+
+    width: 5px;
+    height: 5px;
+
+    transform: translateY(-50%) rotate(45deg);
+
+    border: 1px solid var(--stats-border);
+}
+
+.ability-summary__ornament::before {
+    left: 0;
+}
+
+.ability-summary__ornament::after {
+    right: 0;
+}
+
+.ability-summary__value {
+    width: 100%;
+}
+
+.ability-summary__input {
+    width: 100%;
+    height: 58px;
+
+    box-sizing: border-box;
+
+    border: 1px solid var(--stats-border);
+    border-radius: 5px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.65),
+            rgba(246, 233, 207, 0.65)
+        );
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.45),
+        0 1px 2px rgba(80, 55, 20, 0.06);
+
+    text-align: center;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 25px;
+    font-weight: 400;
+    color: var(--stats-text);
+}
+
+.ability-summary__input:focus {
+    outline: none;
+
+    border-color: #aa8758;
+
+    box-shadow:
+        0 0 0 2px rgba(170, 135, 88, 0.14),
+        inset 0 0 0 1px rgba(255,255,255,.45);
+}
+
+.ability-summary__total {
+    margin-top: 8px;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* ============================================================
+   GENERIC PANEL
+   ============================================================ */
+
+.editor-panel {
+    border: 1px solid var(--stats-border-soft);
+    border-radius: 4px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(255,255,255,.14),
+            rgba(238,223,194,.14)
+        );
+
+    box-shadow: var(--stats-panel-shadow);
+
+    overflow: hidden;
+}
+
+.editor-panel + .editor-panel {
+    margin-top: 24px;
+}
+
+.editor-panel__header {
+    width: 100%;
+
+    min-height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 17px;
+
+    border: 0;
+    border-left: 3px solid var(--stats-green);
+
+    background: rgba(243, 231, 206, 0.62);
+
+    color: var(--stats-text);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    text-align: left;
+    cursor: pointer;
+}
+
+.editor-panel__header:hover {
+    background: rgba(235, 219, 188, 0.78);
+}
+
+.editor-panel__title {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.editor-panel__meta {
+    display: block;
+
+    margin-top: 2px;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 12px;
+    color: #6d675e;
+}
+
+.editor-panel__toggle {
+    font-size: 22px;
+    line-height: 1;
+}
+
+.editor-panel__body {
+    padding: 0 14px 14px;
+}
+
+
+/* ============================================================
+   DICE ROLL GROUPS
+   ============================================================ */
+
+.dice-groups {
+    margin-bottom: 22px;
+}
+
+.dice-groups__toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px 4px 14px;
+}
+
+.dice-groups__count {
+    border: 1px solid transparent;
+    background: transparent;
+    padding: 6px 8px;
+    cursor: pointer;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 12px;
+    color: var(--stats-text-soft);
+}
+
+.dice-groups__count[aria-pressed="true"] {
+    border-color: var(--stats-border-soft);
+    background: rgba(143, 200, 235, 0.16);
+    color: var(--stats-text);
+}
+
+
+/* ============================================================
+   DICE GROUP
+   ============================================================ */
+
+.dice-group {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr) 40px;
+    align-items: center;
+    gap: 8px;
+
+    border: 1px solid var(--stats-border-soft);
+    border-radius: 4px;
+
+    padding: 12px 8px 14px;
+
+    background: rgba(248, 238, 216, 0.42);
+}
+
+.dice-group__columns {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 22px;
+    min-width: 0;
+}
+
+.dice-group__nav {
+    width: 34px;
+    height: 34px;
+
+    border: 0;
+    border-radius: 4px;
+
+    background: #8fc8eb;
+    color: white;
+
+    font-family: Arial, sans-serif;
+    font-size: 35px;
+    line-height: 25px;
+
+    cursor: pointer;
+}
+
+.dice-group__nav:hover {
+    background: #73b8e0;
+}
+
+
+/* ============================================================
+   ROLL SLOT
+   ============================================================ */
+
+.roll-slot {
+    min-width: 0;
+    text-align: center;
+}
+
+.roll-slot__score {
+    margin-bottom: 7px;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.roll-slot__dice {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    min-height: 26px;
+
+    margin-bottom: 10px;
+}
+
+.die {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 24px;
+    height: 24px;
+
+    border-radius: 4px;
+
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+
+    color: white;
+}
+
+.die--blue {
+    background: var(--stats-blue);
+}
+
+.die--gray {
+    background: #777c81;
+}
+
+.roll-slot__select-wrapper {
+    display: block;
+}
+
+.roll-slot__select {
+    width: 100%;
+    min-height: 38px;
+
+    padding: 0 9px;
+
+    border: 1px solid #c8c1b4;
+    border-radius: 3px;
+
+    background: rgba(255,255,255,.68);
+
+    color: var(--stats-text);
+
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+.roll-slot__select:focus {
+    outline: none;
+    border-color: #9d8159;
+}
+
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.btn {
+    min-height: 30px;
+
+    padding: 7px 13px;
+
+    border: 0;
+    border-radius: 3px;
+
+    color: white;
+
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.btn--add {
+    background: var(--stats-green);
+}
+
+.btn--add:hover {
+    background: var(--stats-green-dark);
+}
+
+.btn--success {
+    background: #88b253;
+}
+
+.btn--success:hover {
+    background: #769d43;
+}
+
+.btn--danger {
+    background: var(--stats-red);
+}
+
+.btn--danger:hover {
+    background: #bd3d37;
+}
+
+
+/* ============================================================
+   DICE ACTIONS
+   ============================================================ */
+
+.dice-group__actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 10px;
+}
+
+
+/* ============================================================
+   SCORE CALCULATIONS
+   ============================================================ */
+
+.score-calculations {
+    margin-top: 26px;
+}
+
+.score-calculations__header {
+    margin-bottom: 18px;
+}
+
+.score-calculations__title {
+    margin: 0;
+
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+.score-calculations__description {
+    max-width: 1050px;
+
+    margin: 8px 0 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 13px;
+    line-height: 1.5;
+
+    color: var(--stats-text);
+}
+
+
+/* ============================================================
+   SCORE GRID
+   ============================================================ */
+
+.score-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(6, minmax(0, 1fr));
+
+    gap: 12px;
+}
+
+
+/* ============================================================
+   SCORE CARD
+   ============================================================ */
+
+.score-card {
+    min-width: 0;
+
+    border: 1px solid var(--stats-border-soft);
+    border-radius: 3px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(255,255,255,.30),
+            rgba(239,224,194,.18)
+        );
+
+    box-shadow:
+        0 1px 2px rgba(80,55,20,.06);
+}
+
+.score-card__header {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    min-height: 38px;
+
+    padding: 0 11px;
+
+    background: #232323;
+    color: #fff;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+}
+
+.score-card__icon {
+    font-size: 15px;
+}
+
+.score-card__title {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+/* ============================================================
+   SCORE ROWS
+   ============================================================ */
+
+.score-card__rows {
+    font-family: Arial, sans-serif;
+}
+
+.score-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+
+    min-height: 37px;
+
+    padding: 0 10px;
+
+    border-bottom: 1px solid rgba(178, 159, 128, 0.22);
+
+    font-size: 12px;
+}
+
+.score-row:last-child {
+    border-bottom: 0;
+}
+
+.score-row > strong {
+    justify-self: end;
+    font-weight: 600;
+}
+
+.score-row--highlight {
+    background: rgba(193, 210, 233, 0.78);
+}
+
+.score-row--highlight > span,
+.score-row--highlight > strong {
+    font-weight: 700;
+}
+
+.score-row--input {
+    min-height: 40px;
+}
+
+.score-row--input label {
+    padding-right: 6px;
+}
+
+.score-row--input input {
+    width: 49px;
+    height: 28px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #b7aa97;
+    border-radius: 4px;
+
+    background: rgba(255,255,255,.55);
+
+    text-align: center;
+
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+}
+
+.score-row--input input::placeholder {
+    color: #777;
+}
+
+.score-row--input input:focus {
+    outline: none;
+
+    border-color: #8a6c47;
+
+    box-shadow:
+        0 0 0 2px rgba(138,108,71,.12);
+}
+
+
+/* ============================================================
+   ACCESSIBILITY
+   ============================================================ */
+
+.sr-only {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    padding: 0;
+    margin: -1px;
+
+    overflow: hidden;
+
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+
+    border: 0;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1200px) {
+
+    .stats-editor {
+        width: min(1100px, calc(100% - 30px));
+    }
+
+    .ability-summary {
+        gap: 16px;
+    }
+
+    .dice-group__columns {
+        gap: 12px;
+    }
+
+    .score-grid {
+        gap: 8px;
+    }
+
+}
+
+
+@media (max-width: 1000px) {
+
+    .ability-summary {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .dice-group__columns {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        row-gap: 22px;
+    }
+
+    .score-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        row-gap: 14px;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .stats-editor {
+        width: calc(100% - 20px);
+        padding-top: 22px;
+    }
+
+    .ability-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .dice-group {
+        grid-template-columns: 32px minmax(0, 1fr) 32px;
+        padding-inline: 4px;
+    }
+
+    .dice-group__columns {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .score-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 460px) {
+
+    .stats-editor {
+        width: calc(100% - 12px);
+    }
+
+    .stats-editor__title {
+        font-size: 25px;
+    }
+
+    .ability-summary {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .ability-summary__label {
+        font-size: 12px;
+    }
+
+    .ability-summary__ornament {
+        width: 12px;
+    }
+
+    .ability-summary__input {
+        height: 48px;
+        font-size: 21px;
+    }
+
+    .dice-group {
+        grid-template-columns: 1fr;
+    }
+
+    .dice-group__nav {
+        display: none;
+    }
+
+    .dice-group__columns {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .dice-group__actions {
+        justify-content: stretch;
+        flex-direction: column;
+    }
+
+    .dice-group__actions .btn {
+        width: 100%;
+    }
+
+    .score-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
