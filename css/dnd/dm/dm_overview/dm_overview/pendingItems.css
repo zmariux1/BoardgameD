@@ -1,0 +1,884 @@
+/* =========================================================
+   PENDING ITEMS
+   ========================================================= */
+
+.pendingItems {
+
+    position: relative;
+
+    width: 100%;
+
+    padding: 18px;
+
+    color: #e8dcc5;
+
+    /* background:
+        linear-gradient(
+            180deg,
+            #08111a 0%,
+            #09131c 50%,
+            #071018 100%
+        ); */
+
+    border: 1px solid rgba(170, 120, 55, .55);
+
+    border-radius: 10px;
+
+    box-shadow:
+
+        0 0 0 1px rgba(35, 24, 12, .95),
+
+        0 0 14px rgba(170, 120, 55, .08),
+
+        inset 0 0 22px rgba(0, 0, 0, .65),
+
+        inset 0 0 0 1px rgba(255, 220, 160, .035);
+
+    overflow: hidden;
+}
+
+
+/* Inner ornamental frame */
+
+.pendingItems::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 6px;
+
+    border: 1px solid rgba(186, 144, 86, .20);
+
+    border-radius: 7px;
+
+    pointer-events: none;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 210, 140, .015),
+        0 0 7px rgba(140, 90, 35, .05);
+}
+
+
+/* Subtle metallic highlight */
+
+.pendingItems::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 1px;
+
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255, 220, 170, .045),
+            transparent 18%,
+            transparent 82%,
+            rgba(255, 220, 170, .025)
+        );
+
+    pointer-events: none;
+}
+
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.pendingItems_header {
+
+    position: relative;
+
+    z-index: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 4px 4px 16px;
+
+    border-bottom:
+        1px solid rgba(170, 120, 55, .25);
+}
+
+
+.pendingItems_title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.pendingItems_icon {
+
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #c9993d;
+
+    font-size: 18px;
+
+    border: 1px solid rgba(170, 120, 55, .55);
+
+    border-radius: 6px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(135, 91, 35, .20),
+            rgba(20, 18, 14, .75)
+        );
+
+    box-shadow:
+        inset 0 0 8px rgba(0, 0, 0, .6),
+        0 0 5px rgba(170, 120, 55, .08);
+}
+
+
+.pendingItems_title h3 {
+
+    margin: 0;
+
+    color: #ead8b7;
+
+    font-size: 1.05rem;
+
+    font-weight: 500;
+
+    letter-spacing: .03em;
+}
+
+
+.pendingItems_title p {
+
+    margin: 2px 0 0;
+
+    color: #817a6d;
+
+    font-size: .72rem;
+}
+
+
+
+/* =========================================================
+   HEADER BUTTONS
+   ========================================================= */
+
+.pendingItems_actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.pendingItems_actions button {
+
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    /* gap: 7px; */
+
+    padding: 0 12px;
+
+    border-radius: 5px;
+
+    font-size: .72rem;
+
+    letter-spacing: .03em;
+
+    cursor: pointer;
+
+    transition:
+        background .18s ease,
+        border-color .18s ease,
+        color .18s ease,
+        box-shadow .18s ease,
+        transform .18s ease;
+}
+
+
+/* Import */
+
+.pendingItems_import {
+
+    color: #d2b27a;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(87, 61, 28, .25),
+            rgba(23, 21, 17, .75)
+        );
+
+    border: 1px solid rgba(161, 112, 48, .55);
+
+    box-shadow:
+        inset 0 1px rgba(255, 220, 160, .04);
+}
+
+
+.pendingItems_import:hover {
+
+    color: #f0d18d;
+
+    border-color: #b9893c;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(110, 77, 35, .35),
+            rgba(30, 25, 18, .85)
+        );
+
+    box-shadow:
+        0 0 10px rgba(170, 120, 55, .12);
+
+    transform: translateY(-1px);
+}
+
+
+
+/* Make visible */
+
+.pendingItems_reveal {
+
+    color: #b7d98a;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(62, 92, 38, .28),
+            rgba(16, 28, 17, .85)
+        );
+
+    border: 1px solid rgba(111, 151, 57, .65);
+
+    box-shadow:
+        inset 0 1px rgba(210, 255, 170, .04);
+}
+
+
+.pendingItems_reveal:hover {
+
+    color: #d1efa4;
+
+    border-color: #8dbd51;
+
+    box-shadow:
+        0 0 12px rgba(111, 151, 57, .16);
+
+    transform: translateY(-1px);
+}
+
+
+
+/* =========================================================
+   ITEM LIST
+   ========================================================= */
+
+.pendingItems_list {
+
+    position: relative;
+    height: 78%;
+
+    z-index: 1;
+
+    margin-top: 12px;
+
+    border:
+        1px solid rgba(150, 105, 50, .22);
+
+    border-radius: 5px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    background:
+        rgba(4, 10, 15, .42);
+}
+
+.pendingItems_empty {
+
+    margin: 0;
+    padding: 18px;
+
+    color: #847b6d;
+    font-size: .8rem;
+    text-align: center;
+}
+
+
+/* =========================================================
+   ITEM
+   ========================================================= */
+
+.pendingItem {
+
+    min-height: 66px;
+
+    display: block;
+
+    border-bottom:
+        1px solid rgba(160, 120, 65, .18);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, .015),
+            transparent 65%
+        );
+
+    transition:
+        background .18s ease,
+        opacity .18s ease;
+}
+
+.pendingItem_summary {
+
+    min-height: 66px;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        80px
+        42px
+        12px;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 8px 10px;
+
+    list-style: none;
+
+    cursor: pointer;
+}
+
+.pendingItem_summary::-webkit-details-marker {
+    display: none;
+}
+
+.pendingItem_expand::before {
+    content: "›";
+    display: inline-block;
+    color: #a57938;
+    transition: transform .18s ease;
+}
+
+.pendingItem[open] .pendingItem_expand::before {
+    transform: rotate(90deg);
+}
+
+.pendingItem_distribution {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+
+    padding: 0 12px 12px 68px;
+}
+
+.pendingItem_distribution-form,
+.pendingItem_distribution-form label {
+
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.pendingItem_distribution-form label > span {
+
+    color: #a98b5e;
+
+    font-size: .65rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: .04em;
+}
+
+.pendingItem_distribution-form select {
+
+    width: 100%;
+
+    min-width: 0;
+
+    padding: 7px 9px;
+
+    color: #e6d4b2;
+
+    border: 1px solid rgba(145, 103, 48, .35);
+
+    border-radius: 4px;
+
+    background: rgba(10, 14, 17, .85);
+}
+
+.pendingItem_distribution-form select:focus-visible {
+
+    outline: 1px solid rgba(186, 139, 63, .8);
+
+    outline-offset: 1px;
+}
+
+.pendingItem_distribution-form option {
+
+    color: #e6d4b2;
+
+    background: #101519;
+}
+
+@media (max-width: 520px) {
+    .pendingItem_summary {
+        grid-template-columns: minmax(0, 1fr) 68px 34px 10px;
+        gap: 7px;
+        padding: 8px;
+    }
+
+    .pendingItem_distribution {
+        gap: 8px;
+        padding: 0 8px 10px;
+    }
+}
+
+
+.pendingItem:last-child {
+
+    border-bottom: none;
+}
+
+
+.pendingItem:hover {
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(173, 126, 55, .08),
+            rgba(255, 255, 255, .015)
+        );
+}
+
+
+
+/* =========================================================
+   ITEM INFORMATION
+   ========================================================= */
+
+.pendingItem_info {
+
+    min-width: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+}
+
+
+.pendingItem_icon {
+
+    width: 46px;
+    height: 46px;
+
+    flex: 0 0 46px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #d3ad68;
+
+    font-size: 19px;
+
+    border: 1px solid rgba(159, 110, 49, .55);
+
+    border-radius: 5px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(120, 80, 30, .18),
+            rgba(5, 10, 14, .9)
+        );
+
+    box-shadow:
+        inset 0 0 10px rgba(0, 0, 0, .7);
+}
+
+
+.pendingItem_details {
+
+    min-width: 0;
+}
+
+
+.pendingItem_details h4 {
+
+    margin: 0;
+
+    overflow: hidden;
+
+    color: #e6d4b2;
+
+    font-size: .88rem;
+
+    font-weight: 500;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+
+.pendingItem_details p {
+
+    margin: 3px 0 0;
+
+    color: #847b6d;
+
+    font-size: .68rem;
+}
+
+
+.pendingItem_details p span {
+
+    margin: 0 4px;
+
+    color: #a57938;
+}
+
+
+
+/* =========================================================
+   IDLE STATE
+   ========================================================= */
+
+/*
+    Idle = DM-only.
+
+    The entire item is intentionally muted.
+    This is the main visual indicator for the DM.
+*/
+
+.pendingItem.is-idle {
+
+    opacity: .48;
+
+    filter: saturate(.35);
+}
+
+
+.pendingItem.is-idle:hover .pendingItem_icon {
+
+    color: #8d7045;
+
+    border-color: rgba(168, 112, 43, 0.8);
+}
+
+
+.pendingItem.is-idle .pendingItem_details h4 {
+
+    color: #9b8a70;
+}
+
+
+.pendingItem.is-idle .pendingItem_status {
+
+    color: #8b744b;
+}
+
+
+
+/* =========================================================
+   VISIBLE STATE
+   ========================================================= */
+
+/*
+    When JS changes:
+
+        is-idle
+
+    into:
+
+        is-visible
+
+    the item returns to normal appearance.
+*/
+
+.pendingItem.is-visible {
+
+    opacity: 1;
+
+    filter: none;
+}
+
+
+.pendingItem.is-visible:hover .pendingItem_icon {
+
+    color: #d8b46d;
+
+    border-color: rgba(186, 139, 63, .75);
+
+    box-shadow:
+        inset 0 0 10px rgba(0, 0, 0, .7),
+        0 0 6px rgba(170, 120, 55, .08);
+}
+
+
+.pendingItem.is-visible .pendingItem_details h4 {
+
+    color: #ead9b8;
+}
+
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.pendingItem_status {
+
+    display: flex;
+
+    justify-content: center;
+
+
+}
+
+
+/* Status comun */
+
+.itemStatus_idle,
+.itemStatus_visible {
+
+    height: 27px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 6px;
+
+    padding: 0 8px;
+
+    border-radius: 5px;
+
+    font-size: .63rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: .04em;
+
+    color: #947a4e;
+
+    border: 1px solid rgba(145, 103, 48, .25);
+
+    background:
+        rgba(10, 14, 17, .65);
+}
+
+
+/* Idle icon */
+
+.itemStatus_idle .fa-circle {
+
+    font-size: 5px;
+
+    color: #a87b34;
+}
+
+
+/* Visible icon */
+
+.itemStatus_visible .fa-eye {
+
+    font-size: 15px;
+
+    color: #a87b34;
+
+    padding: 0 5px;
+}
+
+
+/* =========================================================
+   STATUS INACTIV / ASCUNS
+   ========================================================= */
+
+.itemStatus_idle,
+.itemStatus_visible {
+
+    display: none;
+    
+    margin: 5px 0;
+}
+
+
+/* =========================================================
+   STATUS ACTIV
+   ========================================================= */
+
+.itemStatus_idle.is-visible,
+.itemStatus_visible.is-visible {
+
+    display: inline-flex;
+}
+
+
+/* =========================================================
+   VISIBLE ITEM
+   ========================================================= */
+
+.pendingItem.is-visible .pendingItem_status {
+
+    color: #a8cf73;
+
+    border-color: rgba(111, 151, 57, .45);
+
+    background:
+        rgba(49, 76, 29, .20);
+}
+
+
+.pendingItem.is-visible .pendingItem_status i {
+
+    color: #8dbd51;
+}
+
+
+
+
+
+/* =========================================================
+   DELETE
+   ========================================================= */
+
+.pendingItem_delete {
+
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #9a493f;
+
+    border: 1px solid rgba(140, 70, 58, .35);
+
+    border-radius: 5px;
+
+    background:
+        rgba(20, 12, 12, .65);
+
+    cursor: pointer;
+
+    transition:
+        color .18s ease,
+        border-color .18s ease,
+        background .18s ease,
+        box-shadow .18s ease;
+}
+
+
+.pendingItem_delete:hover {
+
+    color: #e46b5c;
+
+    border-color: rgba(190, 72, 58, .75);
+
+    background:
+        rgba(110, 35, 27, .18);
+
+    box-shadow:
+        0 0 8px rgba(170, 50, 40, .12);
+}
+
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.pendingItems_footer {
+
+    position: relative;
+
+    z-index: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 12px;
+
+    padding: 9px 4px 2px;
+
+    color: #746d61;
+
+    font-size: .66rem;
+}
+
+
+.pendingItems_footer i {
+
+    color: #b0833e;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   MOBILE FIRST - RESPONSIVE LAYOUT
+   ========================================================= */
+
+/* Mobile First - Fixed width on larger screens */
+@media (min-width: 960px) {
+    .pendingItems {
+        width: 365px;
+        max-width: 365px;
+        flex: 0 0 365px;
+    }
+}

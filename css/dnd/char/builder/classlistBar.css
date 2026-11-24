@@ -1,0 +1,1454 @@
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root {
+    --parchment-1: #ead6aa;
+    --parchment-2: #d7bb87;
+    --parchment-3: #c2a06b;
+
+    --gold-1: #e0ba67;
+    --gold-2: #b48b43;
+    --gold-3: #745126;
+    --gold-4: #3b2914;
+
+    --dark-1: #171310;
+    --dark-2: #0e0c09;
+    --dark-3: #050403;
+
+    --red-1: #ad271b;
+    --red-2: #7e1c14;
+    --red-3: #3d0d09;
+
+    --text-dark: #261a10;
+    --text-soft: #59432b;
+
+    --shadow-deep: rgba(0, 0, 0, 0.65);
+    --shadow-medium: rgba(56, 34, 13, 0.35);
+
+    --font-dnd:
+        Georgia,
+        "Times New Roman",
+        serif;
+}
+
+
+
+
+
+
+/* =========================================================
+   COMPONENT WRAPPER
+========================================================= */
+
+.class-level-bar {
+    width: 100%;
+    padding: 14px 18px;
+}
+
+
+/* =========================================================
+   OUTER FRAME
+========================================================= */
+
+.class-level-bar__frame {
+    position: relative;
+
+    width: 100%;
+
+    min-height: 118px;
+
+    padding: 8px;
+
+    border:
+        1px solid
+        var(--gold-3);
+
+    background:
+        linear-gradient(
+            180deg,
+            #0d0a07 0%,
+            #1b120a 7%,
+            #382515 8%,
+            #17100a 94%,
+            #050403 100%
+        );
+
+    box-shadow:
+        0 8px 20px var(--shadow-deep),
+        inset 0 0 0 1px rgba(228, 190, 113, 0.17),
+        inset 0 0 16px rgba(0, 0, 0, 0.75);
+
+    isolation: isolate;
+}
+
+
+/* =========================================================
+   INNER FRAME
+========================================================= */
+
+.class-level-bar__frame::before {
+    content: "";
+
+    position: absolute;
+    inset: 5px;
+
+    border:
+        1px solid
+        #9a7439;
+
+    pointer-events: none;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(237, 204, 132, 0.25),
+        0 0 0 1px #25180b;
+
+    z-index: 1;
+}
+
+
+.class-level-bar__frame::after {
+    content: "";
+
+    position: absolute;
+    inset: 8px;
+
+    border:
+        1px solid
+        rgba(231, 191, 109, 0.6);
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+
+/* =========================================================
+   PARCHMENT AREA
+========================================================= */
+
+.class-level-bar__content {
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    width: 100%;
+    min-height: 100px;
+
+    align-items: center;
+
+    padding:
+        9px
+        24px
+        9px
+        26px;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(255, 243, 204, 0.7) 0%,
+            rgba(239, 214, 171, 0.9) 48%,
+            rgba(203, 166, 108, 0.95) 100%
+        );
+
+    border:
+        1px solid
+        #8f6b39;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 244, 214, 0.7),
+        inset 0 -2px 5px rgba(98, 67, 31, 0.35),
+        inset 4px 0 10px rgba(90, 57, 19, 0.08),
+        inset -4px 0 10px rgba(90, 57, 19, 0.08);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   PARCHMENT TEXTURE
+========================================================= */
+
+.class-level-bar__content::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: 0.35;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent 0,
+            transparent 2px,
+            rgba(73, 48, 22, 0.04) 3px,
+            transparent 4px
+        );
+
+    mix-blend-mode: multiply;
+}
+
+.class-level-bar__content::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    box-shadow:
+        inset 0 0 32px rgba(87, 53, 17, 0.22);
+
+    z-index: 0;
+}
+
+
+/* =========================================================
+   FRAME CORNER ORNAMENTS
+========================================================= */
+
+.class-level-bar__corner {
+    position: absolute;
+
+    z-index: 5;
+
+    width: 37px;
+    height: 37px;
+
+    pointer-events: none;
+}
+
+
+/* ---------------------------------------------------------
+   TOP LEFT
+--------------------------------------------------------- */
+
+.class-level-bar__corner--tl {
+    left: -2px;
+    top: -2px;
+
+    border-top:
+        2px solid
+        var(--gold-1);
+
+    border-left:
+        2px solid
+        var(--gold-1);
+
+    filter:
+        drop-shadow(0 1px 1px rgba(0, 0, 0, 0.7));
+}
+
+.class-level-bar__corner--tl::before,
+.class-level-bar__corner--tl::after {
+    content: "";
+
+    position: absolute;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--gold-1),
+            var(--gold-3)
+        );
+}
+
+.class-level-bar__corner--tl::before {
+    width: 2px;
+    height: 25px;
+
+    left: 11px;
+    top: 3px;
+
+    transform:
+        rotate(45deg);
+
+    transform-origin: top center;
+}
+
+.class-level-bar__corner--tl::after {
+    width: 2px;
+    height: 17px;
+
+    left: 7px;
+    top: 12px;
+
+    transform:
+        rotate(-45deg);
+
+    transform-origin: top center;
+}
+
+
+/* ---------------------------------------------------------
+   TOP RIGHT
+--------------------------------------------------------- */
+
+.class-level-bar__corner--tr {
+    right: -2px;
+    top: -2px;
+
+    border-top:
+        2px solid
+        var(--gold-1);
+
+    border-right:
+        2px solid
+        var(--gold-1);
+}
+
+.class-level-bar__corner--tr::before,
+.class-level-bar__corner--tr::after {
+    content: "";
+
+    position: absolute;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--gold-1),
+            var(--gold-3)
+        );
+}
+
+.class-level-bar__corner--tr::before {
+    width: 2px;
+    height: 25px;
+
+    right: 11px;
+    top: 3px;
+
+    transform:
+        rotate(-45deg);
+}
+
+.class-level-bar__corner--tr::after {
+    width: 2px;
+    height: 17px;
+
+    right: 7px;
+    top: 12px;
+
+    transform:
+        rotate(45deg);
+}
+
+
+/* ---------------------------------------------------------
+   BOTTOM LEFT
+--------------------------------------------------------- */
+
+.class-level-bar__corner--bl {
+    left: -2px;
+    bottom: -2px;
+
+    border-bottom:
+        2px solid
+        var(--gold-1);
+
+    border-left:
+        2px solid
+        var(--gold-1);
+}
+
+.class-level-bar__corner--bl::before,
+.class-level-bar__corner--bl::after {
+    content: "";
+
+    position: absolute;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--gold-1),
+            var(--gold-3)
+        );
+}
+
+.class-level-bar__corner--bl::before {
+    width: 2px;
+    height: 25px;
+
+    left: 11px;
+    bottom: 3px;
+
+    transform:
+        rotate(-45deg);
+}
+
+.class-level-bar__corner--bl::after {
+    width: 2px;
+    height: 17px;
+
+    left: 7px;
+    bottom: 12px;
+
+    transform:
+        rotate(45deg);
+}
+
+
+/* ---------------------------------------------------------
+   BOTTOM RIGHT
+--------------------------------------------------------- */
+
+.class-level-bar__corner--br {
+    right: -2px;
+    bottom: -2px;
+
+    border-bottom:
+        2px solid
+        var(--gold-1);
+
+    border-right:
+        2px solid
+        var(--gold-1);
+}
+
+.class-level-bar__corner--br::before,
+.class-level-bar__corner--br::after {
+    content: "";
+
+    position: absolute;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--gold-1),
+            var(--gold-3)
+        );
+}
+
+.class-level-bar__corner--br::before {
+    width: 2px;
+    height: 25px;
+
+    right: 11px;
+    bottom: 3px;
+
+    transform:
+        rotate(45deg);
+}
+
+.class-level-bar__corner--br::after {
+    width: 2px;
+    height: 17px;
+
+    right: 7px;
+    bottom: 12px;
+
+    transform:
+        rotate(-45deg);
+}
+
+
+/* =========================================================
+   SMALL FRAME DETAILS
+========================================================= */
+
+.class-level-bar__frame-detail {
+    position: absolute;
+
+    z-index: 4;
+
+    width: 22px;
+    height: 7px;
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--gold-1),
+            var(--gold-3)
+        );
+
+    clip-path:
+        polygon(
+            0 50%,
+            15% 10%,
+            33% 40%,
+            50% 0,
+            67% 40%,
+            85% 10%,
+            100% 50%,
+            85% 90%,
+            67% 60%,
+            50% 100%,
+            33% 60%,
+            15% 90%
+        );
+
+    opacity: 0.75;
+}
+
+.class-level-bar__frame-detail--top {
+    left: 50%;
+    top: 0;
+
+    transform:
+        translateX(-50%);
+}
+
+.class-level-bar__frame-detail--bottom {
+    left: 50%;
+    bottom: 0;
+
+    transform:
+        translateX(-50%)
+        rotate(180deg);
+}
+
+
+/* =========================================================
+   CLASS ITEM
+========================================================= */
+
+.class-level-item {
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    min-width: 190px;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding:
+        5px
+        12px;
+
+    color: var(--text-dark);
+
+    flex-shrink: 1;
+}
+
+
+/* =========================================================
+   ACTIVE CLASS
+========================================================= */
+
+.class-level-item--active {
+    /* poate primi ulterior o evidențiere foarte discretă */
+}
+
+
+/* =========================================================
+   ICON FRAME
+========================================================= */
+
+.class-level-item__icon-frame {
+    position: relative;
+
+    width: 75px;
+    height: 75px;
+
+    flex: 0 0 75px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #d2a84f 0%,
+            #765223 38%,
+            #321d0d 55%,
+            #b58a3d 100%
+        );
+
+    box-shadow:
+        0 3px 5px rgba(47, 27, 9, 0.5),
+        inset 0 1px 1px rgba(255, 229, 153, 0.55),
+        inset 0 -2px 3px rgba(18, 9, 2, 0.65);
+}
+
+
+/* metal outer engraving */
+.class-level-item__icon-frame::before {
+    content: "";
+
+    position: absolute;
+    inset: 3px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(242, 205, 118, 0.75);
+
+    box-shadow:
+        inset 0 0 0 1px #442a0f;
+}
+
+
+/* small ornamental marks */
+.class-level-item__icon-frame::after {
+    content: "";
+
+    position: absolute;
+
+    width: 11px;
+    height: 11px;
+
+    top: 6px;
+    left: 50%;
+
+    transform:
+        translateX(-50%)
+        rotate(45deg);
+
+    border:
+        1px solid
+        rgba(234, 193, 109, 0.55);
+
+    background:
+        rgba(60, 35, 13, 0.55);
+
+    box-shadow:
+        0 0 4px rgba(0, 0, 0, 0.4);
+}
+
+
+/* =========================================================
+   ICON RING
+========================================================= */
+
+.class-level-item__icon-ring {
+    position: relative;
+
+    display: flex;
+
+    width: 63px;
+    height: 63px;
+
+    align-items: center;
+    justify-content: center;
+
+    border:
+        2px solid
+        #23150a;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 32% 28%,
+            #503115,
+            #1a0d06 68%
+        );
+
+    box-shadow:
+        inset 0 2px 4px rgba(255, 223, 151, 0.16),
+        inset 0 -4px 5px rgba(0, 0, 0, 0.7);
+}
+
+
+/* =========================================================
+   ICON
+========================================================= */
+
+.class-level-item__icon {
+    display: flex;
+
+    width: 50px;
+    height: 50px;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    box-shadow:
+        inset 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.class-level-item__icon img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+/* fallback icon appearance when there is no image */
+.class-level-item__icon:not(:has(img)) {
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #bd8a30,
+            #57210d 53%,
+            #240905 100%
+        );
+
+    color: #e8c66b;
+
+    font-size: 28px;
+
+    font-family:
+        Georgia,
+        serif;
+}
+
+
+/* =========================================================
+   CLASS BODY
+========================================================= */
+
+.class-level-item__body {
+    display: flex;
+
+    min-width: 95px;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    gap: 8px;
+}
+
+.class-level-item__name {
+    color: #24170d;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 25px;
+
+    line-height: 1;
+
+    font-weight: 700;
+}
+
+.class-level-item__title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.class-level-item__delete-form {
+    flex: 0 0 auto;
+    margin: 0;
+}
+
+.class-level-item__delete-button {
+    padding: 4px 7px;
+    border: 1px solid #765126;
+    border-radius: 3px;
+    background: #ead6aa;
+    color: #3b2914;
+    font: inherit;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.class-level-item__delete-button:hover {
+    background: #d7bb87;
+}
+
+.class-level-item__delete-button:focus-visible {
+    outline: 2px solid #2d5f9b;
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   LEVEL CONTROL
+========================================================= */
+
+.class-level-item__level-control {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+/* =========================================================
+   LEVEL BUTTONS
+========================================================= */
+
+.level-control__button {
+    position: relative;
+
+    display: flex;
+
+    width: 34px;
+    height: 32px;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border:
+        1px solid
+        #a78650;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(245, 224, 180, 0.9),
+            rgba(206, 174, 124, 0.75)
+        );
+
+    color: #2f2113;
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size: 22px;
+
+    line-height: 1;
+
+    cursor: pointer;
+    text-decoration: none;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 250, 228, 0.8),
+        inset 0 -2px 3px rgba(92, 59, 22, 0.2),
+        0 1px 2px rgba(58, 36, 12, 0.28);
+
+    transition:
+        transform 0.12s ease,
+        filter 0.12s ease,
+        background 0.12s ease;
+}
+
+
+.level-control__button::before {
+    content: "";
+
+    position: absolute;
+    inset: 2px;
+
+    border:
+        1px solid
+        rgba(124, 91, 49, 0.42);
+
+    pointer-events: none;
+}
+
+
+.level-control__button:hover {
+    filter: brightness(1.06);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(250, 232, 193, 0.98),
+            rgba(218, 187, 136, 0.88)
+        );
+}
+
+.level-control__button:active {
+    transform:
+        translateY(1px);
+}
+
+
+/* =========================================================
+   LEVEL VALUE
+========================================================= */
+
+.level-control__value {
+    display: flex;
+
+    min-width: 24px;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #704f2d;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 23px;
+
+    font-weight: 700;
+
+    line-height: 1;
+}
+
+
+/* =========================================================
+   LEVEL DROPDOWN
+========================================================= */
+
+.level-control__dropdown {
+    position: relative;
+
+    padding: 6px 28px 6px 12px;
+
+    border: 1px solid #a78650;
+
+    background-color: rgba(245, 224, 180, 0.9);
+
+    color: #2f2113;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 16px;
+
+    line-height: 1.4;
+
+    cursor: pointer;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 250, 228, 0.8),
+        inset 0 -2px 3px rgba(92, 59, 22, 0.2),
+        0 1px 2px rgba(58, 36, 12, 0.28),
+        inset 2px 0 0 rgba(124, 91, 49, 0.42);
+
+    transition:
+        filter 0.12s ease,
+        background-color 0.12s ease,
+        transform 0.12s ease;
+
+    appearance: none;
+
+    background-image:
+        url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232f2113' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+
+    background-repeat: no-repeat;
+
+    background-position: right 8px center;
+
+    background-size: 14px;
+
+    padding-right: 28px;
+}
+
+.level-control__dropdown:hover {
+    filter: brightness(1.06);
+
+    background-color: rgba(250, 232, 193, 0.98);
+}
+
+.level-control__dropdown:focus {
+    outline: 2px solid #c2a06b;
+
+    outline-offset: 2px;
+
+    filter: brightness(1.08);
+}
+
+.level-control__dropdown:active {
+    transform: translateY(1px);
+}
+
+.level-control__dropdown option {
+    background-color: #f5e0b4;
+
+    color: #2f2113;
+
+    font-family: Georgia, serif;
+
+    padding: 6px 12px;
+
+    line-height: 1.6;
+}
+
+.level-control__dropdown option:checked {
+    background: linear-gradient(#c2a06b, #c2a06b);
+
+    color: #ffffff;
+
+    font-weight: 600;
+}
+
+
+
+/* =========================================================
+   CLASS SEPARATOR
+========================================================= */
+
+.class-level-separator {
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    width: 34px;
+    min-height: 70px;
+
+    flex:
+        0 0
+        34px;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* central vertical line */
+.class-level-separator__line {
+    position: absolute;
+
+    top: 7px;
+    bottom: 7px;
+
+    left: 50%;
+
+    width: 1px;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        linear-gradient(
+            180deg,
+            transparent,
+            rgba(113, 81, 41, 0.35) 17%,
+            rgba(113, 81, 41, 0.65) 50%,
+            rgba(113, 81, 41, 0.35) 83%,
+            transparent
+        );
+}
+
+
+/* =========================================================
+   SEPARATOR ORNAMENT
+========================================================= */
+
+.class-level-separator__ornament {
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    width: 19px;
+    height: 31px;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 3px;
+}
+
+
+/* central diamond */
+.class-level-separator__ornament b {
+    position: relative;
+
+    display: block;
+
+    width: 9px;
+    height: 9px;
+
+    transform:
+        rotate(45deg);
+
+    border:
+        1px solid
+        #8e6a38;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ecd08f,
+            #b38a4b
+        );
+
+    box-shadow:
+        0 0 2px rgba(58, 34, 12, 0.4);
+}
+
+
+/* side diamonds */
+.class-level-separator__ornament i {
+    display: block;
+
+    width: 5px;
+    height: 5px;
+
+    transform:
+        rotate(45deg);
+
+    border:
+        1px solid
+        #9a743d;
+
+    background:
+        #d1ad70;
+}
+
+
+/* =========================================================
+   ADD CLASS BUTTON
+========================================================= */
+
+.add-class-button {
+    position: relative;
+
+    z-index: 3;
+
+    display: flex;
+
+    min-width: 250px;
+    height: 60px;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-left: 2px;
+
+    padding:
+        0
+        18px;
+
+    border:
+        2px solid
+        #4b190f;
+
+    background:
+        linear-gradient(
+            180deg,
+            #a12c1c 0%,
+            #8b2318 44%,
+            #66150f 100%
+        );
+
+    color: #f3d99a;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 19px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
+
+    cursor: pointer;
+    text-decoration: none;
+
+    box-shadow:
+        0 3px 6px rgba(51, 20, 7, 0.48),
+        inset 0 1px 0 rgba(250, 216, 135, 0.4),
+        inset 0 -3px 5px rgba(53, 8, 4, 0.5);
+
+    transition:
+        filter 0.15s ease,
+        transform 0.15s ease;
+}
+
+
+/* outer golden border */
+.add-class-button::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 4px;
+
+    border:
+        1px solid
+        #c3914b;
+
+    pointer-events: none;
+}
+
+
+/* inner dark line */
+.add-class-button::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 7px;
+
+    border:
+        1px solid
+        rgba(63, 16, 8, 0.65);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   BUTTON ICON
+========================================================= */
+
+.add-class-button__icon-frame {
+    position: relative;
+
+    display: flex;
+
+    width: 38px;
+    height: 38px;
+
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 38px;
+
+    border:
+        1px solid
+        #d1a24d;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #d2a751,
+            #765022 48%,
+            #38200e
+        );
+
+    box-shadow:
+        inset 0 1px 1px rgba(255, 231, 160, 0.55),
+        inset 0 -2px 3px rgba(29, 11, 3, 0.6),
+        0 1px 2px rgba(0, 0, 0, 0.45);
+}
+
+.add-class-button__text {
+    margin: 0;
+    color: inherit;
+}
+
+
+.add-class-button__icon-ring {
+    display: flex;
+
+    width: 29px;
+    height: 29px;
+
+    align-items: center;
+    justify-content: center;
+
+    border:
+        2px solid
+        #2c1509;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #3a160c,
+            #170803
+        );
+}
+
+
+.add-class-button__icon {
+    color: #e6bc64;
+
+    font-size: 24px;
+
+    line-height: 1;
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* =========================================================
+   BUTTON HOVER
+========================================================= */
+
+.add-class-button:hover {
+    filter: brightness(1.08);
+
+    transform:
+        translateY(-1px);
+}
+
+.add-class-button:active {
+    transform:
+        translateY(1px);
+}
+
+
+/* =========================================================
+   LARGE SCREENS
+========================================================= */
+
+@media (min-width: 1450px) {
+
+    .class-level-bar {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .class-level-bar__content {
+        padding-left: 38px;
+        padding-right: 38px;
+    }
+
+    .class-level-item {
+        min-width: 215px;
+    }
+
+    .class-level-item__icon-frame {
+        width: 79px;
+        height: 79px;
+        flex-basis: 79px;
+    }
+
+    .class-level-item__icon-ring {
+        width: 67px;
+        height: 67px;
+    }
+
+    .class-level-item__icon {
+        width: 53px;
+        height: 53px;
+    }
+}
+
+
+/* =========================================================
+   MEDIUM
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .class-level-bar__content {
+        padding:
+            8px
+            15px;
+    }
+
+    .class-level-item {
+        min-width: 155px;
+
+        gap: 9px;
+
+        padding:
+            5px
+            7px;
+    }
+
+    .class-level-item__icon-frame {
+        width: 62px;
+        height: 62px;
+        flex-basis: 62px;
+    }
+
+    .class-level-item__icon-ring {
+        width: 52px;
+        height: 52px;
+    }
+
+    .class-level-item__icon {
+        width: 42px;
+        height: 42px;
+    }
+
+    .class-level-item__name {
+        font-size: 20px;
+    }
+
+    .level-control__button {
+        width: 29px;
+        height: 28px;
+    }
+
+    .level-control__value {
+        font-size: 20px;
+    }
+
+    .add-class-button {
+        min-width: 200px;
+        height: 52px;
+
+        font-size: 16px;
+    }
+}
+
+
+/* =========================================================
+   SMALL
+========================================================= */
+
+@media (max-width: 850px) {
+    .character-content,
+    .pozitionare_content,
+    .multisub_container,
+    .class-level-bar,
+    .class-level-bar__frame,
+    .class-level-bar__content {
+        min-width: 0;
+    }
+
+    .pozitionare_content,
+    .multisub_container,
+    .class-level-bar,
+    .class-level-bar__frame {
+        width: 100%;
+    }
+
+    .class-level-bar__content {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-x: contain;
+        touch-action: pan-x pan-y;
+
+        scrollbar-width: thin;
+
+        scrollbar-color:
+            #8d6a38
+            rgba(70, 45, 21, 0.15);
+    }
+
+    .class-level-item,
+    .class-level-separator,
+    .add-class-button {
+        flex-shrink: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .class-level-bar {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .add-class-button {
+        min-width: 58px;
+        width: 58px;
+        padding: 0;
+        gap: 0;
+    }
+
+    .add-class-button__text {
+        display: none;
+    }
+}

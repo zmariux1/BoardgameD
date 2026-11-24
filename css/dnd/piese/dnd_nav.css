@@ -1,0 +1,523 @@
+/* =========================================================
+   D&D NAVIGATION (desktop + mobile)
+   Folosit de views/userAccess/dnd/piese/dnd_nav.ejs
+   Pagini: dndHome, myChars, globalCampaigns, myCampains
+========================================================= */
+
+
+.characters-navbar {
+    --characters-gold: #c7a66a;
+    --characters-gold-light: #dfc58f;
+    --characters-text-soft: #aaa294;
+    --characters-border: rgba(199, 166, 106, 0.25);
+
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.characters-navbar *,
+.characters-navbar *::before,
+.characters-navbar *::after {
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.characters-navbar {
+
+    position: relative;
+    z-index: 50;
+
+    width: 100%;
+
+    border-bottom:
+        1px solid rgba(199, 166, 106, 0.18);
+
+    background:
+
+        linear-gradient(
+            180deg,
+            rgba(5, 10, 14, 0.98),
+            rgba(5, 10, 14, 0.93)
+        );
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.characters-navbar__inner {
+
+    width: min(1440px, calc(100% - 72px));
+
+    min-height: 96px;
+
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+
+}
+
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.characters-navbar__logo {
+
+    width: 82px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    color: var(--characters-gold);
+
+    text-decoration: none;
+}
+
+
+
+.characters-navbar__logo-symbol {
+
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    color: var(--characters-gold);
+
+    font-size: 35px;
+
+    transform: rotate(0deg);
+
+    text-shadow:
+        0 0 15px rgba(199, 166, 106, 0.15);
+}
+
+
+
+.characters-navbar__logo-symbol::before,
+.characters-navbar__logo-symbol::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 34px;
+    height: 34px;
+
+    border: 1px solid
+        rgba(199, 166, 106, 0.55);
+
+    transform: rotate(45deg);
+}
+
+
+
+.characters-navbar__logo-symbol::after {
+
+    width: 23px;
+    height: 23px;
+
+    border-color:
+        rgba(199, 166, 106, 0.32);
+}
+
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.characters-navbar__nav {
+
+    height: 100%;
+
+    display: flex;
+    align-items: stretch;
+
+    gap: 5px;
+
+    flex: 1;
+
+    margin-left: 42px;
+}
+
+
+
+.characters-navbar__link {
+
+    position: relative;
+
+    min-width: 145px;
+
+    padding: 0 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 11px;
+
+    color:
+        rgba(225, 216, 201, 0.78);
+
+    text-decoration: none;
+
+    font-size: 16px;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease;
+}
+
+
+
+.characters-navbar__link:hover {
+
+    color:
+        var(--characters-gold-light);
+
+    background:
+        rgba(199, 166, 106, 0.035);
+}
+
+
+
+.characters-navbar__link--active {
+
+    color:
+        var(--characters-gold-light);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(199, 166, 106, 0.055),
+            rgba(199, 166, 106, 0.015)
+        );
+}
+
+
+
+.characters-navbar__link--active::after {
+
+    content: "";
+
+    position: absolute;
+
+    bottom: 0;
+    left: 22%;
+    right: 22%;
+
+    height: 1px;
+
+    background:
+        var(--characters-gold);
+
+    box-shadow:
+        0 0 8px rgba(199, 166, 106, 0.35);
+}
+
+
+
+.characters-navbar__link-icon {
+
+    color:
+        var(--characters-gold);
+
+    font-size: 19px;
+
+    line-height: 1;
+}
+
+
+
+/* =========================================================
+   USER
+========================================================= */
+
+.characters-navbar__user {
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-left: 25px;
+
+    color: var(--characters-gold);
+
+    text-decoration: none;
+}
+
+
+
+.characters-navbar__avatar {
+
+    width: 52px;
+    height: 52px;
+
+    overflow: hidden;
+
+    border-radius: 50%;
+
+    border:
+        1px solid var(--characters-gold);
+
+    box-shadow:
+        0 0 0 3px rgba(199, 166, 106, 0.07);
+}
+
+
+
+.characters-navbar__avatar img {
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+
+.characters-navbar__user-arrow {
+
+    color: var(--characters-gold);
+
+    font-size: 17px;
+}
+
+
+
+/* =========================================================
+   MOBILE NAV
+========================================================= */
+
+.characters-navbar__mobile-toggle {
+
+    display: none;
+
+    width: 43px;
+    height: 43px;
+
+    margin-left: auto;
+
+    border:
+        1px solid var(--characters-border);
+
+    border-radius: 6px;
+
+    background:
+        rgba(10, 16, 21, 0.9);
+
+    cursor: pointer;
+}
+
+
+
+.characters-navbar__mobile-toggle span {
+
+    display: block;
+
+    width: 18px;
+    height: 1px;
+
+    margin: 4px auto;
+
+    background:
+        var(--characters-gold);
+}
+
+
+
+.characters-navbar__mobile {
+
+    display: none;
+}
+
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1150px) {
+
+    .characters-navbar__inner {
+
+        width:
+            min(
+                100% - 40px,
+                1370px
+            );
+    }
+
+
+    .characters-navbar__nav {
+
+        margin-left: 20px;
+    }
+
+
+    .characters-navbar__link {
+
+        min-width: auto;
+
+        padding:
+            0 13px;
+    }
+
+
+    .characters-navbar__link-icon {
+
+        display: none;
+    }
+
+}
+
+
+
+/* TABLET */
+
+@media (max-width: 850px) {
+
+    .characters-navbar__nav {
+
+        display: none;
+    }
+
+
+    .characters-navbar__mobile-toggle {
+
+        display: block;
+    }
+
+
+    .characters-navbar__user {
+
+        margin-left: auto;
+        margin-right: 15px;
+    }
+
+
+    .characters-navbar__mobile {
+
+        position: absolute;
+
+        left: 20px;
+        right: 20px;
+
+        top: calc(100% + 7px);
+
+        padding: 8px;
+
+        display: none;
+        flex-direction: column;
+
+        border:
+            1px solid var(--characters-border);
+
+        background:
+            rgba(7, 13, 18, 0.98);
+
+        box-shadow:
+            0 15px 40px rgba(0, 0, 0, 0.45);
+    }
+
+
+    .characters-navbar__mobile.is-open {
+
+        display: flex;
+    }
+
+
+    .characters-navbar__mobile a {
+
+        padding: 14px 16px;
+
+        color:
+            var(--characters-text-soft);
+
+        text-decoration: none;
+
+        font-size: 14px;
+
+        border-bottom:
+            1px solid
+            rgba(199, 166, 106, 0.08);
+    }
+
+
+    .characters-navbar__mobile a:last-child {
+
+        border-bottom: none;
+    }
+
+
+    .characters-navbar__mobile a:hover,
+    .characters-navbar__mobile a.characters-navbar__mobile-link--active {
+
+        color:
+            var(--characters-gold-light);
+
+        background:
+            rgba(199, 166, 106, 0.05);
+    }
+
+}
+
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .characters-navbar__inner {
+
+        width:
+            calc(100% - 28px);
+
+        min-height: 76px;
+    }
+
+
+    .characters-navbar__logo {
+
+        width: auto;
+    }
+
+
+    .characters-navbar__logo-symbol {
+
+        width: 45px;
+        height: 45px;
+
+        font-size: 30px;
+    }
+
+
+    .characters-navbar__avatar {
+
+        width: 42px;
+        height: 42px;
+    }
+
+
+    .characters-navbar__user-arrow {
+
+        display: none;
+    }
+
+}
