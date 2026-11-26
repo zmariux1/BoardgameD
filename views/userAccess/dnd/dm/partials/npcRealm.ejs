@@ -1,0 +1,503 @@
+<%
+    // =====================================================================
+    // NPC REALM: continent -> towns -> NPC (date reale din campaign.continents)
+    // Controllerul trimite `npcRealmContinents` (dmOverviewController.js).
+    // Mapare UI: continent = tab/panou "regiune", town = tab "oraș", NPC = card.
+    // Câmpurile care NU există în schema campainOverview.js rămân hardcodate
+    // (icon regiune/oraș, descriere, imagine hartă, portret, badge, status,
+    // icon profesie) prin valorile implicite din npcRealmDefaults.
+    // `npcRealmDemoData` de mai jos e păstrat doar ca referință de format;
+    // nu mai este randat.
+    // =====================================================================
+    const npcRealmDemoData = {
+        continent: { index: 'aerendal', name: 'Aerendal' },
+        regions: [
+            {
+                index: 'rivermoor',
+                name: 'Rivermoor',
+                icon: 'fa-brands fa-fort-awesome',
+                description: 'A prosperous region known for its trade and fertile lands.',
+                questCount: 7,
+                mapImage: '/img/dnd/realm/rivermoor.png',
+                cities: [
+                    {
+                        index: 'rivergate',
+                        name: 'Rivergate',
+                        icon: 'fa-brands fa-fort-awesome',
+                        npcs: [
+                            { index: 'elena-maris', name: 'Elena Maris', profession: 'Merchant', professionIcon: 'fa-solid fa-sack-dollar', portrait: '/img/dnd/npc/elena-maris.png', badge: 'ally', questCount: 2, status: 'active' },
+                            { index: 'brother-alric', name: 'Brother Alric', profession: 'Priest', professionIcon: 'fa-solid fa-sun', portrait: '/img/dnd/npc/brother-alric.png', badge: 'neutral', questCount: 1, status: 'active' },
+                            { index: 'dorn-blackwell', name: 'Dorn Blackwell', profession: 'Guard', professionIcon: 'fa-solid fa-shield-halved', portrait: '/img/dnd/npc/dorn-blackwell.png', badge: 'hostile', questCount: 0, status: 'active' }
+                        ]
+                    },
+                    {
+                        index: 'millbrook',
+                        name: 'Millbrook',
+                        icon: 'fa-brands fa-fort-awesome',
+                        npcs: [
+                            { index: 'hobb-tanner', name: 'Hobb Tanner', profession: 'Miller', professionIcon: 'fa-solid fa-wheat-awn', portrait: '/img/dnd/npc/hobb-tanner.png', badge: 'ally', questCount: 1, status: 'active' }
+                        ]
+                    },
+                    {
+                        index: 'oakenshield',
+                        name: 'Oakenshield',
+                        icon: 'fa-brands fa-fort-awesome',
+                        npcs: [
+                            { index: 'lady-corwen', name: 'Lady Corwen', profession: 'Noble', professionIcon: 'fa-solid fa-crown', portrait: '/img/dnd/npc/lady-corwen.png', badge: 'neutral', questCount: 2, status: 'active' }
+                        ]
+                    }
+                ]
+            },
+            {
+                index: 'stormpeak',
+                name: 'Stormpeak',
+                icon: 'fa-solid fa-mountain',
+                description: 'Frozen highlands where dwarven forges never cool.',
+                questCount: 4,
+                mapImage: '/img/dnd/realm/stormpeak.png',
+                cities: [
+                    {
+                        index: 'frosthelm',
+                        name: 'Frosthelm',
+                        icon: 'fa-solid fa-snowflake',
+                        npcs: [
+                            { index: 'thrain-ironforge', name: 'Thrain Ironforge', profession: 'Smith', professionIcon: 'fa-solid fa-hammer', portrait: '/img/dnd/npc/thrain-ironforge.png', badge: 'neutral', questCount: 1, status: 'active' },
+                            { index: 'sylvara-moonwhisper', name: 'Sylvara Moonwhisper', profession: 'Wizard', professionIcon: 'fa-solid fa-book-open', portrait: '/img/dnd/npc/sylvara-moonwhisper.png', badge: 'arcane', questCount: 3, status: 'active' }
+                        ]
+                    },
+                    {
+                        index: 'stonebridge',
+                        name: 'Stonebridge',
+                        icon: 'fa-solid fa-gear',
+                        npcs: [
+                            { index: 'grenda-stonefist', name: 'Grenda Stonefist', profession: 'Mason', professionIcon: 'fa-solid fa-trowel-bricks', portrait: '/img/dnd/npc/grenda-stonefist.png', badge: 'ally', questCount: 0, status: 'active' }
+                        ]
+                    }
+                ]
+            },
+            {
+                index: 'sunset-vale',
+                name: 'Sunset Vale',
+                icon: 'fa-solid fa-sun',
+                description: 'Golden fields and quiet roads, watched by old knightly orders.',
+                questCount: 3,
+                mapImage: '/img/dnd/realm/sunset-vale.png',
+                cities: [
+                    {
+                        index: 'goldenbrook',
+                        name: 'Goldenbrook',
+                        icon: 'fa-solid fa-sun',
+                        npcs: [
+                            { index: 'mira-holdfast', name: 'Mira Holdfast', profession: 'Innkeeper', professionIcon: 'fa-solid fa-mug-hot', portrait: '/img/dnd/npc/mira-holdfast.png', badge: 'ally', questCount: 0, status: 'active' },
+                            { index: 'captain-vorn', name: 'Captain Vorn', profession: 'Knight', professionIcon: 'fa-solid fa-chess-knight', portrait: '/img/dnd/npc/captain-vorn.png', badge: 'hostile', questCount: 1, status: 'active' }
+                        ]
+                    },
+                    {
+                        index: 'westhaven',
+                        name: 'Westhaven',
+                        icon: 'fa-brands fa-fort-awesome',
+                        npcs: [
+                            { index: 'oren-saltby', name: 'Oren Saltby', profession: 'Fisher', professionIcon: 'fa-solid fa-fish', portrait: '/img/dnd/npc/oren-saltby.png', badge: 'neutral', questCount: 1, status: 'inactive' }
+                        ]
+                    }
+                ]
+            },
+            {
+                index: 'shadowfen',
+                name: 'Shadowfen',
+                icon: 'fa-solid fa-tree',
+                description: 'Mist-choked marshes where few travelers return unchanged.',
+                questCount: 5,
+                mapImage: '/img/dnd/realm/shadowfen.png',
+                cities: [
+                    {
+                        index: 'mirewatch',
+                        name: 'Mirewatch',
+                        icon: 'fa-solid fa-tree',
+                        npcs: [
+                            { index: 'old-maeve', name: 'Old Maeve', profession: 'Hermit', professionIcon: 'fa-solid fa-leaf', portrait: '/img/dnd/npc/old-maeve.png', badge: 'arcane', questCount: 2, status: 'active' },
+                            { index: 'silas-crowe', name: 'Silas Crowe', profession: 'Smuggler', professionIcon: 'fa-solid fa-mask', portrait: '/img/dnd/npc/silas-crowe.png', badge: 'hostile', questCount: 1, status: 'active' }
+                        ]
+                    },
+                    {
+                        index: 'blackwater',
+                        name: 'Blackwater',
+                        icon: 'fa-solid fa-water',
+                        npcs: [
+                            { index: 'nessa-reed', name: 'Nessa Reed', profession: 'Guide', professionIcon: 'fa-solid fa-compass', portrait: '/img/dnd/npc/nessa-reed.png', badge: 'ally', questCount: 1, status: 'active' }
+                        ]
+                    }
+                ]
+            }
+        ]
+    };
+
+    const npcBadgeInfo = {
+        ally: { label: 'Ally', inner: 'fa-solid fa-plus' },
+        neutral: { label: 'Neutral', inner: 'fa-solid fa-cross' },
+        hostile: { label: 'Hostile', inner: 'fa-solid fa-xmark' },
+        arcane: { label: 'Arcane', inner: 'fa-solid fa-gem' }
+    };
+
+    const getRegionStats = (region) => {
+        const cities = Array.isArray(region.cities) ? region.cities : [];
+        return {
+            cities: cities.length,
+            npcs: cities.reduce((total, city) => total + (Array.isArray(city.npcs) ? city.npcs.length : 0), 0),
+            quests: Number(region.questCount) || 0
+        };
+    };
+
+    // ---- valori hardcodate pentru câmpurile lipsă din schemă ----
+    const npcRealmDefaults = {
+        regionIcon: 'fa-solid fa-earth-europe',
+        regionDescription: 'No description available for this continent yet.',
+        regionMapImage: '/img/dnd/realm/rivermoor.png',
+        cityIcon: 'fa-brands fa-fort-awesome',
+        portraitDir: '/img/dnd/npc/',
+        badge: 'neutral',
+        status: 'active',
+        professionIcon: 'fa-solid fa-user'
+    };
+    const professionIcons = {
+        merchant: 'fa-solid fa-sack-dollar',
+        priest: 'fa-solid fa-sun',
+        guard: 'fa-solid fa-shield-halved',
+        miller: 'fa-solid fa-wheat-awn',
+        noble: 'fa-solid fa-crown',
+        smith: 'fa-solid fa-hammer',
+        blacksmith: 'fa-solid fa-hammer',
+        wizard: 'fa-solid fa-book-open',
+        mason: 'fa-solid fa-trowel-bricks',
+        innkeeper: 'fa-solid fa-mug-hot',
+        knight: 'fa-solid fa-chess-knight',
+        fisher: 'fa-solid fa-fish',
+        hermit: 'fa-solid fa-leaf',
+        smuggler: 'fa-solid fa-mask',
+        guide: 'fa-solid fa-compass'
+    };
+
+    // ---- date reale: campaign.continents -> structura folosită de template ----
+    const realmContinents = typeof npcRealmContinents !== 'undefined' && Array.isArray(npcRealmContinents)
+        ? npcRealmContinents
+        : [];
+    const npcRegions = realmContinents.map((continent) => ({
+        index: continent.id,
+        name: continent.name,
+        icon: npcRealmDefaults.regionIcon,               // hardcodat
+        description: npcRealmDefaults.regionDescription, // hardcodat
+        questCount: continent.questCount,
+        mapImage: npcRealmDefaults.regionMapImage,       // hardcodat
+        cities: (continent.towns || []).map((town) => ({
+            index: town.id,
+            name: town.name,
+            icon: npcRealmDefaults.cityIcon,             // hardcodat
+            npcs: (town.npcs || []).map((npc) => {
+                const details = [
+                    npc.race,
+                    npc.className,
+                    npc.level !== null ? `Lv ${npc.level}` : ''
+                ].filter(Boolean).join(' · ');
+                return {
+                    index: npc.id,
+                    name: npc.name,
+                    profession: npc.profession || npc.className || '—',
+                    professionIcon: professionIcons[String(npc.profession || '').trim().toLowerCase()] ||
+                        npcRealmDefaults.professionIcon,
+                    details,
+                    searchText: [npc.profession, npc.race, npc.className].filter(Boolean).join(' '),
+                    portrait: `${npcRealmDefaults.portraitDir}${npc.id}.png`, // hardcodat (convenție)
+                    badge: npcRealmDefaults.badge,       // hardcodat
+                    questCount: npc.questCount,
+                    status: npcRealmDefaults.status      // hardcodat
+                };
+            })
+        }))
+    }));
+    const npcRealmData = {
+        continent: { index: 'realm', name: (typeof campaign !== 'undefined' && campaign.name) || 'Realm' },
+        regions: npcRegions
+    };
+    const activeRegion = npcRegions[0] || null;
+    const activeRegionStats = activeRegion ? getRegionStats(activeRegion) : { cities: 0, npcs: 0, quests: 0 };
+    const placeholderImage = (text) =>
+        `https://placehold.co/600x400/0f131a/e3c48a?text=${encodeURIComponent(text || '')}`;
+%>
+
+<section class="npcRealm" aria-labelledby="npcRealmTitle">
+
+    <!-- =====================================================
+         SUMMARY CONTINENT
+    ====================================================== -->
+    <div class="npcRealm__panel npcRealm__summary">
+        <span class="npcRealm__corner npcRealm__corner--tl" aria-hidden="true"></span>
+        <span class="npcRealm__corner npcRealm__corner--tr" aria-hidden="true"></span>
+        <span class="npcRealm__corner npcRealm__corner--bl" aria-hidden="true"></span>
+        <span class="npcRealm__corner npcRealm__corner--br" aria-hidden="true"></span>
+        <span class="npcRealm__edgeGem npcRealm__edgeGem--top" aria-hidden="true"></span>
+        <span class="npcRealm__edgeGem npcRealm__edgeGem--bottom" aria-hidden="true"></span>
+
+        <header class="npcRealm__header">
+            <div class="npcRealm__brand">
+                <div class="npcRealm__emblem" aria-hidden="true">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+                <div class="npcRealm__titles">
+                    <h2 id="npcRealmTitle" class="npcRealm__title">NPCs</h2>
+                    <p class="npcRealm__subtitle">Discover the people of the realm</p>
+                </div>
+            </div>
+
+            <div class="npcRealm__tools">
+                <label class="npcRealm__search">
+                    <span class="npcRealm__srOnly">Search NPCs</span>
+                    <i class="fa-solid fa-magnifying-glass npcRealm__searchIcon" aria-hidden="true"></i>
+                    <input
+                        type="search"
+                        class="npcRealm__searchInput"
+                        placeholder="Search NPCs…"
+                        autocomplete="off"
+                        data-npc-search
+                    >
+                </label>
+
+                <div class="npcRealm__filter">
+                    <button
+                        type="button"
+                        class="npcRealm__filterButton"
+                        aria-label="Filtrează NPC-urile"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        aria-controls="npcRealmFilterMenu"
+                        data-npc-filter-toggle
+                    >
+                        <i class="fa-solid fa-filter" aria-hidden="true"></i>
+                    </button>
+
+                    <div class="npcRealm__filterMenu" id="npcRealmFilterMenu" hidden data-npc-filter-menu>
+                        <p class="npcRealm__filterTitle">Badge</p>
+                        <% Object.keys(npcBadgeInfo).forEach((badgeKey) => { %>
+                            <label class="npcRealm__filterOption">
+                                <input type="checkbox" value="<%= badgeKey %>" checked data-npc-filter-badge>
+                                <span class="npcRealm__badge npcRealm__badge--<%= badgeKey %> npcRealm__badge--inline" aria-hidden="true">
+                                    <i class="fa-solid fa-shield"></i>
+                                    <i class="<%= npcBadgeInfo[badgeKey].inner %> npcRealm__badgeInner"></i>
+                                </span>
+                                <span><%= npcBadgeInfo[badgeKey].label %></span>
+                            </label>
+                        <% }); %>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <% if (activeRegion) { %>
+            <div class="npcRealm__hero" id="npcRealmHero" aria-live="polite">
+                <div class="npcRealm__map">
+                    <img
+                        src="<%= activeRegion.mapImage %>"
+                        alt="Harta regiunii <%= activeRegion.name %>"
+                        class="npcRealm__mapImage"
+                        data-npc-hero-map
+                        onerror="this.onerror=null;this.src='<%= placeholderImage(npcRealmData.continent.name) %>'"
+                    >
+                </div>
+
+                <div class="npcRealm__info">
+                    <div class="npcRealm__castle" aria-hidden="true"></div>
+
+                    <div class="npcRealm__infoTop">
+                        <div class="npcRealm__crest" aria-hidden="true">
+                            <i class="<%= activeRegion.icon %>" data-npc-hero-icon></i>
+                        </div>
+                        <div>
+                            <h3 class="npcRealm__regionName" data-npc-hero-name><%= activeRegion.name %></h3>
+                            <p class="npcRealm__regionDesc" data-npc-hero-desc><%= activeRegion.description %></p>
+                        </div>
+                    </div>
+
+                    <p class="npcRealm__overviewLabel"><span>Region Overview</span></p>
+
+                    <ul class="npcRealm__stats">
+                        <li class="npcRealm__stat">
+                            <i class="fa-brands fa-fort-awesome" aria-hidden="true"></i>
+                            <span data-npc-hero-cities><%= activeRegionStats.cities %></span> Cities
+                        </li>
+                        <li class="npcRealm__stat">
+                            <i class="fa-solid fa-users" aria-hidden="true"></i>
+                            <span data-npc-hero-npcs><%= activeRegionStats.npcs %></span> NPCs
+                        </li>
+                        <li class="npcRealm__stat">
+                            <i class="fa-solid fa-scroll" aria-hidden="true"></i>
+                            <span data-npc-hero-quests><%= activeRegionStats.quests %></span> Quests
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <nav class="npcRealm__regionTabs" aria-label="Regiuni">
+                <% npcRegions.forEach((region, regionIndex) => {
+                    const regionStats = getRegionStats(region);
+                %>
+                    <button
+                        type="button"
+                        class="npcRealm__tab npcRealm__regionTab<%= regionIndex === 0 ? ' npcRealm__tab--active' : '' %>"
+                        aria-pressed="<%= regionIndex === 0 ? 'true' : 'false' %>"
+                        aria-controls="npcRegion-<%= region.index %>"
+                        data-npc-region-tab="<%= region.index %>"
+                        data-name="<%= region.name %>"
+                        data-description="<%= region.description %>"
+                        data-icon="<%= region.icon %>"
+                        data-map="<%= region.mapImage %>"
+                        data-cities="<%= regionStats.cities %>"
+                        data-npcs="<%= regionStats.npcs %>"
+                        data-quests="<%= regionStats.quests %>"
+                    >
+                        <i class="<%= region.icon %> npcRealm__tabIcon" aria-hidden="true"></i>
+                        <span><%= region.name %></span>
+                    </button>
+                <% }); %>
+            </nav>
+        <% } %>
+    </div>
+
+    <p class="npcRealm__empty" hidden data-npc-empty>Niciun NPC găsit</p>
+    <% if (!npcRegions.length) { %>
+        <p class="npcRealm__empty">Campania nu are încă continente, orașe sau NPC-uri.</p>
+    <% } %>
+
+    <!-- =====================================================
+         PANOURI REGIUNI
+    ====================================================== -->
+    <% npcRegions.forEach((region) => {
+        const cities = Array.isArray(region.cities) ? region.cities : [];
+        const regionBodyId = `npcRegionBody-${region.index}`;
+    %>
+        <section
+            class="npcRealm__panel npcRealm__region"
+            id="npcRegion-<%= region.index %>"
+            aria-labelledby="npcRegionTitle-<%= region.index %>"
+            data-npc-region="<%= region.index %>"
+        >
+            <span class="npcRealm__corner npcRealm__corner--tl" aria-hidden="true"></span>
+            <span class="npcRealm__corner npcRealm__corner--tr" aria-hidden="true"></span>
+            <span class="npcRealm__corner npcRealm__corner--bl" aria-hidden="true"></span>
+            <span class="npcRealm__corner npcRealm__corner--br" aria-hidden="true"></span>
+
+            <header class="npcRealm__regionHeader">
+                <i class="<%= region.icon %> npcRealm__regionIcon" aria-hidden="true"></i>
+                <h3 class="npcRealm__regionTitle" id="npcRegionTitle-<%= region.index %>"><%= region.name %></h3>
+                <span class="npcRealm__headerLine" aria-hidden="true"></span>
+                <button
+                    type="button"
+                    class="npcRealm__collapse"
+                    aria-expanded="true"
+                    aria-controls="<%= regionBodyId %>"
+                    data-npc-collapse
+                >
+                    <span><%= cities.length %> <%= cities.length === 1 ? 'City' : 'Cities' %></span>
+                    <i class="fa-solid fa-chevron-down npcRealm__chevron" aria-hidden="true"></i>
+                </button>
+            </header>
+
+            <div class="npcRealm__regionBody" id="<%= regionBodyId %>">
+                <div class="npcRealm__cityTabs" role="tablist" aria-label="Orașe din <%= region.name %>">
+                    <% cities.forEach((city, cityIndex) => {
+                        const cityId = `${region.index}-${city.index}`;
+                    %>
+                        <button
+                            type="button"
+                            role="tab"
+                            class="npcRealm__tab npcRealm__cityTab<%= cityIndex === 0 ? ' npcRealm__tab--active' : '' %>"
+                            id="npcCityTab-<%= cityId %>"
+                            aria-selected="<%= cityIndex === 0 ? 'true' : 'false' %>"
+                            aria-controls="npcCityPanel-<%= cityId %>"
+                            tabindex="<%= cityIndex === 0 ? '0' : '-1' %>"
+                            data-npc-city-tab
+                        >
+                            <i class="<%= city.icon %> npcRealm__tabIcon" aria-hidden="true"></i>
+                            <span><%= city.name %></span>
+                        </button>
+                    <% }); %>
+                </div>
+
+                <% cities.forEach((city, cityIndex) => {
+                    const cityId = `${region.index}-${city.index}`;
+                    const npcs = Array.isArray(city.npcs) ? city.npcs : [];
+                %>
+                    <div
+                        class="npcRealm__cityPanel"
+                        role="tabpanel"
+                        id="npcCityPanel-<%= cityId %>"
+                        aria-labelledby="npcCityTab-<%= cityId %>"
+                        tabindex="0"
+                        <%= cityIndex === 0 ? '' : 'hidden' %>
+                        data-npc-city-panel
+                    >
+                        <div class="npcRealm__cards">
+                            <% npcs.forEach((npc) => {
+                                const badge = npcBadgeInfo[npc.badge] ? npc.badge : 'neutral';
+                                const isActive = npc.status === 'active';
+                            %>
+                                <article
+                                    class="npcRealm__card"
+                                    data-npc-card
+                                    data-name="<%= npc.name %>"
+                                    data-profession="<%= npc.searchText || npc.profession %>"
+                                    data-badge="<%= badge %>"
+                                >
+                                    <div class="npcRealm__portrait">
+                                        <img
+                                            src="<%= npc.portrait %>"
+                                            alt="Portret <%= npc.name %>"
+                                            loading="lazy"
+                                            onerror="this.onerror=null;this.src='<%= placeholderImage(npc.name) %>'"
+                                        >
+                                    </div>
+
+                                    <div class="npcRealm__cardBody">
+                                        <div class="npcRealm__cardHead">
+                                            <h4 class="npcRealm__name"><%= npc.name %></h4>
+                                            <p class="npcRealm__role"<% if (npc.details) { %> title="<%= npc.details %>"<% } %>>
+                                                <i class="<%= npc.professionIcon %>" aria-hidden="true"></i>
+                                                <span><%= npc.profession %></span>
+                                            </p>
+                                        </div>
+
+                                        <span
+                                            class="npcRealm__badge npcRealm__badge--<%= badge %>"
+                                            role="img"
+                                            aria-label="<%= npcBadgeInfo[badge].label %>"
+                                            title="<%= npcBadgeInfo[badge].label %>"
+                                        >
+                                            <i class="fa-solid fa-shield" aria-hidden="true"></i>
+                                            <i class="<%= npcBadgeInfo[badge].inner %> npcRealm__badgeInner" aria-hidden="true"></i>
+                                        </span>
+
+                                        <div class="npcRealm__meta">
+                                            <span class="npcRealm__quests" title="Quests">
+                                                <i class="fa-solid fa-scroll" aria-hidden="true"></i>
+                                                <span><%= Number(npc.questCount) || 0 %></span>
+                                                <span class="npcRealm__srOnly">quests</span>
+                                            </span>
+                                            <span class="npcRealm__status npcRealm__status--<%= isActive ? 'active' : 'inactive' %>">
+                                                <span class="npcRealm__statusDot" aria-hidden="true"></span>
+                                                <%= isActive ? 'Active' : 'Inactive' %>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </article>
+                            <% }); %>
+                        </div>
+                        <% if (!npcs.length) { %>
+                            <p class="npcRealm__empty">Niciun NPC în <%= city.name %></p>
+                        <% } %>
+                    </div>
+                <% }); %>
+                <% if (!cities.length) { %>
+                    <p class="npcRealm__empty">Niciun oraș în <%= region.name %></p>
+                <% } %>
+            </div>
+        </section>
+    <% }); %>
+</section>
