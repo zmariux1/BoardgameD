@@ -1,0 +1,94 @@
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.topbar {
+    height: 68px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 28px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #161b1c 0%,
+            #0d1011 100%
+        );
+
+    border-bottom: 1px solid #4a4138;
+
+    color: #efe0bd;
+}
+
+
+.topbar__brand-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: #ef301c;
+    text-shadow:
+        0 2px 0 #5e100a,
+        1px 1px 0 #000;
+}
+
+
+.topbar__brand-title span {
+    color: #dbc79d;
+    font-size: 21px;
+}
+
+
+.topbar__user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.topbar__user-avatar {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid #80653a;
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #a27a2e 0%,
+            #4f3815 100%
+        );
+
+    color: #f2dfb2;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+
+.topbar__user-name {
+    color: #e7d7b4;
+    font-size: 17px;
+}
+
+
+.topbar__user-toggle {
+    width: 32px;
+    height: 32px;
+
+    border: 1px solid #302b27;
+    border-radius: 6px;
+
+    background: #0d0f10;
+    color: #dfcfab;
+
+    cursor: pointer;
+}
