@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101514">
+  <title>DM Shop</title>
+    
+
+  <link rel="icon" href="img/title/">
+
+
+  <link rel="stylesheet" href="/css/dnd/char/playerShop.css">
+
+
+  <script
+    type="module"
+    src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+  ></script>
+  <!-- Include jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    
+  <div class="app-shell">
+    <div class="app-frame">
+      <div class="status-bar" aria-hidden="true">
+        <span>9:41</span>
+        <div class="status-indicators">
+          <span class="signal"></span>
+          <span class="wifi"></span>
+          <span class="battery"><span></span></span>
+        </div>
+      </div>
+
+      <header class="app-header" data-screen="welcome">
+        <button class="header-action" id="header-left" type="button" aria-label="Open menu">
+          <svg class="header-icon icon-menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <svg class="header-icon icon-back is-hidden" viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 5 8.5 12l7 7"/></svg>
+        </button>
+
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <circle cx="24" cy="24" r="9"/>
+              <path d="M24 3v42M3 24h42M9.2 9.2l29.6 29.6M38.8 9.2 9.2 38.8"/>
+              <path d="m24 3 2.6 5.2L24 12l-2.6-3.8L24 3Zm21 21-5.2 2.6L36 24l3.8-2.6L45 24ZM24 45l-2.6-5.2L24 36l2.6 3.8L24 45ZM3 24l5.2-2.6L12 24l-3.8 2.6L3 24Z"/>
+            </svg>
+          </span>
+          <span class="brand-text">DM Shop</span>
+        </div>
+
+        <button class="header-action" type="button" aria-label="Notifications">
+          <svg class="header-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 17h9l-1.2-1.7V10a3.3 3.3 0 1 0-6.6 0v5.3L7.5 17Z"/><path d="M10.2 19.3a2.1 2.1 0 0 0 3.6 0"/></svg>
+        </button>
+      </header>
+
+      <main id="main-content" class="app-main">
+        <!-- ==================== WELCOME ==================== -->
+        <section class="screen screen--welcome" data-screen-content="welcome">
+          <div class="welcome-hero">
+            <img src="/img/dnd/shop/hero.png" alt="Fantasy medieval shop interior" class="welcome-hero__image">
+            <div class="welcome-hero__shade"></div>
+            <div class="welcome-hero__copy">
+              <h1>Welcome, DM</h1>
+              <p>Manage items, set prices and control<br>what your players can access.</p>
+            </div>
+          </div>
+
+          <div class="welcome-menu">
+            <button class="menu-card" type="button" data-go="item-list">
+              <span class="menu-card__icon icon-bag" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><path d="M8 11h16l2 14H6l2-14Z"/><path d="M11 11a5 5 0 0 1 10 0"/><path d="M11 17h10"/></svg>
+              </span>
+              <span class="menu-card__copy">
+                <strong>Item List</strong>
+                <small>View a limited selection of unique items<br>available to your players.</small>
+              </span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </button>
+
+            <button class="menu-card" type="button" data-go="create-item">
+              <span class="menu-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><path d="m7 25 16-16"/><path d="m8 29 4-1 14-14-4-4L8 24l-2 5Z"/><path d="m21 7 4 4M24 4l4 3-3 3-4-3 3-3Z"/></svg>
+              </span>
+              <span class="menu-card__copy">
+                <strong>Create Item</strong>
+                <small>Build a new magic item with custom<br>properties.</small>
+              </span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </button>
+
+            <button class="menu-card" type="button">
+              <span class="menu-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><path d="M7 11h18l-2 14H9L7 11Z"/><path d="M11 11a5 5 0 0 1 10 0"/><path d="m16 15 1.4 2.9 3.1.4-2.3 2.1.6 3.1-2.8-1.6-2.8 1.6.6-3.1-2.3-2.1 3.1-.4L16 15Z"/></svg>
+              </span>
+              <span class="menu-card__copy">
+                <strong>Magic Items</strong>
+                <small>Manage existing magic items in your world.</small>
+              </span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </button>
+
+            <button class="menu-card" type="button" data-go="price-manipulation">
+              <span class="menu-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><path d="M8 11h16l2 14H6l2-14Z"/><path d="M11 11a5 5 0 0 1 10 0"/><path d="M12 18h8"/><path d="M12 22h5"/></svg>
+              </span>
+              <span class="menu-card__copy">
+                <strong>Price Manipulation</strong>
+                <small>Adjust buy and sell prices for all items.</small>
+              </span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </button>
+
+            <button class="menu-card" type="button" data-go="create-shop">
+              <span class="menu-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><path d="M5 13 7 6h18l2 7"/><path d="M5 13c0 2 1.6 3 3.7 3s3.6-1 3.6-3c0 2 1.6 3 3.7 3s3.7-1 3.7-3c0 2 1.5 3 3.6 3S27 15 27 13"/><path d="M7 16v10h18V16"/><path d="M13 26v-6h6v6"/></svg>
+              </span>
+              <span class="menu-card__copy">
+                <strong>Create Shop</strong>
+                <small>Set up a new shop, its keeper and<br>trading rules for your campaign.</small>
+              </span>
+              <span class="chevron" aria-hidden="true">›</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- ==================== ITEM LIST ==================== -->
+        <section class="screen screen--item-list is-hidden" data-screen-content="item-list">
+          <div class="paper-panel item-list-panel">
+            <div class="section-heading">
+              <span class="section-heading__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="9"/><path d="M16 3v6M16 23v6M3 16h6M23 16h6M8 8l4 4M20 20l4 4M24 8l-4 4M12 20l-4 4"/></svg>
+              </span>
+              <h1>Item List</h1>
+            </div>
+
+            <div class="limit-card">
+              <p>You can access a limited number<br>of unique items. Currently available:<br><strong>5 / 20</strong></p>
+            </div>
+
+            <div class="filter-row">
+              <div class="filter-tabs" role="tablist" aria-label="Item category">
+                <button class="filter-tab is-active" data-filter="all" data-list="item-list" type="button">All</button>
+                <button class="filter-tab" data-filter="weapon" data-list="item-list" type="button">Weapons</button>
+                <button class="filter-tab" data-filter="armor" data-list="item-list" type="button">Armor</button>
+              </div>
+              <button class="filter-button" type="button" aria-label="More filters">
+                <svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+              </button>
+            </div>
+
+            <div class="item-list" id="item-list">
+              <button class="item-row" type="button" data-type="armor">
+                <span class="item-thumb"><img src="/img/dnd/shop/crown.png" alt=""></span>
+                <span class="item-meta"><strong>Crown of the Dawn</strong><small>Headwear</small></span>
+                <span class="visibility-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 12s3.2-5 8.5-5 8.5 5 8.5 5-3.2 5-8.5 5-8.5-5-8.5-5Z"/><circle cx="12" cy="12" r="2.1"/></svg></span>
+              </button>
+              <button class="item-row" type="button" data-type="weapon">
+                <span class="item-thumb"><img src="/img/dnd/shop/sword.png" alt=""></span>
+                <span class="item-meta"><strong>Shadowfang</strong><small>Sword</small></span>
+                <span class="visibility-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 12s3.2-5 8.5-5 8.5 5 8.5 5-3.2 5-8.5 5-8.5-5-8.5-5Z"/><circle cx="12" cy="12" r="2.1"/></svg></span>
+              </button>
+              <button class="item-row" type="button" data-type="armor">
+                <span class="item-thumb"><img src="/img/dnd/shop/cloak.png" alt=""></span>
+                <span class="item-meta"><strong>The Wanderer's Cloak</strong><small>Cloak</small></span>
+                <span class="visibility-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 12s3.2-5 8.5-5 8.5 5 8.5 5-3.2 5-8.5 5-8.5-5-8.5-5Z"/><circle cx="12" cy="12" r="2.1"/></svg></span>
+              </button>
+              <button class="item-row" type="button" data-type="armor">
+                <span class="item-thumb"><img src="/img/dnd/shop/ring.png" alt=""></span>
+                <span class="item-meta"><strong>Ring of Storms</strong><small>Ring</small></span>
+                <span class="visibility-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 12s3.2-5 8.5-5 8.5 5 8.5 5-3.2 5-8.5 5-8.5-5-8.5-5Z"/><circle cx="12" cy="12" r="2.1"/></svg></span>
+              </button>
+              <button class="item-row" type="button" data-type="armor">
+                <span class="item-thumb"><img src="/img/dnd/shop/boots.png" alt=""></span>
+                <span class="item-meta"><strong>Boots of Swiftness</strong><small>Boots</small></span>
+                <span class="visibility-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 12s3.2-5 8.5-5 8.5 5 8.5 5-3.2 5-8.5 5-8.5-5-8.5-5Z"/><circle cx="12" cy="12" r="2.1"/></svg></span>
+              </button>
+              <button class="item-row is-locked" type="button" data-type="weapon">
+                <span class="item-thumb"><img src="/img/dnd/shop/flameheart.png" alt=""></span>
+                <span class="item-meta"><strong>Flameheart</strong><small>Staff</small></span>
+                <span class="lock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="10" width="12" height="10" rx="1.5"/><path d="M8.5 10V7.5A3.5 3.5 0 0 1 12 4a3.5 3.5 0 0 1 3.5 3.5V10"/></svg></span>
+              </button>
+              <button class="item-row is-locked" type="button" data-type="armor">
+                <span class="item-thumb"><img src="/img/dnd/shop/dragon.png" alt=""></span>
+                <span class="item-meta"><strong>Dragon's Breath</strong><small>Amulet</small></span>
+                <span class="lock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="10" width="12" height="10" rx="1.5"/><path d="M8.5 10V7.5A3.5 3.5 0 0 1 12 4a3.5 3.5 0 0 1 3.5 3.5V10"/></svg></span>
+              </button>
+              <button class="item-row is-locked" type="button" data-type="armor">
+                <span class="item-thumb"><img src="/img/dnd/shop/helm.png" alt=""></span>
+                <span class="item-meta"><strong>Helm of the Ancients</strong><small>Helmet</small></span>
+                <span class="lock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="10" width="12" height="10" rx="1.5"/><path d="M8.5 10V7.5A3.5 3.5 0 0 1 12 4a3.5 3.5 0 0 1 3.5 3.5V10"/></svg></span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==================== PRICE MANIPULATION ==================== -->
+        <section class="screen screen--price-manipulation is-hidden" data-screen-content="price-manipulation">
+          <div class="paper-panel price-panel">
+            <div class="price-heading">
+              <span class="price-heading__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><path d="M6 11h18l2 14H4l2-14Z"/><path d="M10 11a6 6 0 0 1 12 0"/><path d="M11 18h10"/><path d="M11 22h6"/></svg>
+              </span>
+              <div>
+                <h1>Price Manipulation</h1>
+                <p>Adjust buy and sell prices for all items<br>in the shop.</p>
+              </div>
+            </div>
+
+            <div class="form-divider"></div>
+
+            <section class="modifier-card" aria-labelledby="sell-price-title">
+              <div class="modifier-card__title">
+                <span class="modifier-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M4 6h13l2 12H2L4 6Z"/><path d="M7 6a4 4 0 0 1 8 0"/><path d="M7 12h7"/></svg>
+                </span>
+                <h2 id="sell-price-title">Sell Price Modifier</h2>
+              </div>
+              <div class="modifier-value" id="sell-price-value">+ 15%</div>
+              <div class="modifier-slider" data-slider-wrap="sell">
+                <span class="modifier-end">−</span>
+                <input id="sell-price-slider" type="range" min="-50" max="50" step="1" value="15" aria-label="Sell price modifier">
+                <span class="modifier-end">+</span>
+              </div>
+              <p class="modifier-help">Increases the price at which players can sell<br>items to the shop.</p>
+            </section>
+
+            <section class="modifier-card" aria-labelledby="buy-price-title">
+              <div class="modifier-card__title">
+                <span class="modifier-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M4 6h13l2 12H2L4 6Z"/><path d="M7 6a4 4 0 0 1 8 0"/><path d="m9 12 2 2 4-4"/></svg>
+                </span>
+                <h2 id="buy-price-title">Buy Price Modifier</h2>
+              </div>
+              <div class="modifier-value" id="buy-price-value">- 10%</div>
+              <div class="modifier-slider" data-slider-wrap="buy">
+                <span class="modifier-end">−</span>
+                <input id="buy-price-slider" type="range" min="-50" max="50" step="1" value="-10" aria-label="Buy price modifier">
+                <span class="modifier-end">+</span>
+              </div>
+              <p class="modifier-help">Decreases the price at which players can buy<br>items from the shop.</p>
+            </section>
+
+            <div class="price-info-box">
+              <span class="price-info-box__icon" aria-hidden="true">i</span>
+              <p>The modifiers are applied globally to all items<br>in the shop, unless overridden for specific<br>items.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== SHOP ==================== -->
+        <section class="screen screen--shop is-hidden" data-screen-content="shop">
+          <div class="shop-screen">
+            <div class="shop-hero">
+              <img src="/img/dnd/shop/shop-hero.png" alt="Fantasy medieval marketplace" class="shop-hero__image">
+              <div class="shop-hero__shade"></div>
+              <div class="shop-hero__copy">
+                <h1>Shop</h1>
+                <p>Discover, buy and sell magical items<br>in the world of your campaign.</p>
+              </div>
+            </div>
+
+            <div class="shop-actions">
+              <button class="menu-card" type="button" data-go="buy-items">
+                <span class="menu-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 32 32"><path d="M8 11h16l2 14H6l2-14Z"/><path d="M11 11a5 5 0 0 1 10 0"/><circle cx="12" cy="18" r="1.5"/><circle cx="20" cy="18" r="1.5"/></svg>
+                </span>
+                <span class="menu-card__copy"><strong>Buy</strong><small>Purchase items<br>from the shop</small></span>
+                <span class="chevron" aria-hidden="true">›</span>
+              </button>
+
+              <button class="menu-card shop-action-placeholder" type="button" data-go="sell-items">
+                <span class="menu-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 32 32"><ellipse cx="16" cy="11" rx="9" ry="4"/><path d="M7 11v5c0 2.2 4 4 9 4s9-1.8 9-4v-5"/><path d="M7 16v5c0 2.2 4 4 9 4s9-1.8 9-4v-5"/></svg>
+                </span>
+                <span class="menu-card__copy"><strong>Sell</strong><small>Sell your items<br>to the shop</small></span>
+                <span class="chevron" aria-hidden="true">›</span>
+              </button>
+
+              <button class="menu-card shop-action-placeholder" type="button" data-go="magic-items">
+                <span class="menu-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 32 32"><path d="M9 5h14v22H9z"/><path d="M12 9h8M12 14h8M12 19h6"/><path d="M22 5 25 8"/></svg>
+                </span>
+                <span class="menu-card__copy"><strong>Browse Magic Items</strong><small>View special and unique<br>items</small></span>
+                <span class="chevron" aria-hidden="true">›</span>
+              </button>
+            </div>
+
+            <section class="quick-stats" aria-labelledby="quick-stats-title">
+              <h2 id="quick-stats-title">Quick Stats</h2>
+              <div class="quick-stats__grid">
+                <div class="quick-stat">
+                  <span class="quick-stat__label">Total Items</span>
+                  <strong>128</strong>
+                </div>
+                <div class="quick-stat">
+                  <span class="quick-stat__label">Your Gold</span>
+                  <div class="quick-stat__value"><span class="coin-icon" aria-hidden="true">◎</span><strong>4,250</strong></div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <!-- ==================== BUY ITEMS ==================== -->
+        <section class="screen screen--buy-items is-hidden" data-screen-content="buy-items">
+          <div class="paper-panel buy-panel">
+            <div class="section-heading">
+              <span class="section-heading__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="9"/><path d="M16 3v6M16 23v6M3 16h6M23 16h6M8 8l4 4M20 20l4 4M24 8l-4 4M12 20l-4 4"/></svg>
+              </span>
+              <h1>Buy Items</h1>
+            </div>
+
+            <div class="buy-filter-row">
+              <input
+                class="buy-search"
+                id="buy-search"
+                type="search"
+                placeholder="Search items..."
+                aria-label="Search shop items"
+                autocomplete="off">
+              <select class="buy-category" id="buy-category" aria-label="Filter shop items by category">
+                <option value="all">All categories</option>
+                <option value="weapon">Weapons</option>
+                <option value="armor">Armor</option>
+                <option value="shields">Shields</option>
+                <option value="gear">Gear</option>
+              </select>
+            </div>
+
+            <div class="item-list buy-list" id="buy-list">
+              <% shopBuy.forEach(item => { %>
+                <form class="item-row buy-item-row" method="post" action="/<%= userId %>/dnd/char/<%= characterId %>/playerShopBuy" data-type="<%= item.shopCategory %>">
+                  <input type="hidden" name="equipmentIndex" value="<%= item.index %>">
+                  <input type="hidden" name="quantity" value="1">
+                  <span class="item-thumb"><img src="<%= item.imagePath %>" alt=""></span>
+                  <span class="item-meta">
+                    <strong><%= item.name %></strong>
+                    <small>Common · <%= item.itemType %></small>
+                  </span>
+                  <span class="buy-price"><span class="coin-icon" aria-hidden="true">◎</span><strong><%= item.displayPrice %></strong></span>
+                  <button class="chevron chevron--row" type="submit" aria-label="Buy <%= item.name %>">›</button>
+                </form>
+              <% }); %>
+            </div>
+            <p class="buy-empty-state" id="buy-empty-state" hidden>No items match these filters.</p>
+          </div>
+        </section>
+
+        <!-- ==================== CREATE SHOP (DM) ==================== -->
+        <section class="screen screen--create-shop is-hidden" data-screen-content="create-shop">
+          <div class="paper-panel create-panel">
+            <div class="create-heading">
+              <span class="create-heading__icon section-heading__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><path d="M5 13 7 6h18l2 7"/><path d="M5 13c0 2 1.6 3 3.7 3s3.6-1 3.6-3c0 2 1.6 3 3.7 3s3.7-1 3.7-3c0 2 1.5 3 3.6 3S27 15 27 13"/><path d="M7 16v10h18V16"/><path d="M13 26v-6h6v6"/></svg>
+              </span>
+              <div>
+                <h1>Create Shop</h1>
+                <p>Place a new shop in your campaign and<br>decide how players can trade with it.</p>
+              </div>
+            </div>
+
+            <div class="form-divider"></div>
+
+            <form id="create-shop-form" class="create-form" method="post" enctype="multipart/form-data">
+              <label class="field-label" for="shop-name">Shop Name</label>
+              <input class="field-control" id="shop-name" name="shopName" type="text" placeholder="The Gilded Anvil" autocomplete="off" required>
+
+              <!-- ===== Visibility ===== -->
+              <section class="modifier-card" aria-labelledby="shop-visibility-title">
+                <div class="shop-setting-head">
+                  <div class="modifier-card__title">
+                    <span class="modifier-card__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24"><path d="M3.5 12s3.2-5 8.5-5 8.5 5 8.5 5-3.2 5-8.5 5-8.5-5-8.5-5Z"/><circle cx="12" cy="12" r="2.1"/></svg>
+                    </span>
+                    <h2 id="shop-visibility-title">Visibility</h2>
+                  </div>
+                  <label class="toggle-chip">
+                    <input type="checkbox" name="isVisible" value="1" checked>
+                    <span class="toggle-chip__face"><span class="toggle-chip__on">Visible</span><span class="toggle-chip__off">Hidden</span></span>
+                  </label>
+                </div>
+                <p class="modifier-help">Hidden shops are not shown to players until<br>you reveal them.</p>
+              </section>
+
+              <!-- ===== Trading ===== -->
+              <details class="modifier-card shop-block" open>
+                <summary>
+                  <span class="modifier-card__title">
+                    <span class="modifier-card__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg>
+                    </span>
+                    <h2>Trading</h2>
+                  </span>
+                  <span class="shop-block__arrow" aria-hidden="true">›</span>
+                </summary>
+
+                <div class="shop-setting-row">
+                  <span>Shop buys items</span>
+                  <label class="toggle-chip">
+                    <input type="checkbox" id="trade-buy" name="buyingEnabled" value="1" checked>
+                    <span class="toggle-chip__face"><span class="toggle-chip__on">On</span><span class="toggle-chip__off">Off</span></span>
+                  </label>
+                </div>
+                <div class="shop-setting-row">
+                  <span>Shop sells items</span>
+                  <label class="toggle-chip">
+                    <input type="checkbox" id="trade-sell" name="sellingEnabled" value="1" checked>
+                    <span class="toggle-chip__face"><span class="toggle-chip__on">On</span><span class="toggle-chip__off">Off</span></span>
+                  </label>
+                </div>
+
+                <!-- Trades with: repeatable rows (affiliation, refuse / accept only) -->
+                <div class="trades-with" id="trades-with-field">
+                  <p class="shop-subtitle">Trades with</p>
+                  <div class="repeat-list" data-repeat="tradesWith">
+                    <div class="repeat-row repeat-row--trades">
+                      <select class="field-control repeat-row__main" name="tradesWith[0][affiliation]" aria-label="Affiliation">
+                        <optgroup label="Army">
+                          <option value="royal-army">Royal Army</option>
+                          <option value="iron-legion">Iron Legion</option>
+                        </optgroup>
+                        <optgroup label="Underworld">
+                          <option value="thieves-guild">Thieves' Guild</option>
+                          <option value="black-market">Black Market</option>
+                        </optgroup>
+                        <optgroup label="Races">
+                          <option value="human">Human</option>
+                          <option value="dwarf">Dwarf</option>
+                          <option value="elf">Elf</option>
+                          <option value="half-orc" selected>Half-Orc</option>
+                          <option value="tiefling">Tiefling</option>
+                        </optgroup>
+                      </select>
+                      <select class="field-control repeat-row__second" name="tradesWith[0][rule]" aria-label="Rule">
+                        <option value="refuse">Refuses</option>
+                        <option value="accept-only">Accepts only</option>
+                      </select>
+                      <button class="filter-button repeat-btn" type="button" data-repeat-action="add" aria-label="Add another rule">+</button>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="reveal-field" id="affiliation-field" hidden>
+                  <label class="field-label" for="shop-affiliation">Trades only with</label>
+                  <select class="field-control" id="shop-affiliation" name="affiliation">
+                    <option value="silver-order">The Silver Order</option>
+                    <option value="merchant-league">Merchant League</option>
+                    <option value="thieves-guild">Thieves' Guild</option>
+                    <option value="arcane-circle">Arcane Circle</option>
+                  </select>
+                </div>
+
+                <p class="modifier-help" id="trade-mode-help">Shop buys and sells at normal prices.</p>
+              </details>
+
+              <!-- ===== Location ===== -->
+              <fieldset class="form-section">
+                <legend>Location</legend>
+                <div class="field-row">
+                  <div>
+                    <label class="field-label" for="shop-continent">Continent</label>
+                    <select class="field-control" id="shop-continent" name="continent">
+                      <option value="eldoria">Eldoria</option>
+                      <option value="varnhold">Varnhold</option>
+                      <option value="sunreach">Sunreach Isles</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="field-label" for="shop-town">Town</label>
+                    <select class="field-control" id="shop-town" name="town">
+                      <option value="brightwater" data-continent="eldoria">Brightwater</option>
+                      <option value="oakhollow" data-continent="eldoria">Oakhollow</option>
+                      <option value="ironpeak" data-continent="varnhold">Ironpeak</option>
+                      <option value="frostmere" data-continent="varnhold">Frostmere</option>
+                      <option value="coralport" data-continent="sunreach">Coralport</option>
+                    </select>
+                  </div>
+                </div>
+              </fieldset>
+
+              <!-- ===== Merchant configuration (NPC) ===== -->
+              <details class="modifier-card shop-block" open>
+                <summary>
+                  <span class="modifier-card__title">
+                    <span class="modifier-card__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-4 3.5-6 7-6s6.2 2 7 6"/></svg>
+                    </span>
+                    <h2>Merchant</h2>
+                  </span>
+                  <span class="shop-block__arrow" aria-hidden="true">›</span>
+                </summary>
+
+                <label class="field-label" for="shop-npc">Assign NPC</label>
+                <select class="field-control" id="shop-npc" name="npcId">
+                  <option value="borin">Borin Ashgrove</option>
+                  <option value="mira">Mira Vell</option>
+                  <option value="tolwick">Tolwick the Grey</option>
+                  <option value="new">+ New NPC</option>
+                </select>
+
+                <div class="reveal-field" id="new-npc-field" hidden>
+                  <label class="field-label" for="new-npc-name">Name</label>
+                  <input class="field-control" id="new-npc-name" name="newNpcName" type="text" placeholder="Shopkeeper name" autocomplete="off">
+
+                  <div class="field-row">
+                    <div>
+                      <label class="field-label" for="new-npc-race">Race</label>
+                      <select class="field-control" id="new-npc-race" name="newNpcRace">
+                        <option>Human</option><option>Dwarf</option><option>Elf</option><option>Halfling</option><option>Gnome</option><option>Half-Orc</option><option>Tiefling</option>
+                      </select>
+                    </div>
+                    <div>
+                      <span class="field-label">Portrait</span>
+                      <div class="npc-image-pick">
+                        <label class="toggle-chip__face npc-image-btn" for="new-npc-image" id="new-npc-image-label">+ Add image</label>
+                        <span class="npc-image-check" id="new-npc-image-check" role="img" aria-label="Image selected" hidden>✓</span>
+                      </div>
+                      <!-- Sent only with the whole form submit (multipart). -->
+                      <input type="file" id="new-npc-image" name="newNpcImage" accept=".jpg,.jpeg,.png,image/jpeg,image/png" hidden>
+                    </div>
+                  </div>
+
+                  <label class="field-label" for="new-npc-appearance">Appearance</label>
+                  <textarea class="field-control" id="new-npc-appearance" name="newNpcAppearance" rows="2" placeholder="Stocky, soot-stained apron, one gold tooth..."></textarea>
+                </div>
+
+                <p class="shop-subtitle">Likes</p>
+                <div class="repeat-list" data-repeat="npcLikes">
+                  <div class="repeat-row repeat-row--single">
+                    <select class="field-control repeat-row__main" name="npcLikes[0]" data-char-pick aria-label="Liked character">
+                      <option value="" selected>Choose a character…</option>
+                      <option value="aldric">Aldric · Paladin</option>
+                      <option value="seraphine">Seraphine · Cleric</option>
+                      <option value="thorne">Thorne · Wizard</option>
+                      <option value="kael">Kael · Rogue</option>
+                      <option value="brynn">Brynn · Ranger</option>
+                    </select>
+                    <button class="filter-button repeat-btn" type="button" data-repeat-action="add" aria-label="Add another liked character">+</button>
+                  </div>
+                </div>
+
+                <p class="shop-subtitle">Dislikes &amp; grudges</p>
+                <div class="repeat-list" data-repeat="npcDislikes">
+                  <div class="repeat-row repeat-row--single">
+                    <select class="field-control repeat-row__main" name="npcDislikes[0]" data-char-pick aria-label="Disliked character">
+                      <option value="" selected>Choose a character…</option>
+                      <option value="aldric">Aldric · Paladin</option>
+                      <option value="seraphine">Seraphine · Cleric</option>
+                      <option value="thorne">Thorne · Wizard</option>
+                      <option value="kael">Kael · Rogue</option>
+                      <option value="brynn">Brynn · Ranger</option>
+                    </select>
+                    <button class="filter-button repeat-btn" type="button" data-repeat-action="add" aria-label="Add another disliked character">+</button>
+                  </div>
+                </div>
+
+                <label class="field-label" for="npc-purchase-power"><span class="coin-icon" aria-hidden="true">◎</span> Purchase power (gold)</label>
+                <input class="field-control" id="npc-purchase-power" name="purchasePower" type="number" inputmode="numeric" min="0" step="10" value="1500">
+                <div class="chip-grid gold-presets" role="group" aria-label="Purchase power presets">
+                  <button class="toggle-chip__face gold-preset" type="button" data-gold="100">Peddler<small class="chip-note">100 gp</small></button>
+                  <button class="toggle-chip__face gold-preset" type="button" data-gold="500">Village shop<small class="chip-note">500 gp</small></button>
+                  <button class="toggle-chip__face gold-preset" type="button" data-gold="1500">Town merchant<small class="chip-note">1,500 gp</small></button>
+                  <button class="toggle-chip__face gold-preset" type="button" data-gold="5000">City trader<small class="chip-note">5,000 gp</small></button>
+                  <button class="toggle-chip__face gold-preset" type="button" data-gold="15000">Guild merchant<small class="chip-note">15,000 gp</small></button>
+                  <button class="toggle-chip__face gold-preset" type="button" data-gold="50000">Merchant prince<small class="chip-note">50,000 gp</small></button>
+                </div>
+                <p class="modifier-help">The merchant can't buy from players once this<br>amount runs out.</p>
+              </details>
+
+              <!-- ===== Other services ===== -->
+              <details class="modifier-card shop-block">
+                <summary>
+                  <span class="modifier-card__title">
+                    <span class="modifier-card__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24"><path d="m14 4 6 6M18 2l2 2-8.7 8.7-2-2L18 2Z"/><path d="m6 18 6-6M4 20l2.7-.5L8 16.2 5.3 13.5 2 14.8 4 20Z"/></svg>
+                    </span>
+                    <h2>Other Services</h2>
+                  </span>
+                  <span class="shop-block__arrow" aria-hidden="true">›</span>
+                </summary>
+                <div class="chip-grid">
+                  <label class="toggle-chip"><input type="checkbox" name="services" value="crafting"><span class="toggle-chip__face">Custom crafting</span></label>
+                  <label class="toggle-chip"><input type="checkbox" name="services" value="repairs"><span class="toggle-chip__face">Repairs</span></label>
+                  <label class="toggle-chip"><input type="checkbox" name="services" value="enchanting"><span class="toggle-chip__face">Enchanting</span></label>
+                  <label class="toggle-chip"><input type="checkbox" name="services" value="identification"><span class="toggle-chip__face">Identification</span></label>
+                </div>
+              </details>
+
+              <!-- ===== Price factors ===== -->
+              <details class="modifier-card shop-block">
+                <summary>
+                  <span class="modifier-card__title">
+                    <span class="modifier-card__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24"><path d="M12 3v18M5 7h14M5 7l-3 7a3 3 0 0 0 6 0L5 7Zm14 0-3 7a3 3 0 0 0 6 0l-3-7ZM8 21h8"/></svg>
+                    </span>
+                    <h2>Price Factors</h2>
+                  </span>
+                  <span class="shop-block__arrow" aria-hidden="true">›</span>
+                </summary>
+                <p class="modifier-help">Choose what influences the final price.</p>
+                <div class="chip-grid">
+                  <label class="toggle-chip"><input type="checkbox" name="priceFactors" value="god-intervention" data-reveal="god-field"><span class="toggle-chip__face">God intervention</span></label>
+                  <label class="toggle-chip"><input type="checkbox" name="priceFactors" value="charisma" checked><span class="toggle-chip__face">Charisma modifier<small class="chip-note">Recommended</small></span></label>
+                  <label class="toggle-chip"><input type="checkbox" name="priceFactors" value="char-reputation"><span class="toggle-chip__face">Char reputation</span></label>
+                  <label class="toggle-chip"><input type="checkbox" name="priceFactors" value="char-affiliation" data-reveal="char-affiliation-field"><span class="toggle-chip__face">Char affiliation</span></label>
+                  <label class="toggle-chip"><input type="checkbox" name="priceFactors" value="char-title"><span class="toggle-chip__face">Char title</span></label>
+                  <label class="toggle-chip"><input type="checkbox" name="priceFactors" value="negotiation-dice" data-reveal="dice-field"><span class="toggle-chip__face">Negotiation dice</span></label>
+                  <label class="toggle-chip"><input type="checkbox" name="priceFactors" value="npc-quests"><span class="toggle-chip__face">Quests done for NPC</span></label>
+                  <label class="toggle-chip"><input type="checkbox" name="priceFactors" value="negotiation-tolerance" data-reveal="tolerance-field"><span class="toggle-chip__face">Negotiation tolerance</span></label>
+                  <label class="toggle-chip"><input type="checkbox" name="priceFactors" value="nearby-reputation"><span class="toggle-chip__face">Nearby town reputation</span></label>
+                  <label class="toggle-chip"><input type="checkbox" name="priceFactors" value="item-shortage"><span class="toggle-chip__face">Item shortage</span></label>
+                  <label class="toggle-chip"><input type="checkbox" name="priceFactors" value="hassle-only-trade"><span class="toggle-chip__face">Hassle vs only buy / sell<small class="chip-note">×2 cost</small></span></label>
+                  <label class="toggle-chip"><input type="checkbox" name="priceFactors" value="owner-vibe" data-reveal="owner-vibe-field"><span class="toggle-chip__face">Owner vibe</span></label>
+                  <label class="toggle-chip"><input type="checkbox" name="priceFactors" value="economy-vibe"><span class="toggle-chip__face">Global economy vibe</span></label>
+                  <label class="toggle-chip"><input type="checkbox" name="priceFactors" value="favoritism" data-reveal="favoritism-field"><span class="toggle-chip__face">Favoritism</span></label>
+                </div>
+
+                <div class="reveal-field" id="god-field" hidden>
+                  <p class="shop-subtitle">God intervention</p>
+                  <div class="modifier-value" id="god-value">+ 0%</div>
+                  <div class="modifier-slider">
+                    <span class="modifier-end">−</span>
+                    <input id="god-slider" name="godIntervention" type="range" min="-50" max="50" step="1" value="0" aria-label="God intervention modifier">
+                    <span class="modifier-end">+</span>
+                  </div>
+                </div>
+
+                <!-- Char affiliation: repeatable rows (affiliation, intensity, effect) -->
+                <div class="reveal-field" id="char-affiliation-field" hidden>
+                  <p class="shop-subtitle">Char affiliation</p>
+                  <div class="repeat-list" data-repeat="charAffiliations">
+                    <div class="repeat-row repeat-row--affiliation">
+                      <select class="field-control repeat-row__main" name="charAffiliations[0][affiliation]" aria-label="Affiliation">
+                        <optgroup label="Army">
+                          <option value="royal-army">Royal Army</option>
+                          <option value="iron-legion">Iron Legion</option>
+                        </optgroup>
+                        <optgroup label="Underworld">
+                          <option value="thieves-guild">Thieves' Guild</option>
+                          <option value="black-market">Black Market</option>
+                        </optgroup>
+                        <optgroup label="Races">
+                          <option value="human">Human</option>
+                          <option value="dwarf">Dwarf</option>
+                          <option value="elf">Elf</option>
+                          <option value="half-orc">Half-Orc</option>
+                          <option value="tiefling">Tiefling</option>
+                        </optgroup>
+                      </select>
+                      <select class="field-control repeat-row__second" name="charAffiliations[0][intensity]" aria-label="Intensity">
+                        <option value="low">Low · 5%</option>
+                        <option value="medium" selected>Medium · 10%</option>
+                        <option value="high">High · 20%</option>
+                      </select>
+                      <div class="repeat-row__effect">
+                        <label class="toggle-chip"><input type="radio" name="charAffiliations[0][effect]" value="increase" checked><span class="toggle-chip__face">▲ Increase</span></label>
+                        <label class="toggle-chip"><input type="radio" name="charAffiliations[0][effect]" value="decrease"><span class="toggle-chip__face">▼ Decrease</span></label>
+                      </div>
+                      <button class="filter-button repeat-btn" type="button" data-repeat-action="add" aria-label="Add another affiliation">+</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Negotiation dice -->
+                <div class="reveal-field" id="dice-field" hidden>
+                  <p class="shop-subtitle">Negotiation dice</p>
+                  <div class="dice-grid">
+                    <div class="dice-field">
+                      <label class="field-label" for="dice-min">Minimum</label>
+                      <input class="field-control" id="dice-min" name="negotiationDiceMin" type="number" inputmode="numeric" min="12" step="1" value="16">
+                      <span class="dice-hint" id="dice-min-hint">Min 12</span>
+                    </div>
+                    <div class="dice-field">
+                      <label class="field-label" for="dice-mid">Medium</label>
+                      <input class="field-control" id="dice-mid" name="negotiationDiceMid" type="number" inputmode="numeric" min="16" step="1" value="18">
+                      <span class="dice-hint" id="dice-mid-hint">Min 16</span>
+                    </div>
+                    <div class="dice-field">
+                      <label class="field-label" for="dice-max">Maximum</label>
+                      <input class="field-control" id="dice-max" name="negotiationDiceMax" type="number" inputmode="numeric" min="18" step="1" value="20">
+                      <span class="dice-hint" id="dice-max-hint">Min 18</span>
+                    </div>
+                  </div>
+                  <input type="hidden" id="dice-min-floor" name="negotiationDiceMinFloor" value="12">
+                  <input type="hidden" id="dice-mid-floor" name="negotiationDiceMidFloor" value="16">
+                  <input type="hidden" id="dice-max-floor" name="negotiationDiceMaxFloor" value="18">
+                  <p class="modifier-help">Rolls needed to win small, medium and big<br>discounts when bargaining.</p>
+                </div>
+
+                <!-- Negotiation tolerance -->
+                <div class="reveal-field" id="tolerance-field" hidden>
+                  <label class="field-label" for="negotiation-tolerance">Owner discomfort on repeated haggling</label>
+                  <select class="field-control" id="negotiation-tolerance" name="negotiationTolerance">
+                    <option value="1">Patient · 1 point</option>
+                    <option value="2" selected>Normal reaction · 2 points</option>
+                    <option value="3">Annoyed · 3 points</option>
+                  </select>
+                  <p class="modifier-help">Points added to future prices after every<br>negotiation attempt.</p>
+                </div>
+
+                <div class="reveal-field" id="owner-vibe-field" hidden>
+                  <label class="field-label" for="owner-vibe">Owner vibe</label>
+                  <select class="field-control" id="owner-vibe" name="ownerVibe">
+                    <option value="angry">Angry</option>
+                    <option value="greedy">Greedy</option>
+                    <option value="neutral" selected>Neutral</option>
+                    <option value="good-mood">Good mood</option>
+                    <option value="generous">Generous</option>
+                  </select>
+                </div>
+
+                <div class="reveal-field" id="favoritism-field" hidden>
+                  <p class="shop-subtitle">Favoritism towards</p>
+                  <div class="chip-grid">
+                    <label class="toggle-chip"><input type="checkbox" name="favoritismType" value="race" checked><span class="toggle-chip__face">Race</span></label>
+                    <label class="toggle-chip"><input type="checkbox" name="favoritismType" value="background"><span class="toggle-chip__face">Background</span></label>
+                  </div>
+                  <input class="field-control reveal-field__input" name="favoritismTarget" type="text" placeholder="e.g. Dwarf, Guild Artisan" autocomplete="off" aria-label="Favored races or backgrounds">
+                </div>
+
+                <p class="modifier-help">Negotiation tolerance: every negotiation raises<br>future prices. Item shortage: fewer items in<br>stock means higher prices. Hassle: players can<br>still do what an only buy / sell shop avoids,<br>but at double cost.</p>
+              </details>
+
+              <!-- ===== Global economy vibe (read-only) ===== -->
+              <details class="modifier-card shop-block">
+                <summary>
+                  <span class="modifier-card__title">
+                    <span class="modifier-card__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.4 3.5 5.2 3.5 8.5s-1 6.1-3.5 8.5c-2.5-2.4-3.5-5.2-3.5-8.5s1-6.1 3.5-8.5Z"/></svg>
+                    </span>
+                    <h2>Global Economy Vibe</h2>
+                  </span>
+                  <span class="shop-block__arrow" aria-hidden="true">›</span>
+                </summary>
+                <p class="modifier-help">Read only. Cumulated from the state of your world.</p>
+                <div class="tag-list economy-scale">
+                  <div class="economy-row" style="--tone:#8e2f22"><span class="economy-dot"></span><span>Disaster, calamities</span><em>Highest markup</em></div>
+                  <div class="economy-row" style="--tone:#b0552d"><span class="economy-dot"></span><span>Close war, racism, capital town</span><em>Challenging</em></div>
+                  <div class="economy-row is-active" style="--tone:#c08a3e"><span class="economy-dot"></span><span>Far war, bandits, poverty, big town, bad owner, bad charisma, unavailable item request</span><em>Slight increase</em></div>
+                  <div class="economy-row" style="--tone:#8f8670"><span class="economy-dot"></span><span>Normal</span><em>No modifier</em></div>
+                  <div class="economy-row" style="--tone:#7d9450"><span class="economy-dot"></span><span>Small village, race, class</span><em>Slight decrease</em></div>
+                  <div class="economy-row" style="--tone:#5d8a45"><span class="economy-dot"></span><span>Hero char title</span><em>Grateful price</em></div>
+                  <div class="economy-row" style="--tone:#3f7440"><span class="economy-dot"></span><span>High authority, reputation, menace</span><em>Best price</em></div>
+                </div>
+                <div class="economy-total"><span>Current vibe</span><span>Slight increase · +5%</span></div>
+              </details>
+
+              <!-- ===== Random item availability ===== -->
+              <details class="modifier-card shop-block">
+                <summary>
+                  <span class="modifier-card__title">
+                    <span class="modifier-card__icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><circle cx="8.5" cy="8.5" r="1.2"/><circle cx="15.5" cy="15.5" r="1.2"/><circle cx="12" cy="12" r="1.2"/></svg>
+                    </span>
+                    <h2>Item Availability</h2>
+                  </span>
+                  <span class="shop-block__arrow" aria-hidden="true">›</span>
+                </summary>
+                <p class="modifier-help">Random stock depends on:</p>
+                <div class="chip-grid">
+                  <label class="toggle-chip"><input type="checkbox" name="availabilityFactors" value="crime-rate" data-reveal="crime-field"><span class="toggle-chip__face">Crime rate</span></label>
+                  <label class="toggle-chip"><input type="checkbox" name="availabilityFactors" value="war" data-reveal="war-field"><span class="toggle-chip__face">War</span></label>
+                  <label class="toggle-chip"><input type="checkbox" name="availabilityFactors" value="town-size" data-reveal="town-size-field"><span class="toggle-chip__face">Town size</span></label>
+                  <label class="toggle-chip"><input type="checkbox" name="availabilityFactors" value="shop-size" data-reveal="shop-size-field"><span class="toggle-chip__face">Shop size</span></label>
+                  <label class="toggle-chip"><input type="checkbox" name="availabilityFactors" value="player-request" data-reveal="player-request-field"><span class="toggle-chip__face">Player request</span></label>
+                  <label class="toggle-chip"><input type="checkbox" name="availabilityFactors" value="player-reputation" data-reveal="player-reputation-field"><span class="toggle-chip__face">Player reputation</span></label>
+                </div>
+
+                <div class="reveal-field" id="crime-field" hidden>
+                  <label class="field-label" for="crime-rate">Crime rate</label>
+                  <select class="field-control" id="crime-rate" name="crimeRate">
+                    <option value="rarely">Rarely</option>
+                    <option value="normal" selected>Normal</option>
+                    <option value="slight-tension">Slight tension</option>
+                    <option value="often">Often</option>
+                    <option value="severe">Severe</option>
+                  </select>
+                </div>
+
+                <div class="reveal-field" id="war-field" hidden>
+                  <label class="field-label" for="war-distance">War</label>
+                  <select class="field-control" id="war-distance" name="warDistance">
+                    <option value="none">None</option>
+                    <option value="far">Far</option>
+                    <option value="close">Close</option>
+                  </select>
+                </div>
+
+                <div class="reveal-field" id="town-size-field" hidden>
+                  <label class="field-label" for="town-size">Town size</label>
+                  <select class="field-control" id="town-size" name="townSize">
+                    <option value="small-village">Small village</option>
+                    <option value="medium-village">Medium village</option>
+                    <option value="large-village">Large village</option>
+                    <option value="small-town">Small town</option>
+                    <option value="medium-town" selected>Medium town</option>
+                    <option value="large-town">Large town</option>
+                    <option value="capital">Capital</option>
+                  </select>
+                </div>
+
+                <div class="reveal-field" id="shop-size-field" hidden>
+                  <label class="field-label" for="shop-size">Shop size</label>
+                  <select class="field-control" id="shop-size" name="shopSize">
+                    <option value="shabby">Shabby</option>
+                    <option value="very-small">Very small</option>
+                    <option value="small">Small</option>
+                    <option value="decent" selected>Decent / Medium</option>
+                    <option value="significant">Significant</option>
+                    <option value="opulent">Opulent</option>
+                    <option value="prestigious">Prestigious</option>
+                  </select>
+                </div>
+
+                <div class="reveal-field" id="player-request-field" hidden>
+                  <div class="price-info-box">
+                    <span class="price-info-box__icon" aria-hidden="true">i</span>
+                    <p><strong>Player request:</strong> when a player asks for an item the shop doesn't have, the merchant searches nearby towns in the same region and offers it at an extra price. The player is informed of the extra cost when they choose this action.</p>
+                  </div>
+                </div>
+
+                <div class="reveal-field" id="player-reputation-field" hidden>
+                  <div class="price-info-box">
+                    <span class="price-info-box__icon" aria-hidden="true">i</span>
+                    <p><strong>Player reputation:</strong> the character's reputation influences the shop's decisions: which items are offered, how many and whether rare items are shown at all. Low reputation hides stock, high reputation unlocks it.</p>
+                  </div>
+                </div>
+              </details>
+
+              <!-- ===== Estimated total price modifier ===== -->
+              <section class="modifier-card price-total" aria-labelledby="price-total-title">
+                <div class="modifier-card__title">
+                  <span class="modifier-card__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M4 6h13l2 12H2L4 6Z"/><path d="M7 6a4 4 0 0 1 8 0"/><path d="M7 12h7"/></svg>
+                  </span>
+                  <h2 id="price-total-title">Total Price Modifier <small>(estimated)</small></h2>
+                </div>
+                <div class="modifier-value" id="price-total-value">+ 0%</div>
+                <div class="tag-list economy-scale" id="price-total-breakdown"></div>
+                <p class="modifier-help">Character-based factors (reputation, title,<br>charisma, dice, affiliation) are applied in game.</p>
+              </section>
+
+              <button class="primary-button" type="submit">Create Shop</button>
+            </form>
+          </div>
+        </section>
+
+        <!-- ==================== CREATE ITEM ==================== -->
+        <section class="screen screen--create-item is-hidden" data-screen-content="create-item">
+          <div class="paper-panel create-panel">
+            <div class="create-heading">
+              <span class="create-heading__icon section-heading__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="9"/><path d="M16 3v6M16 23v6M3 16h6M23 16h6M8 8l4 4M20 20l4 4M24 8l-4 4M12 20l-4 4"/></svg>
+              </span>
+              <div>
+                <h1>Create Item</h1>
+                <p>Build a new magic item with custom<br>properties and effects.</p>
+              </div>
+            </div>
+
+            <div class="form-divider"></div>
+
+            <form id="create-item-form" class="create-form">
+              <label class="field-label" for="item-type">Item Type</label>
+              <select class="field-control" id="item-type"><option>Sword</option><option>Axe</option><option>Staff</option><option>Armor</option></select>
+
+              <label class="field-label" for="rarity">Rarity</label>
+              <select class="field-control" id="rarity"><option>Rare</option><option>Uncommon</option><option>Very Rare</option><option>Legendary</option></select>
+
+              <fieldset class="form-section" id="spells-section">
+                <legend>Spells (optional)</legend>
+                <div class="tag-list" id="spell-list">
+                  <div class="tag-row"><span class="tag-dot">◉</span><span>Fireball</span><button type="button" class="remove-row" aria-label="Remove Fireball">×</button></div>
+                  <div class="tag-row"><span class="tag-dot">◉</span><span>Levitate</span><button type="button" class="remove-row" aria-label="Remove Levitate">×</button></div>
+                </div>
+                <button type="button" class="add-row" data-add="spell">+ <span>Add Spell</span></button>
+              </fieldset>
+
+              <fieldset class="form-section">
+                <legend>Stats Bonus (optional)</legend>
+                <div id="bonus-list"></div>
+                <button type="button" class="add-row" data-add="bonus">+ <span>Add Bonus</span></button>
+              </fieldset>
+
+              <fieldset class="form-section">
+                <legend>Curses (optional)</legend>
+                <div id="curse-list"></div>
+                <button type="button" class="add-row" data-add="curse">+ <span>Add Curse</span></button>
+              </fieldset>
+
+              <fieldset class="form-section image-upload-section">
+                <legend>Item Image</legend>
+                <input type="file" id="item-image-input" accept="image/*" hidden>
+                <label class="upload-box" for="item-image-input" id="upload-box">
+                  <span class="upload-box__icon">⇧</span>
+                  <span>Click to upload image<br>or drag and drop</span>
+                </label>
+              </fieldset>
+
+              <button class="primary-button" type="submit">Create Item</button>
+            </form>
+          </div>
+        </section>
+      </main>
+
+      <nav class="bottom-nav" aria-label="Main navigation">
+        <button class="bottom-nav__item is-active" type="button" data-go="shop" data-nav="shop">
+          <span class="bottom-nav__icon"><svg viewBox="0 0 24 24"><path d="M6 8.5h12l1 11H5l1-11Z"/><path d="M8.5 8.5a3.5 3.5 0 0 1 7 0M9 19.5v-3M15 19.5v-3"/></svg></span>
+          <span>Shop</span>
+        </button>
+        <button class="bottom-nav__item" type="button" data-go="item-list" data-nav="items">
+          <span class="bottom-nav__icon"><svg viewBox="0 0 24 24"><path d="m12 3 2.2 4.4L19 9.6l-4.8 2.2L12 16l-2.2-4.2L5 9.6l4.8-2.2L12 3Z"/><path d="m18 15 .9 1.8L21 18l-2.1 1.2L18 21l-.9-1.8L15 18l2.1-1.2L18 15Z"/></svg></span>
+          <span>Items</span>
+        </button>
+        <button class="bottom-nav__item" type="button" data-go="create-item" data-nav="create">
+          <span class="bottom-nav__icon"><svg viewBox="0 0 24 24"><path d="m6 18 8.8-8.8M4 20l2.7-.5L8 16.2 5.3 13.5 2 14.8 4 20Z"/><path d="m14 4 6 6M18 2l2 2-8.7 8.7-2-2L18 2Z"/></svg></span>
+          <span>Create</span>
+        </button>
+        <button class="bottom-nav__item" type="button" data-nav="settings">
+          <span class="bottom-nav__icon"><svg viewBox="0 0 24 24"><path d="m9.7 3.7.7-1.2h3.2l.7 1.2 1.4.6 1.4-.3 2.2 2.2-.3 1.4.6 1.4 1.2.7v3.2l-1.2.7-.6 1.4.3 1.4-2.2 2.2-1.4-.3-1.4.6-.7 1.2h-3.2l-.7-1.2-1.4-.6-1.4.3-2.2-2.2.3-1.4-.6-1.4-1.2-.7V9.7l1.2-.7.6-1.4-.3-1.4 2.2-2.2 1.4.3 1.4-.6Z"/><circle cx="12" cy="11.3" r="3"/></svg></span>
+          <span>Settings</span>
+        </button>
+      </nav>
+    </div>
+  </div>
+
+  <script src="/js/dnd/char/playerShop.js"></script>
+  <script src="https://kit.fontawesome.com/19568ad9a4.js" crossorigin="anonymous"></script>
+  
+</body>
+</html>
